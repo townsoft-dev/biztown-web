@@ -1,0 +1,209 @@
+/* Trang tĩnh biztown.vn — bảng màu lấy từ src/lib/core/theme.dart để khớp app. */
+:root {
+  --navy: #23305E;
+  --slate: #5A6B8A;
+  --muted: #868DA7;
+  --orange: #EF9F27;
+  --border: #E7E9F1;
+  --bg: #F5F6F9;
+  --card: #FFFFFF;
+  --danger: #D9483C;
+}
+
+* { box-sizing: border-box; }
+
+html { overflow-x: hidden; }
+
+body {
+  margin: 0;
+  max-width: 100%;
+  background: var(--bg);
+  color: var(--navy);
+  font: 16px/1.65 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+  -webkit-text-size-adjust: 100%;
+}
+
+header {
+  background: var(--navy);
+  padding: 20px 0;
+}
+
+header .inner,
+main,
+footer .inner {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+header a.brand {
+  color: #fff;
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: .06em;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+/* Flex + wrap: thanh điều hướng 4 mục dài hơn bề ngang điện thoại, để mặc định
+   inline thì nó đẩy rộng cả trang và chữ bị cắt ở mép phải. */
+nav { margin-top: 12px; }
+
+/* Mỗi ngôn ngữ một nhóm link; nhóm đang hiện thì dàn hàng và tự xuống dòng
+   (4 mục dài hơn bề ngang điện thoại). */
+nav > span {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 18px;
+}
+
+/* Phải đứng SAU quy tắc display ở trên, nếu không thuộc tính `hidden` bị
+   `display: flex` ghi đè và nhóm ngôn ngữ kia vẫn hiện. */
+[hidden] { display: none !important; }
+
+nav a {
+  color: #C8CEE0;
+  text-decoration: none;
+  font-size: 14px;
+  padding: 2px 0;
+}
+
+nav a:hover, nav a[aria-current="page"] { color: #fff; }
+
+main {
+  background: var(--card);
+  border-radius: 12px;
+  padding: 32px 28px 40px;
+  margin: 24px auto 32px;
+  max-width: 760px;
+  border: 1px solid var(--border);
+}
+
+h1 { font-size: 27px; line-height: 1.25; margin: 0 0 6px; }
+h2 { font-size: 19px; margin: 32px 0 10px; }
+h3 { font-size: 16px; margin: 22px 0 6px; }
+
+p, li { color: var(--slate); }
+li { margin-bottom: 5px; }
+
+.lead { color: var(--muted); margin: 0 0 4px; font-size: 15px; }
+
+.meta {
+  color: var(--muted);
+  font-size: 14px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 18px;
+  margin-bottom: 4px;
+}
+
+.meta div { margin: 2px 0; }
+
+strong { color: var(--navy); }
+
+a { color: #3E6BD9; }
+
+.steps { counter-reset: step; list-style: none; padding-left: 0; }
+
+.steps li {
+  counter-increment: step;
+  position: relative;
+  padding-left: 38px;
+  margin-bottom: 12px;
+}
+
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 1px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--navy);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.callout {
+  background: #FBE7E5;
+  border-left: 4px solid var(--danger);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin: 22px 0;
+}
+
+.callout p { margin: 0; color: #8E2F27; }
+
+.note {
+  background: var(--bg);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin: 22px 0;
+}
+
+.note p { margin: 0; font-size: 15px; }
+
+.table-wrap { overflow-x: auto; }
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin: 14px 0;
+  font-size: 15px;
+  /* Bảng hẹp hơn mức này thì chữ dồn cục; cho nó tràn trong .table-wrap
+     (overflow-x: auto) chứ không để tràn cả trang. */
+  min-width: 420px;
+}
+
+th, td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  color: var(--slate);
+  vertical-align: top;
+}
+
+th { color: var(--navy); font-weight: 700; background: var(--bg); }
+
+.lang {
+  display: flex;
+  gap: 8px;
+  margin: 0 0 26px;
+  flex-wrap: wrap;
+}
+
+.lang button {
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 5px 15px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: #fff;
+  color: var(--slate);
+  cursor: pointer;
+}
+
+.lang button[aria-pressed="true"] {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: #fff;
+}
+
+footer {
+  padding: 4px 0 44px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+footer a { color: var(--slate); }
+
+@media (max-width: 600px) {
+  main { border-radius: 0; padding: 26px 18px 32px; border-left: none; border-right: none; }
+  h1 { font-size: 23px; }
+}
