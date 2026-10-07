@@ -1,0 +1,23 @@
+# Chạy trên server tại /home/ubuntu/biztown-web (CI chép file này lên mỗi lần deploy).
+#
+# /home/ubuntu/biztown-web/
+# ├─ docker-compose.yml
+# ├─ nginx/default.conf
+# ├─ releases/<commit-sha>/   # mỗi lần deploy một thư mục, giữ 5 bản gần nhất
+# └─ current -> releases/<commit-sha>   # symlink tương đối, đổi nguyên tử khi deploy
+#
+# Container chỉ mở cổng trên 127.0.0.1: gateway-nginx (network host) nhận 80/443 của
+# biztown.vn và proxy về đây — giống frontend Balheh (8080), dev (8088), storage (8081).
+services:
+  web:
+    image: nginx:1.26.3
+    container_name: biztown-web
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8090:80"
+    volumes:
+      # Mount cả thư mục (không mount riêng current) để symlink current được phân giải
+      # lúc phục vụ request: đổi symlink là có bản mới ngay, không cần restart container.
+      - ./:/srv/site:ro
+      # Mount thư mục chứ không mount file: file ghi đè bằng inode mới vẫn hiện trong container.
+      - ./nginx:/etc/nginx/conf.d:ro

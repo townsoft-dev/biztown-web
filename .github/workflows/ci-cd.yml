@@ -1,0 +1,139 @@
+name: CI/CD
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+  workflow_dispatch:
+
+# Không cho hai lần deploy chạy chồng lên nhau; lần build kiểm tra cũ của cùng nhánh thì huỷ.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+
+      # Phiên bản pnpm lấy từ trường packageManager trong package.json.
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm format:check
+      - run: pnpm build
+
+      # Đóng gói out/ thành tar: giữ file ẩn và quyền file; job deploy dùng đúng bản đã kiểm tra.
+      - name: Pack build
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        run: tar -czf site.tar.gz -C out .
+
+      - uses: actions/upload-artifact@v4
+        if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+        with:
+          name: site
+          path: site.tar.gz
+          retention-days: 7
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    environment: production
+    env:
+      # Thư mục đã tạo sẵn trên server, cạnh các project Docker khác ở /home/ubuntu.
+      REMOTE_DIR: /home/ubuntu/biztown-web
+      RELEASE: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          sparse-checkout: deploy
+
+      - uses: actions/download-artifact@v4
+        with:
+          name: site
+
+      - name: Set up SSH
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "${{ secrets.LIGHTSAIL_KEY_PEM }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "${{ secrets.LIGHTSAIL_HOST }}" >> ~/.ssh/known_hosts 2>/dev/null
+          {
+            echo "Host server"
+            echo "  HostName ${{ secrets.LIGHTSAIL_HOST }}"
+            echo "  User ${{ secrets.LIGHTSAIL_USER }}"
+            echo "  IdentityFile ~/.ssh/deploy_key"
+            echo "  IdentitiesOnly yes"
+          } > ~/.ssh/config
+
+      - name: Upload release
+        run: |
+          set -euo pipefail
+          ssh server "mkdir -p '$REMOTE_DIR/releases/$RELEASE' '$REMOTE_DIR/nginx'"
+          # Giải nén thẳng vào thư mục release mới; bản đang chạy chưa bị đụng tới.
+          ssh server "tar -xzf - -C '$REMOTE_DIR/releases/$RELEASE'" < site.tar.gz
+          scp deploy/docker-compose.yml "server:$REMOTE_DIR/docker-compose.yml"
+          scp deploy/nginx/default.conf "server:$REMOTE_DIR/nginx/default.conf"
+
+      - name: Activate release
+        run: |
+          ssh server "REMOTE_DIR='$REMOTE_DIR' RELEASE='$RELEASE' bash -s" <<'EOF'
+          set -euo pipefail
+          cd "$REMOTE_DIR"
+
+          # nginx trong container chạy bằng user nginx (uid 101), không phải ubuntu:
+          # thư mục và file phải cho "others" đọc, nếu không trang trả 403.
+          chmod a+rx . releases nginx
+          chmod -R a+rX "releases/$RELEASE" nginx
+
+          # Lần đầu: tạo container. Các lần sau: không đổi gì nếu compose không đổi.
+          docker compose up -d
+          # Cấu hình nginx mới hỏng thì dừng ở đây — bản đang chạy chưa bị đụng tới.
+          docker compose exec -T web nginx -t
+
+          # Đổi symlink nguyên tử (mv -T) — nginx thấy bản mới ngay ở request kế tiếp.
+          previous="$(readlink current 2>/dev/null || true)"
+          ln -sfn "releases/$RELEASE" current.tmp
+          mv -Tf current.tmp current
+          docker compose exec -T web nginx -s reload
+
+          # Kiểm tra bốn URL đã khai với App Store / Google Play (và bản tiếng Anh).
+          sleep 1
+          failed=0
+          for path in / /support/ /privacy/ /delete-account/ /en/ /en/support/ /en/privacy/ /en/delete-account/; do
+            code="$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:8090$path")"
+            echo "$code $path"
+            [ "$code" = "200" ] || failed=1
+          done
+
+          if [ "$failed" = 1 ]; then
+            echo "::error::Health check thất bại — quay lại bản trước: ${previous:-không có}"
+            if [ -n "$previous" ]; then
+              ln -sfn "$previous" current.tmp
+              mv -Tf current.tmp current
+            fi
+            exit 1
+          fi
+
+          # Giữ 5 bản gần nhất (và luôn giữ bản đang chạy) để quay lại khi cần.
+          ls -1dt releases/*/ | tail -n +6 | while read -r dir; do
+            [ "releases/$(basename "$dir")" = "releases/$RELEASE" ] || rm -rf "$dir"
+          done
+          echo "Đang chạy: $(readlink current)"
+          EOF
+
+      - name: Clean up SSH key
+        if: always()
+        run: rm -f ~/.ssh/deploy_key

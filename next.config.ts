@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Xuất HTML tĩnh ra out/ — chạy được trên GitHub Pages, Nginx hay bất kỳ static host nào.
+  // Xuất HTML tĩnh ra out/ — phục vụ bằng nginx (deploy/).
   output: "export",
   // /support → out/support/index.html, giữ đúng dạng URL đã khai với App Store và Google Play.
   trailingSlash: true,

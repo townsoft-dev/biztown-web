@@ -2,7 +2,7 @@
 
 Các trang công khai phục vụ việc nộp ứng dụng lên App Store và Google Play, song ngữ
 Việt/Anh. Viết bằng **Next.js, xuất tĩnh** (`output: "export"`): build ra thư mục `out/`
-chỉ gồm HTML/CSS/JS, chạy được trên bất kỳ static host nào (Nginx, GitHub Pages...).
+chỉ gồm HTML/CSS/JS, chạy được trên bất kỳ static host nào (ở đây: Nginx trên server Lightsail).
 
 | Đường dẫn (VI)    | Bản tiếng Anh        | Khai vào đâu                                                        |
 | ----------------- | -------------------- | ------------------------------------------------------------------- |
@@ -59,7 +59,6 @@ src/
 │  └─ dictionaries.ts        # Chữ dùng chung: điều hướng, title, description, chân trang
 ├─ config/site.ts            # URL site, email liên hệ
 └─ lib/seo.ts                # Metadata: canonical, hreflang, Open Graph
-public/                      # Chép nguyên vào out/ (CNAME, .nojekyll)
 scripts/import-privacy.mjs   # Nhập chính sách quyền riêng tư từ repo biztown-rent
 ```
 
@@ -99,25 +98,44 @@ tiếng Anh sang `/en/...`. Sửa tay hai file đó sẽ bị ghi đè ở lần
 
 ## Triển khai
 
-`pnpm build` rồi đưa **toàn bộ thư mục `out/`** lên host. `trailingSlash: true` nên mỗi
-trang là `<trang>/index.html`; `/support` và `/support/` đều vào được trên host phục vụ
-`index.html` của thư mục (GitHub Pages tự làm; Nginx: `try_files $uri $uri/ =404;`).
-Trang 404 là `out/404.html` (Nginx: `error_page 404 /404.html;`).
+**CI/CD** (`.github/workflows/ci-cd.yml`):
 
-`public/CNAME` và `public/.nojekyll` được chép vào `out/` — chỉ có tác dụng khi host bằng
-GitHub Pages. `.nojekyll` ở đây là **bắt buộc**: Jekyll bỏ qua thư mục bắt đầu bằng `_`,
-mà toàn bộ JS/CSS nằm trong `out/_next/`.
+- Mọi nhánh và pull request: `lint`, `typecheck`, `format:check`, `build`.
+- Chỉ nhánh **`main`**: build xong thì deploy lên server Lightsail (chung máy với Balheh),
+  dùng ba secret `LIGHTSAIL_HOST`, `LIGHTSAIL_USER` (= `ubuntu`), `LIGHTSAIL_KEY_PEM`.
 
-Domain dùng cho canonical, hreflang, sitemap: `NEXT_PUBLIC_SITE_URL` (mặc định
-`https://biztown.vn`).
+Trên server, mọi thứ nằm trong `/home/ubuntu/biztown-web`:
 
-### Cấu hình đang chạy (trước khi chuyển sang Next.js)
+```
+docker-compose.yml       # chép từ deploy/docker-compose.yml mỗi lần deploy
+nginx/default.conf       # chép từ deploy/nginx/default.conf
+releases/<commit-sha>/   # nội dung out/ của từng lần deploy, giữ 5 bản gần nhất
+current -> releases/<commit-sha>
+```
 
-- GitHub Pages: Source **Deploy from a branch**, nhánh `main`, thư mục `/`. Custom domain
-  `biztown.vn`, bật **Enforce HTTPS**.
-- DNS (quản lý tại whoisdomain.kr): 4 bản ghi `A` tại `@` trỏ về `185.199.108–111.153`.
-  Hướng dẫn: `docs/HUONG-DAN-TRO-TEN-MIEN.md` trong repo `biztown-rent`.
+Container `biztown-web` (`nginx:1.26.3`) phục vụ `current` ở `127.0.0.1:8090`.
+`gateway-nginx` (network host, giữ 80/443) nhận `biztown.vn` và proxy về cổng này — giống
+frontend Balheh (8080), dev (8088), storage (8081).
 
-Cách deploy từ nhánh này **không dùng được nữa** vì gốc repo giờ là mã nguồn, không phải
-HTML. Phải đổi cách deploy (GitHub Actions build `out/`, hoặc server riêng) **trước khi**
-merge vào `main`.
+Mỗi lần deploy: giải nén vào `releases/<sha>`, đổi symlink `current` (nguyên tử), reload
+nginx, rồi gọi thử 8 URL (4 trang × 2 ngôn ngữ). URL nào không trả 200 thì **tự quay lại bản
+trước** và job báo đỏ.
+
+**Quay lại bản cũ bằng tay:**
+
+```sh
+cd /home/ubuntu/biztown-web && ls -1t releases/
+ln -sfn releases/<sha-cũ> current.tmp && mv -Tf current.tmp current
+```
+
+`trailingSlash: true` nên mỗi trang là `<trang>/index.html`; `/support` chuyển hướng sang
+`/support/`. Trang 404 là `out/404.html`. Domain dùng cho canonical, hreflang, sitemap:
+`NEXT_PUBLIC_SITE_URL` (mặc định `https://biztown.vn`).
+
+### Tên miền
+
+`gateway-nginx` (`/home/ubuntu/nginx-gateway`, do người phụ trách server quản lý) giữ TLS
+và chứng chỉ Let's Encrypt cho `biztown.vn`, proxy về `127.0.0.1:8090`. Repo này không chứa
+cấu hình gateway. Đổi cổng 8090 thì phải báo người phụ trách gateway sửa theo.
+
+Trước đây site chạy trên GitHub Pages; đã bỏ hẳn khi chuyển sang server.
