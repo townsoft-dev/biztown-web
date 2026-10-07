@@ -14,7 +14,7 @@ services:
     container_name: biztown-web
     restart: unless-stopped
     ports:
-      - "127.0.0.1:8090:80"
+      - "8090:80"
     volumes:
       # Mount cả thư mục (không mount riêng current) để symlink current được phân giải
       # lúc phục vụ request: đổi symlink là có bản mới ngay, không cần restart container.
