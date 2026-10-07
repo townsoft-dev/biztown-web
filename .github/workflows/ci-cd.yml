@@ -1,10 +1,11 @@
 name: CI/CD
 
+# Push lên main: build + deploy. Pull request vào main: chỉ build để kiểm tra.
 on:
   push:
-    branches: ["**"]
+    branches: [main]
   pull_request:
-  workflow_dispatch:
+    branches: [main]
 
 # Không cho hai lần deploy chạy chồng lên nhau; lần build kiểm tra cũ của cùng nhánh thì huỷ.
 concurrency:

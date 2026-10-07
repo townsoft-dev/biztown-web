@@ -100,7 +100,7 @@ tiếng Anh sang `/en/...`. Sửa tay hai file đó sẽ bị ghi đè ở lần
 
 **CI/CD** (`.github/workflows/ci-cd.yml`):
 
-- Mọi nhánh và pull request: `lint`, `typecheck`, `format:check`, `build`.
+- Pull request vào `main`: `lint`, `typecheck`, `format:check`, `build` (không deploy). Nhánh khác không chạy CI.
 - Chỉ nhánh **`main`**: build xong thì deploy lên server Lightsail (chung máy với Balheh),
   dùng ba secret `LIGHTSAIL_HOST`, `LIGHTSAIL_USER` (= `ubuntu`), `LIGHTSAIL_KEY_PEM`.
 
