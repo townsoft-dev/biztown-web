@@ -54,11 +54,10 @@ jobs:
     env:
       # Thư mục đã tạo sẵn trên server, cạnh các project Docker khác ở /home/ubuntu.
       REMOTE_DIR: /home/ubuntu/biztown-web
-      RELEASE: ${{ github.sha }}
       # Cổng container nginx mở trên server (docker-compose.yml do người quản lý server giữ).
       HEALTH_BASE: http://127.0.0.1:8090
-    # CI chỉ ghi releases/<sha> và symlink current. docker-compose.yml và nginx/default.conf
-    # trên server được tạo và sửa tay — CI không chép, không chạy docker compose.
+    # CI chỉ ghi thư mục build/ (nginx phục vụ /srv/site/build). docker-compose.yml và
+    # nginx/default.conf trên server được tạo và sửa tay — CI không chép, không chạy docker compose.
     steps:
       - uses: actions/download-artifact@v4
         with:
@@ -78,29 +77,29 @@ jobs:
             echo "  IdentitiesOnly yes"
           } > ~/.ssh/config
 
-      - name: Upload release
+      - name: Upload build
         run: |
           set -euo pipefail
-          ssh server "mkdir -p '$REMOTE_DIR/releases/$RELEASE'"
-          # Giải nén thẳng vào thư mục release mới; bản đang chạy chưa bị đụng tới.
-          ssh server "tar -xzf - -C '$REMOTE_DIR/releases/$RELEASE'" < site.tar.gz
+          # Giải nén vào build.new trước; build/ đang chạy chưa bị đụng tới cho tới bước sau.
+          ssh server "rm -rf '$REMOTE_DIR/build.new' && mkdir -p '$REMOTE_DIR/build.new'"
+          ssh server "tar -xzf - -C '$REMOTE_DIR/build.new'" < site.tar.gz
 
-      - name: Activate release
+      - name: Replace build
         run: |
-          ssh server "REMOTE_DIR='$REMOTE_DIR' RELEASE='$RELEASE' HEALTH_BASE='$HEALTH_BASE' bash -s" <<'EOF'
+          ssh server "REMOTE_DIR='$REMOTE_DIR' HEALTH_BASE='$HEALTH_BASE' bash -s" <<'EOF'
           set -euo pipefail
           cd "$REMOTE_DIR"
 
           # nginx trong container chạy bằng user nginx (uid 101), không phải ubuntu:
           # thư mục và file phải cho "others" đọc, nếu không trang trả 403.
-          chmod a+rx . releases
-          chmod -R a+rX "releases/$RELEASE"
+          chmod a+rx .
+          chmod -R a+rX build.new
 
-          # Đổi symlink nguyên tử (mv -T). nginx phân giải current ở mỗi request nên thấy bản
-          # mới ngay, không cần reload hay restart container.
-          previous="$(readlink current 2>/dev/null || true)"
-          ln -sfn "releases/$RELEASE" current.tmp
-          mv -Tf current.tmp current
+          # Thay build/ bằng hai lần đổi tên — gần như tức thì, không có lúc nào build/ chứa
+          # nửa cũ nửa mới. Bản cũ giữ ở build.old cho tới khi kiểm tra xong.
+          rm -rf build.old
+          [ -d build ] && mv build build.old
+          mv build.new build
 
           # Kiểm tra bốn URL đã khai với App Store / Google Play (và bản tiếng Anh).
           failed=0
@@ -111,19 +110,16 @@ jobs:
           done
 
           if [ "$failed" = 1 ]; then
-            echo "::error::Health check thất bại (container nginx có đang chạy ở $HEALTH_BASE?) — quay lại bản trước: ${previous:-không có}"
-            if [ -n "$previous" ]; then
-              ln -sfn "$previous" current.tmp
-              mv -Tf current.tmp current
+            echo "::error::Health check thất bại (nginx có đang chạy ở $HEALTH_BASE và phục vụ build/?) — trả lại bản trước"
+            if [ -d build.old ]; then
+              rm -rf build
+              mv build.old build
             fi
             exit 1
           fi
 
-          # Giữ 5 bản gần nhất (và luôn giữ bản đang chạy) để quay lại khi cần.
-          ls -1dt releases/*/ | tail -n +6 | while read -r dir; do
-            [ "releases/$(basename "$dir")" = "releases/$RELEASE" ] || rm -rf "$dir"
-          done
-          echo "Đang chạy: $(readlink current)"
+          rm -rf build.old
+          echo "Đã cập nhật $REMOTE_DIR/build"
           EOF
 
       - name: Clean up SSH key

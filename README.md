@@ -109,27 +109,20 @@ Trên server, mọi thứ nằm trong `/home/ubuntu/biztown-web`:
 ```
 docker-compose.yml       # SỬA TAY trên server (mẫu: deploy/docker-compose.yml)
 nginx/default.conf       # SỬA TAY trên server (mẫu: deploy/nginx/default.conf)
-releases/<commit-sha>/   # CI ghi: nội dung out/ của từng lần deploy, giữ 5 bản gần nhất
-current -> releases/<commit-sha>   # CI đổi
+build/                   # CI ghi: nội dung out/ của lần deploy mới nhất
 ```
 
-Container `biztown-web` (`nginx:1.26.3`) phục vụ `current` ở `127.0.0.1:8090`.
+Container `biztown-web` (`nginx:1.26.3`) phục vụ `build/` ở `127.0.0.1:8090`.
 `gateway-nginx` (network host, giữ 80/443) nhận `biztown.vn` và proxy về cổng này — giống
 frontend Balheh (8080), dev (8088), storage (8081).
 
 `docker-compose.yml` và `nginx/default.conf` do người quản lý server tạo và sửa tay; CI **không**
 chép hai file này và không chạy `docker compose`. Hai file trong `deploy/` chỉ là mẫu tham khảo.
 
-Mỗi lần deploy, CI chỉ giải nén vào `releases/<sha>`, đổi symlink `current` (nguyên tử — nginx
-thấy bản mới ngay, không cần reload), rồi gọi thử 8 URL (4 trang × 2 ngôn ngữ). URL nào không trả 200 thì **tự quay lại bản
-trước** và job báo đỏ.
-
-**Quay lại bản cũ bằng tay:**
-
-```sh
-cd /home/ubuntu/biztown-web && ls -1t releases/
-ln -sfn releases/<sha-cũ> current.tmp && mv -Tf current.tmp current
-```
+Mỗi lần deploy, CI giải nén bản build vào `build.new/`, đổi tên `build/` → `build.old/` và
+`build.new/` → `build/` (gần như tức thì), rồi gọi thử 8 URL (4 trang × 2 ngôn ngữ). URL nào
+không trả 200 thì **trả lại bản cũ** và job báo đỏ; ổn thì xoá `build.old/`. Muốn quay về một
+bản cũ hơn: chạy lại workflow của commit đó (Actions → Re-run) hoặc `git revert` rồi push.
 
 `trailingSlash: true` nên mỗi trang là `<trang>/index.html`; `/support` chuyển hướng sang
 `/support/`. Trang 404 là `out/404.html`. Domain dùng cho canonical, hreflang, sitemap:

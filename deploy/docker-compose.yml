@@ -4,11 +4,10 @@
 # /home/ubuntu/biztown-web/
 # ├─ docker-compose.yml       # sửa tay trên server
 # ├─ nginx/default.conf       # sửa tay trên server
-# ├─ releases/<commit-sha>/   # CI ghi: mỗi lần deploy một thư mục, giữ 5 bản gần nhất
-# └─ current -> releases/<commit-sha>   # CI đổi: symlink tương đối, đổi nguyên tử
+# └─ build/                   # CI ghi: nội dung out/ của lần deploy mới nhất
 #
 # CI cần cấu hình trên server giữ đúng hai điều:
-#   - nginx phục vụ thư mục current (mount cả /home/ubuntu/biztown-web, root .../current);
+#   - nginx phục vụ thư mục build (mount cả /home/ubuntu/biztown-web, root .../build);
 #   - trả trang ở 127.0.0.1:8090 — CI gọi thử 8 URL ở đó sau mỗi lần deploy
 #     (đổi cổng thì sửa HEALTH_BASE trong .github/workflows/ci-cd.yml).
 #
@@ -22,8 +21,8 @@ services:
     ports:
       - "127.0.0.1:8090:80"
     volumes:
-      # Mount cả thư mục (không mount riêng current) để symlink current được phân giải
-      # lúc phục vụ request: đổi symlink là có bản mới ngay, không cần restart container.
+      # Mount cả thư mục (không mount riêng build): CI thay build/ bằng cách đổi tên thư mục,
+      # mount riêng build/ thì container vẫn giữ thư mục cũ đã bị đổi tên.
       - ./:/srv/site:ro
       # Mount thư mục chứ không mount file: file ghi đè bằng inode mới vẫn hiện trong container.
       - ./nginx:/etc/nginx/conf.d:ro
