@@ -1,10 +1,16 @@
-# Chạy trên server tại /home/ubuntu/biztown-web (CI chép file này lên mỗi lần deploy).
+# MẪU THAM KHẢO. File thật nằm ở /home/ubuntu/biztown-web/docker-compose.yml, do người quản
+# lý server tạo và sửa tay — CI KHÔNG chép file này lên và không chạy docker compose.
 #
 # /home/ubuntu/biztown-web/
-# ├─ docker-compose.yml
-# ├─ nginx/default.conf
-# ├─ releases/<commit-sha>/   # mỗi lần deploy một thư mục, giữ 5 bản gần nhất
-# └─ current -> releases/<commit-sha>   # symlink tương đối, đổi nguyên tử khi deploy
+# ├─ docker-compose.yml       # sửa tay trên server
+# ├─ nginx/default.conf       # sửa tay trên server
+# ├─ releases/<commit-sha>/   # CI ghi: mỗi lần deploy một thư mục, giữ 5 bản gần nhất
+# └─ current -> releases/<commit-sha>   # CI đổi: symlink tương đối, đổi nguyên tử
+#
+# CI cần cấu hình trên server giữ đúng hai điều:
+#   - nginx phục vụ thư mục current (mount cả /home/ubuntu/biztown-web, root .../current);
+#   - trả trang ở 127.0.0.1:8090 — CI gọi thử 8 URL ở đó sau mỗi lần deploy
+#     (đổi cổng thì sửa HEALTH_BASE trong .github/workflows/ci-cd.yml).
 #
 # Container chỉ mở cổng trên 127.0.0.1: gateway-nginx (network host) nhận 80/443 của
 # biztown.vn và proxy về đây — giống frontend Balheh (8080), dev (8088), storage (8081).

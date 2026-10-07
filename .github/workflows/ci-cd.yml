@@ -55,11 +55,11 @@ jobs:
       # Thư mục đã tạo sẵn trên server, cạnh các project Docker khác ở /home/ubuntu.
       REMOTE_DIR: /home/ubuntu/biztown-web
       RELEASE: ${{ github.sha }}
+      # Cổng container nginx mở trên server (docker-compose.yml do người quản lý server giữ).
+      HEALTH_BASE: http://127.0.0.1:8090
+    # CI chỉ ghi releases/<sha> và symlink current. docker-compose.yml và nginx/default.conf
+    # trên server được tạo và sửa tay — CI không chép, không chạy docker compose.
     steps:
-      - uses: actions/checkout@v6
-        with:
-          sparse-checkout: deploy
-
       - uses: actions/download-artifact@v4
         with:
           name: site
@@ -81,45 +81,37 @@ jobs:
       - name: Upload release
         run: |
           set -euo pipefail
-          ssh server "mkdir -p '$REMOTE_DIR/releases/$RELEASE' '$REMOTE_DIR/nginx'"
+          ssh server "mkdir -p '$REMOTE_DIR/releases/$RELEASE'"
           # Giải nén thẳng vào thư mục release mới; bản đang chạy chưa bị đụng tới.
           ssh server "tar -xzf - -C '$REMOTE_DIR/releases/$RELEASE'" < site.tar.gz
-          scp deploy/docker-compose.yml "server:$REMOTE_DIR/docker-compose.yml"
-          scp deploy/nginx/default.conf "server:$REMOTE_DIR/nginx/default.conf"
 
       - name: Activate release
         run: |
-          ssh server "REMOTE_DIR='$REMOTE_DIR' RELEASE='$RELEASE' bash -s" <<'EOF'
+          ssh server "REMOTE_DIR='$REMOTE_DIR' RELEASE='$RELEASE' HEALTH_BASE='$HEALTH_BASE' bash -s" <<'EOF'
           set -euo pipefail
           cd "$REMOTE_DIR"
 
           # nginx trong container chạy bằng user nginx (uid 101), không phải ubuntu:
           # thư mục và file phải cho "others" đọc, nếu không trang trả 403.
-          chmod a+rx . releases nginx
-          chmod -R a+rX "releases/$RELEASE" nginx
+          chmod a+rx . releases
+          chmod -R a+rX "releases/$RELEASE"
 
-          # Lần đầu: tạo container. Các lần sau: không đổi gì nếu compose không đổi.
-          docker compose up -d
-          # Cấu hình nginx mới hỏng thì dừng ở đây — bản đang chạy chưa bị đụng tới.
-          docker compose exec -T web nginx -t
-
-          # Đổi symlink nguyên tử (mv -T) — nginx thấy bản mới ngay ở request kế tiếp.
+          # Đổi symlink nguyên tử (mv -T). nginx phân giải current ở mỗi request nên thấy bản
+          # mới ngay, không cần reload hay restart container.
           previous="$(readlink current 2>/dev/null || true)"
           ln -sfn "releases/$RELEASE" current.tmp
           mv -Tf current.tmp current
-          docker compose exec -T web nginx -s reload
 
           # Kiểm tra bốn URL đã khai với App Store / Google Play (và bản tiếng Anh).
-          sleep 1
           failed=0
           for path in / /support/ /privacy/ /delete-account/ /en/ /en/support/ /en/privacy/ /en/delete-account/; do
-            code="$(curl -s -o /dev/null -w '%{http_code}' "http://127.0.0.1:8090$path")"
+            code="$(curl -s -o /dev/null -w '%{http_code}' "$HEALTH_BASE$path")"
             echo "$code $path"
             [ "$code" = "200" ] || failed=1
           done
 
           if [ "$failed" = 1 ]; then
-            echo "::error::Health check thất bại — quay lại bản trước: ${previous:-không có}"
+            echo "::error::Health check thất bại (container nginx có đang chạy ở $HEALTH_BASE?) — quay lại bản trước: ${previous:-không có}"
             if [ -n "$previous" ]; then
               ln -sfn "$previous" current.tmp
               mv -Tf current.tmp current
