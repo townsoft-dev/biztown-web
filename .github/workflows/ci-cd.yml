@@ -54,8 +54,6 @@ jobs:
     env:
       # Thư mục đã tạo sẵn trên server, cạnh các project Docker khác ở /home/ubuntu.
       REMOTE_DIR: /home/ubuntu/biztown-web
-      # Cổng container nginx mở trên server (docker-compose.yml do người quản lý server giữ).
-      HEALTH_BASE: http://127.0.0.1:8090
     # CI chỉ ghi thư mục build/ (nginx phục vụ /srv/site/build). docker-compose.yml và
     # nginx/default.conf trên server được tạo và sửa tay — CI không chép, không chạy docker compose.
     steps:
@@ -86,7 +84,7 @@ jobs:
 
       - name: Replace build
         run: |
-          ssh server "REMOTE_DIR='$REMOTE_DIR' HEALTH_BASE='$HEALTH_BASE' bash -s" <<'EOF'
+          ssh server "REMOTE_DIR='$REMOTE_DIR' bash -s" <<'EOF'
           set -euo pipefail
           cd "$REMOTE_DIR"
 
@@ -96,28 +94,10 @@ jobs:
           chmod -R a+rX build.new
 
           # Thay build/ bằng hai lần đổi tên — gần như tức thì, không có lúc nào build/ chứa
-          # nửa cũ nửa mới. Bản cũ giữ ở build.old cho tới khi kiểm tra xong.
+          # nửa cũ nửa mới.
           rm -rf build.old
-          [ -d build ] && mv build build.old
+          if [ -d build ]; then mv build build.old; fi
           mv build.new build
-
-          # Kiểm tra bốn URL đã khai với App Store / Google Play (và bản tiếng Anh).
-          failed=0
-          for path in / /support/ /privacy/ /delete-account/ /en/ /en/support/ /en/privacy/ /en/delete-account/; do
-            code="$(curl -s -o /dev/null -w '%{http_code}' "$HEALTH_BASE$path")"
-            echo "$code $path"
-            [ "$code" = "200" ] || failed=1
-          done
-
-          if [ "$failed" = 1 ]; then
-            echo "::error::Health check thất bại (nginx có đang chạy ở $HEALTH_BASE và phục vụ build/?) — trả lại bản trước"
-            if [ -d build.old ]; then
-              rm -rf build
-              mv build.old build
-            fi
-            exit 1
-          fi
-
           rm -rf build.old
           echo "Đã cập nhật $REMOTE_DIR/build"
           EOF

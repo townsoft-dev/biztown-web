@@ -120,8 +120,8 @@ frontend Balheh (8080), dev (8088), storage (8081).
 chép hai file này và không chạy `docker compose`. Hai file trong `deploy/` chỉ là mẫu tham khảo.
 
 Mỗi lần deploy, CI giải nén bản build vào `build.new/`, đổi tên `build/` → `build.old/` và
-`build.new/` → `build/` (gần như tức thì), rồi gọi thử 8 URL (4 trang × 2 ngôn ngữ). URL nào
-không trả 200 thì **trả lại bản cũ** và job báo đỏ; ổn thì xoá `build.old/`. Muốn quay về một
+`build.new/` → `build/` (gần như tức thì), rồi xoá `build.old/`. CI không kiểm tra site sau khi
+deploy — xem trên server bằng `curl -sI http://127.0.0.1:8090/support/`. Muốn quay về một
 bản cũ hơn: chạy lại workflow của commit đó (Actions → Re-run) hoặc `git revert` rồi push.
 
 `trailingSlash: true` nên mỗi trang là `<trang>/index.html`; `/support` chuyển hướng sang

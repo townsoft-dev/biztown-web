@@ -6,10 +6,8 @@
 # ├─ nginx/default.conf       # sửa tay trên server
 # └─ build/                   # CI ghi: nội dung out/ của lần deploy mới nhất
 #
-# CI cần cấu hình trên server giữ đúng hai điều:
-#   - nginx phục vụ thư mục build (mount cả /home/ubuntu/biztown-web, root .../build);
-#   - trả trang ở 127.0.0.1:8090 — CI gọi thử 8 URL ở đó sau mỗi lần deploy
-#     (đổi cổng thì sửa HEALTH_BASE trong .github/workflows/ci-cd.yml).
+# CI cần cấu hình trên server: nginx phục vụ thư mục build
+# (mount cả /home/ubuntu/biztown-web, root .../build).
 #
 # Container chỉ mở cổng trên 127.0.0.1: gateway-nginx (network host) nhận 80/443 của
 # biztown.vn và proxy về đây — giống frontend Balheh (8080), dev (8088), storage (8081).
