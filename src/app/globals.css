@@ -1,0 +1,241 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens — bảng màu lấy từ src/lib/core/theme.dart của app BizTown Rent Manager
+ * để web khớp với app. Đổi màu tại đây; mọi utility (bg-navy, text-slate...) tự cập nhật.
+ */
+@theme {
+  --color-navy: #23305e;
+  --color-navy-soft: #c8cee0;
+  --color-slate: #5a6b8a;
+  --color-muted: #868da7;
+  --color-orange: #ef9f27;
+  --color-line: #e7e9f1;
+  --color-paper: #f5f6f9;
+  --color-card: #ffffff;
+  --color-link: #3e6bd9;
+  --color-danger: #d9483c;
+  --color-danger-soft: #fbe7e5;
+  --color-danger-deep: #8e2f27;
+
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-navy);
+    font-family: var(--font-sans);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--focus-color, var(--color-link));
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background-color: var(--color-orange);
+    color: var(--color-navy);
+  }
+}
+
+@layer components {
+  /* Bề mặt tối (header): viền focus đổi sang cam để đủ tương phản. */
+  .surface-dark {
+    --focus-color: var(--color-orange);
+    background-color: var(--color-navy);
+    color: #fff;
+  }
+
+  /*
+   * Kiểu chữ cho nội dung tài liệu. Viết bằng selector con thay vì class trên từng thẻ vì
+   * nội dung /privacy là HTML sinh từ repo biztown-rent (src/content/privacy/*.html).
+   */
+  .doc {
+    h1 {
+      margin: 0 0 6px;
+      font-size: 23px;
+      line-height: 1.25;
+      font-weight: 700;
+      text-wrap: balance;
+
+      @variant sm {
+        font-size: 27px;
+      }
+    }
+
+    h2 {
+      margin: 32px 0 10px;
+      font-size: 19px;
+      line-height: 1.35;
+      font-weight: 700;
+    }
+
+    h3 {
+      margin: 22px 0 6px;
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    p {
+      margin: 16px 0;
+    }
+
+    p,
+    li {
+      color: var(--color-slate);
+    }
+
+    ul,
+    ol {
+      margin: 16px 0;
+      padding-left: 1.5rem;
+    }
+
+    ul {
+      list-style: disc;
+    }
+
+    ol {
+      list-style: decimal;
+    }
+
+    li {
+      margin-bottom: 5px;
+    }
+
+    strong {
+      color: var(--color-navy);
+      font-weight: 700;
+    }
+
+    a {
+      color: var(--color-link);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      overflow-wrap: anywhere;
+    }
+
+    .lead {
+      margin: 0 0 4px;
+      color: var(--color-muted);
+      font-size: 15px;
+    }
+
+    .meta {
+      margin-bottom: 4px;
+      padding-bottom: 18px;
+      border-bottom: 1px solid var(--color-line);
+      color: var(--color-muted);
+      font-size: 14px;
+
+      div {
+        margin: 2px 0;
+      }
+    }
+
+    /* Danh sách bước có số tròn. */
+    .steps {
+      counter-reset: step;
+      list-style: none;
+      padding-left: 0;
+
+      li {
+        counter-increment: step;
+        position: relative;
+        margin-bottom: 12px;
+        padding-left: 38px;
+      }
+
+      li::before {
+        content: counter(step);
+        position: absolute;
+        top: 1px;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: var(--color-navy);
+        color: #fff;
+        font-size: 13px;
+        font-weight: 700;
+      }
+    }
+
+    .callout,
+    .note {
+      margin: 22px 0;
+      padding: 14px 16px;
+      border-radius: 8px;
+
+      p {
+        margin: 0;
+      }
+    }
+
+    .callout {
+      border-left: 4px solid var(--color-danger);
+      background: var(--color-danger-soft);
+
+      p {
+        color: var(--color-danger-deep);
+      }
+    }
+
+    .note {
+      background: var(--color-paper);
+
+      p {
+        font-size: 15px;
+      }
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      /* Bảng hẹp hơn mức này thì chữ dồn cục; cho tràn trong .table-wrap chứ không tràn trang. */
+      min-width: 420px;
+      margin: 14px 0;
+      border-collapse: collapse;
+      font-size: 15px;
+    }
+
+    th,
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid var(--color-line);
+      color: var(--color-slate);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--color-paper);
+      color: var(--color-navy);
+      font-weight: 700;
+    }
+
+    > :first-child {
+      margin-top: 0;
+    }
+
+    > :last-child {
+      margin-bottom: 0;
+    }
+  }
+}
