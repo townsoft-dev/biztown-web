@@ -112,7 +112,7 @@ nginx/default.conf       # SỬA TAY trên server (mẫu: deploy/nginx/default.c
 build/                   # CI ghi: nội dung out/ của lần deploy mới nhất
 ```
 
-Container `biztown-web` (`nginx:1.26.3`) phục vụ `build/` ở `127.0.0.1:8090`.
+Container `biztown-web` (`nginx:1.26.3`) phục vụ `build/` ở cổng `8090`.
 `gateway-nginx` (network host, giữ 80/443) nhận `biztown.vn` và proxy về cổng này — giống
 frontend Balheh (8080), dev (8088), storage (8081).
 
