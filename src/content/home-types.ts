@@ -146,7 +146,8 @@ export type HomeContent = {
   why: {
     tag: string;
     title: string;
-    mediaLabel: string;
+    /** Ảnh minh hoạ 4:5 ở giữa. Bỏ trống thì ẩn khung ảnh, 6 lý do xếp 2 cột. */
+    media?: { src: string; alt: string };
     left: Feature[];
     right: Feature[];
   };

@@ -1,22 +1,38 @@
+import Image from "next/image";
+
 import type { Feature, HomeContent } from "@/content/home-types";
+import { cn } from "@/lib/utils";
 
 import { SectionHead } from "./parts";
 import { Reveal } from "./reveal";
 
-/** Section "Vì sao chọn BizTown" — 6 lý do quanh ảnh minh hoạ 4:5 (Figma: bt-section s-why). */
+/**
+ * Section "Vì sao chọn BizTown" — 6 lý do quanh ảnh minh hoạ 4:5 (Figma: bt-section s-why).
+ * Chưa có ảnh (content.media trống) thì ẩn khung ảnh, hai cột lý do nằm cạnh nhau.
+ */
 export function Why({ content }: { content: HomeContent["why"] }) {
+  const { media } = content;
+
   return (
     <section className="bt-wrap py-14">
       <Reveal className="flex flex-col items-center gap-8 rounded-[32px] border border-line bg-card p-12 shadow-[0_1px_1px_var(--shadow-soft)] max-sm:p-6">
         <SectionHead tag={content.tag} title={content.title} />
-        <div className="grid w-full grid-cols-1 items-start gap-10 lg:grid-cols-[0.8fr_1fr_0.8fr]">
+        <div
+          className={cn(
+            "grid w-full grid-cols-1 items-start gap-10",
+            media ? "lg:grid-cols-[0.8fr_1fr_0.8fr]" : "mx-auto max-w-[960px] md:grid-cols-2",
+          )}
+        >
           <FeatureColumn features={content.left} start={1} />
-          {/* Chỗ đặt ảnh minh hoạ — design đang để khung xám, thay bằng ảnh thật khi có. */}
-          <div className="relative mx-auto h-[575px] w-full max-w-[448px] rounded-[32px] bg-card-gray max-sm:h-[420px]">
-            <span className="absolute bottom-4 left-4 text-[12px] leading-[19.2px] font-semibold tracking-[1.44px] text-ink-muted uppercase">
-              {content.mediaLabel}
-            </span>
-          </div>
+          {media && (
+            <Image
+              src={media.src}
+              alt={media.alt}
+              width={448}
+              height={560}
+              className="mx-auto aspect-[4/5] w-full max-w-[448px] rounded-[32px] bg-card-gray object-cover"
+            />
+          )}
           <FeatureColumn features={content.right} start={content.left.length + 1} />
         </div>
       </Reveal>

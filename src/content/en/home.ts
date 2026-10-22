@@ -363,7 +363,7 @@ export const HOME: HomeContent = {
   why: {
     tag: "Why BizTown",
     title: "Why choose BizTown",
-    mediaLabel: "Illustration 4:5",
+    // Chưa có ảnh minh hoạ 4:5 — thêm media: { src, alt } khi có để hiện khung ảnh.
     left: [
       {
         title: "A 24/7 mini IT department",
