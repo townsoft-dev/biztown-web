@@ -13,7 +13,8 @@ Xem README.md cho cấu trúc và cách sửa nội dung. Những điểm bắt 
   biztown-rent.
 - Sửa nội dung thì sửa **cả** `src/content/vi` và `src/content/en`; chữ dùng chung ở
   `src/i18n/dictionaries.ts`.
-- Màu giữ theo app (`theme.dart`): token trong `@theme` của `src/app/globals.css`.
+- Màu, chữ theo Figma "BizTown Brandsite" (biến BT v7 · Tokens, mode Day/Night): token ở
+  `:root` / `[data-theme="dark"]` và `@theme` của `src/app/globals.css`. Font Lexend (next/font).
 - Tra tài liệu mới nhất (Context7 hoặc `node_modules/next/dist/docs/`) trước khi viết code
   liên quan thư viện.
 - Trước khi commit: `pnpm lint`, `pnpm typecheck`, `pnpm build` không lỗi.

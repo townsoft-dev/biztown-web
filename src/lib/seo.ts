@@ -31,7 +31,7 @@ export function buildPageMetadata(locale: Locale, page: PageKey): Metadata {
   const url = absoluteUrl(locale, page);
 
   return {
-    // Trang chủ dùng nguyên tên app, không ghép title template.
+    // Trang chủ dùng nguyên tiêu đề riêng, không ghép title template.
     title: page === "home" ? { absolute: title } : title,
     description,
     alternates: {
@@ -40,7 +40,7 @@ export function buildPageMetadata(locale: Locale, page: PageKey): Metadata {
     },
     openGraph: {
       type: "website",
-      siteName: dict.appName,
+      siteName: dict.siteName,
       url,
       title,
       description,

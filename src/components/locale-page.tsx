@@ -3,13 +3,14 @@ import { join } from "node:path";
 import type { ReactNode } from "react";
 
 import { DeleteAccountContent as DeleteAccountEn } from "@/content/en/delete-account";
-import { HomeContent as HomeEn } from "@/content/en/home";
+import { HOME as HOME_EN } from "@/content/en/home";
 import { SupportContent as SupportEn } from "@/content/en/support";
 import { DeleteAccountContent as DeleteAccountVi } from "@/content/vi/delete-account";
-import { HomeContent as HomeVi } from "@/content/vi/home";
+import { HOME as HOME_VI } from "@/content/vi/home";
 import { SupportContent as SupportVi } from "@/content/vi/support";
 import type { Locale, PageKey } from "@/i18n/config";
 
+import { HomePage } from "./home/home-page";
 import { SiteShell } from "./site-shell";
 
 /**
@@ -22,7 +23,10 @@ function PrivacyContent({ locale }: { locale: Locale }) {
 }
 
 const CONTENT: Record<PageKey, Record<Locale, () => ReactNode>> = {
-  home: { vi: () => <HomeVi />, en: () => <HomeEn /> },
+  home: {
+    vi: () => <HomePage content={HOME_VI} locale="vi" />,
+    en: () => <HomePage content={HOME_EN} locale="en" />,
+  },
   support: { vi: () => <SupportVi />, en: () => <SupportEn /> },
   privacy: { vi: () => <PrivacyContent locale="vi" />, en: () => <PrivacyContent locale="en" /> },
   deleteAccount: { vi: () => <DeleteAccountVi />, en: () => <DeleteAccountEn /> },

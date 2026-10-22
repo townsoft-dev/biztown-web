@@ -23,3 +23,20 @@ export function localizedPath(locale: Locale, page: PageKey) {
   const prefix = locale === DEFAULT_LOCALE ? "" : `/${locale}`;
   return `${prefix}${PAGES[page]}/`;
 }
+
+/** Các section của trang chủ có thể trỏ tới (id dùng chung cho mọi ngôn ngữ). */
+export const HOME_SECTIONS = {
+  products: "san-pham",
+  services: "dich-vu",
+  discover: "kham-pha",
+  audience: "danh-cho-ai",
+  about: "ve-biztown",
+  principles: "triet-ly",
+  contact: "lien-he",
+} as const;
+export type HomeSection = keyof typeof HOME_SECTIONS;
+
+/** Link tới một section của trang chủ, ví dụ ("en", "contact") → /en/#lien-he */
+export function sectionPath(locale: Locale, section: HomeSection) {
+  return `${localizedPath(locale, "home")}#${HOME_SECTIONS[section]}`;
+}

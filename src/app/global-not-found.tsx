@@ -4,7 +4,7 @@ import { RootDocument } from "@/components/root-document";
 import { localizedPath } from "@/i18n/config";
 
 export const metadata: Metadata = {
-  title: "404 — BizTown Rent Manager",
+  title: "404 — BizTown",
   robots: { index: false, follow: true },
 };
 
@@ -17,7 +17,7 @@ export default function GlobalNotFound() {
   return (
     <RootDocument locale="vi">
       <main className="doc mx-auto flex min-h-dvh max-w-[760px] flex-col justify-center px-5 py-16">
-        <p className="text-6xl font-bold text-orange" aria-hidden="true">
+        <p className="text-6xl font-bold text-accent" aria-hidden="true">
           404
         </p>
         <h1 className="mt-6">Không tìm thấy trang</h1>
