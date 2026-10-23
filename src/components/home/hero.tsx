@@ -3,6 +3,7 @@
 import { useEffect, useState, type ComponentProps } from "react";
 
 import type { HomeContent } from "@/content/home-types";
+import { HOME_SECTIONS } from "@/i18n/config";
 import { cn } from "@/lib/utils";
 
 import { HeroSceneArt } from "./hero-scenes";
@@ -60,12 +61,16 @@ export function Hero({
             {chapter.lead}
           </p>
           <div className="mt-9 flex flex-wrap items-center gap-3">
-            <button type="button" className="bt-btn bt-btn-primary">
-              {chapter.primary}
-            </button>
-            <button type="button" className="bt-btn bt-btn-outline">
-              {chapter.secondary}
-            </button>
+            <HeroButton
+              label={chapter.primary}
+              consult={chapter.consult === "primary"}
+              className="bt-btn bt-btn-primary"
+            />
+            <HeroButton
+              label={chapter.secondary}
+              consult={chapter.consult === "secondary"}
+              className="bt-btn bt-btn-outline"
+            />
           </div>
         </div>
 
@@ -135,6 +140,27 @@ export function Hero({
         </button>
       </div>
     </section>
+  );
+}
+
+/** Nút ở hero; nút "Nhận tư vấn" là link cuộn xuống section liên hệ. */
+function HeroButton({
+  label,
+  consult,
+  className,
+}: {
+  label: string;
+  consult: boolean;
+  className: string;
+}) {
+  return consult ? (
+    <a href={`#${HOME_SECTIONS.contact}`} className={className}>
+      {label}
+    </a>
+  ) : (
+    <button type="button" className={className}>
+      {label}
+    </button>
   );
 }
 

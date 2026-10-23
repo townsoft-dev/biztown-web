@@ -10,6 +10,7 @@ export const HOME: HomeContent = {
         lead: "Hệ sinh thái phần mềm quản trị và tự động hoá dành cho cá nhân, hộ kinh doanh và doanh nghiệp SME giúp tối giản hoá công quy trình và nâng cao năng suất.",
         primary: "Tại sao chọn BizTown?",
         secondary: "Nhận tư vấn",
+        consult: "secondary",
         scene: "cards",
       },
       {
@@ -18,6 +19,7 @@ export const HOME: HomeContent = {
         lead: "Mỗi sản phẩm là một giải pháp chuyên nghiệp dành cho một lĩnh vực nghiệp vụ cụ thể: quản lý nhà cho thuê, quản lý dự án, quản lý hành chính - nhân sự, quản lý hoá đơn...",
         primary: "Khám phá sản phẩm",
         secondary: "Nhận tư vấn",
+        consult: "secondary",
         scene: "apps",
       },
       {
@@ -26,6 +28,7 @@ export const HOME: HomeContent = {
         lead: "Thay thế sổ tay, bảng tính và hàng chục tin nhắn mỗi tháng bằng những màn hình và tính năng đơn giản.",
         primary: "Dùng thử miễn phí",
         secondary: "Nhận tư vấn",
+        consult: "secondary",
         scene: "paper",
       },
       {
@@ -34,6 +37,7 @@ export const HOME: HomeContent = {
         lead: "Hệ thống tự động làm việc 24/7 để bạn tập trung phát triển kinh doanh.",
         primary: "Nhận tư vấn miễn phí",
         secondary: "Khám phá sản phẩm",
+        consult: "primary",
         scene: "growth",
       },
     ],

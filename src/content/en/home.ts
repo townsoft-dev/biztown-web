@@ -10,6 +10,7 @@ export const HOME: HomeContent = {
         lead: "A management and automation software ecosystem for individuals, household businesses and SMEs that simplifies workflows and boosts productivity.",
         primary: "Why BizTown?",
         secondary: "Get advice",
+        consult: "secondary",
         scene: "cards",
       },
       {
@@ -18,6 +19,7 @@ export const HOME: HomeContent = {
         lead: "Each product is a professional solution for a specific area of work: rental property management, project management, HR & administration, invoicing...",
         primary: "Explore products",
         secondary: "Get advice",
+        consult: "secondary",
         scene: "apps",
       },
       {
@@ -26,6 +28,7 @@ export const HOME: HomeContent = {
         lead: "Replace notebooks, spreadsheets and dozens of messages every month with simple screens and features.",
         primary: "Try it free",
         secondary: "Get advice",
+        consult: "secondary",
         scene: "paper",
       },
       {
@@ -34,6 +37,7 @@ export const HOME: HomeContent = {
         lead: "The system works for you 24/7 so you can focus on growing your business.",
         primary: "Get free advice",
         secondary: "Explore products",
+        consult: "primary",
         scene: "growth",
       },
     ],

@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import type { HomeContent } from "@/content/home-types";
+import { HOME_SECTIONS } from "@/i18n/config";
 import { cn } from "@/lib/utils";
 
 import { SectionHead } from "./parts";
@@ -19,9 +20,9 @@ export function Journey({ content }: { content: HomeContent["journey"] }) {
     <section className="bt-wrap py-14">
       <SectionHead tag={content.tag} title={content.title} className="gap-4">
         <p className="bt-lead">{content.lead}</p>
-        <button type="button" className="bt-btn bt-btn-primary">
+        <a href={`#${HOME_SECTIONS.contact}`} className="bt-btn bt-btn-primary">
           {content.cta}
-        </button>
+        </a>
       </SectionHead>
 
       <Reveal className="mt-10">

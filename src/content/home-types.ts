@@ -18,6 +18,8 @@ export type HeroChapter = {
   lead: string;
   primary: string;
   secondary: string;
+  /** Nút nào là "Nhận tư vấn" — bấm thì cuộn xuống section liên hệ (#lien-he). */
+  consult: "primary" | "secondary";
   scene: HeroScene;
 };
 
