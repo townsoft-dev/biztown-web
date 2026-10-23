@@ -5,7 +5,8 @@ export function SupportContent() {
       <p className="lead">Write to us if you need help — we normally reply within 72 hours.</p>
       <h2>Contact</h2>
       <p>
-        Email: <a href="mailto:biztownofficial@townsoftvina.com">biztownofficial@townsoftvina.com</a>
+        Email:{" "}
+        <a href="mailto:biztownofficial@townsoftvina.com">biztownofficial@townsoftvina.com</a>
         <br /> Provider: Townsoft Vina Co.
       </p>
       <p>
