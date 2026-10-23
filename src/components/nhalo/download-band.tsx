@@ -28,7 +28,7 @@ export function NhaloDownloadBand({ content }: { content: NhaloContent["band"] }
         <div className="relative flex min-w-0 flex-1 flex-col items-start gap-6">
           <h2 className="text-[52px] leading-[57.2px] font-semibold tracking-[-1.56px] max-sm:text-[34px] max-sm:leading-10 max-sm:tracking-[-1px]">
             <span className="block text-white">{content.title[0]}</span>
-            <span className="block bg-[linear-gradient(90deg,#ef9f27,#ffd08a)] bg-clip-text text-transparent">
+            <span className="-my-[0.2em] block bg-[linear-gradient(90deg,#ef9f27,#ffd08a)] bg-clip-text py-[0.2em] text-transparent">
               {content.title[1]}
             </span>
           </h2>

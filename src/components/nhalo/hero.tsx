@@ -201,7 +201,7 @@ export function NhaloHero({ content, app }: { content: NhaloContent["hero"]; app
       <div className="bt-wrap relative flex flex-col items-center text-center">
         <h1 className="bt-hero-title max-w-[1080px] pt-[22px] text-balance">
           <span className="block text-ink">{content.title[0]}</span>
-          <span className="bt-kw block">{content.title[1]}</span>
+          <span className="bt-kw -my-[0.2em] block py-[0.2em]">{content.title[1]}</span>
         </h1>
         <p className="bt-lead mt-[18px] mb-7 max-w-[680px] text-pretty">{content.lead}</p>
         <StoreBadges store={content.store} tone="hero" className="justify-center" />
