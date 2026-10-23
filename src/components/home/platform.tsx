@@ -1,13 +1,14 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
 import { AppMark } from "@/components/ui/app-mark";
 import { Icon } from "@/components/ui/icon";
 import { StatusBadge } from "@/components/ui/status-badge";
 import type { HomeContent, Product, ProductKey } from "@/content/home-types";
-import { HOME_SECTIONS } from "@/i18n/config";
+import { HOME_SECTIONS, localizedPath, type Locale } from "@/i18n/config";
 import { cn } from "@/lib/utils";
 
 import { Illustration } from "./parts";
@@ -24,7 +25,13 @@ const VISUALS: Record<ProductKey, { src: string; height: number; exportHeight: n
 };
 
 /** Section "Một hệ sinh thái | Đa dạng giải pháp" — chọn sản phẩm bằng chip, mũi tên, chấm. */
-export function Platform({ content }: { content: HomeContent["platform"] }) {
+export function Platform({
+  content,
+  locale,
+}: {
+  content: HomeContent["platform"];
+  locale: Locale;
+}) {
   const { products } = content;
   const [active, setActive] = useState(0);
   const product = products[active];
@@ -79,7 +86,12 @@ export function Platform({ content }: { content: HomeContent["platform"] }) {
 
       <Reveal>
         <div className="relative mt-8">
-          <ProductSlide key={product.key} product={product} statusLabels={content.statusLabels} />
+          <ProductSlide
+            key={product.key}
+            product={product}
+            statusLabels={content.statusLabels}
+            locale={locale}
+          />
           <SlideArrow direction="prev" label={content.prevLabel} onClick={() => go(active - 1)} />
           <SlideArrow direction="next" label={content.nextLabel} onClick={() => go(active + 1)} />
         </div>
@@ -107,9 +119,11 @@ export function Platform({ content }: { content: HomeContent["platform"] }) {
 function ProductSlide({
   product,
   statusLabels,
+  locale,
 }: {
   product: Product;
   statusLabels: HomeContent["platform"]["statusLabels"];
+  locale: Locale;
 }) {
   const visual = VISUALS[product.key];
 
@@ -165,9 +179,15 @@ function ProductSlide({
         </ul>
 
         <div className="mt-8 flex flex-wrap gap-3">
-          <button type="button" className="bt-btn bt-btn-primary">
-            {product.primary}
-          </button>
+          {product.detail ? (
+            <Link href={localizedPath(locale, product.detail)} className="bt-btn bt-btn-primary">
+              {product.primary}
+            </Link>
+          ) : (
+            <button type="button" className="bt-btn bt-btn-primary">
+              {product.primary}
+            </button>
+          )}
           <button type="button" className="bt-btn bt-btn-outline">
             {product.secondary}
           </button>

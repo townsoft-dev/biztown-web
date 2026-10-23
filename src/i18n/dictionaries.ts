@@ -1,3 +1,6 @@
+import type { AppMarkKind } from "@/components/ui/app-mark";
+import type { ProductStatus } from "@/components/ui/status-badge";
+
 import type { HomeSection, Locale, PageKey } from "./config";
 
 /**
@@ -9,6 +12,16 @@ export type LinkTarget = { section: HomeSection } | { page: PageKey } | null;
 export type NavLink = { label: string; to: LinkTarget };
 
 export type FooterColumn = { title: string; links: NavLink[] }[];
+
+/** Một sản phẩm trong menu thả xuống "Sản phẩm" ở thanh điều hướng. */
+export type ProductMenuItem = {
+  name: string;
+  desc: string;
+  mark: AppMarkKind;
+  status: ProductStatus;
+  /** Trang chi tiết; null nếu chưa có (hiện chữ thường, không bấm được). */
+  to: LinkTarget;
+};
 
 /**
  * Chữ dùng chung (thanh điều hướng, metadata, chân trang). Nội dung chính của từng trang nằm
@@ -23,6 +36,48 @@ const vi = {
   backToTop: "Lên đầu trang",
   homeLabel: "BizTown — trang chủ",
   startFree: "Bắt đầu miễn phí",
+  productMenu: {
+    label: "Danh sách sản phẩm",
+    statusLabels: { live: "Đang hoạt động", soon: "Sắp ra mắt" },
+    all: "Xem tất cả sản phẩm",
+    items: [
+      {
+        name: "NhàLo",
+        desc: "Quản lý nhà cho thuê",
+        mark: { logo: "nhalo" },
+        status: "live",
+        to: { page: "nhalo" },
+      },
+      {
+        name: "Balheh",
+        desc: "Quản lý dự án, tài liệu, chat nhóm",
+        mark: { logo: "balheh" },
+        status: "live",
+        to: null,
+      },
+      {
+        name: "BizTown Nhân sự",
+        desc: "Nhân sự, chấm công, bảng lương",
+        mark: { code: "HR", tone: "orange" },
+        status: "soon",
+        to: null,
+      },
+      {
+        name: "BizTown Hóa đơn",
+        desc: "Thu chi, công nợ, lãi lỗ",
+        mark: { code: "FN", tone: "slate" },
+        status: "soon",
+        to: null,
+      },
+      {
+        name: "BizTown Tồn kho",
+        desc: "Bán hàng, tồn kho, đơn hàng",
+        mark: { code: "SL", tone: "white" },
+        status: "soon",
+        to: null,
+      },
+    ] satisfies ProductMenuItem[] as ProductMenuItem[],
+  },
   nav: [
     { label: "Sản phẩm", to: { section: "products" } },
     { label: "Dịch vụ", to: { section: "services" } },
@@ -147,6 +202,48 @@ const en: Dictionary = {
   backToTop: "Back to top",
   homeLabel: "BizTown — home",
   startFree: "Start for free",
+  productMenu: {
+    label: "Product list",
+    statusLabels: { live: "Live", soon: "Coming soon" },
+    all: "See all products",
+    items: [
+      {
+        name: "NhàLo",
+        desc: "Rental property management",
+        mark: { logo: "nhalo" },
+        status: "live",
+        to: { page: "nhalo" },
+      },
+      {
+        name: "Balheh",
+        desc: "Projects, documents and team chat",
+        mark: { logo: "balheh" },
+        status: "live",
+        to: null,
+      },
+      {
+        name: "BizTown HR",
+        desc: "HR, attendance and payroll",
+        mark: { code: "HR", tone: "orange" },
+        status: "soon",
+        to: null,
+      },
+      {
+        name: "BizTown Invoices",
+        desc: "Income, expenses, debts, profit & loss",
+        mark: { code: "FN", tone: "slate" },
+        status: "soon",
+        to: null,
+      },
+      {
+        name: "BizTown Inventory",
+        desc: "Sales, inventory and orders",
+        mark: { code: "SL", tone: "white" },
+        status: "soon",
+        to: null,
+      },
+    ],
+  },
   nav: [
     { label: "Products", to: { section: "products" } },
     { label: "Services", to: { section: "services" } },

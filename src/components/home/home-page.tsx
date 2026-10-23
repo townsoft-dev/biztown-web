@@ -27,7 +27,7 @@ export function HomePage({ content, locale }: { content: HomeContent; locale: Lo
         />
         <div className="relative">
           <Hero content={content.hero} />
-          <Platform content={content.platform} />
+          <Platform content={content.platform} locale={locale} />
         </div>
       </div>
       <Offers content={content.offers} />

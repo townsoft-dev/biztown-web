@@ -1,5 +1,6 @@
 import type { AppMarkKind } from "@/components/ui/app-mark";
 import type { ProductStatus } from "@/components/ui/status-badge";
+import type { PageKey } from "@/i18n/config";
 
 /**
  * Nội dung trang chủ theo ngôn ngữ (src/content/<locale>/home.ts). Cấu trúc bám các section
@@ -35,6 +36,8 @@ export type Product = {
   chips: string[];
   primary: string;
   secondary: string;
+  /** Trang chi tiết sản phẩm: nút chính ("Xem chi tiết") dẫn tới đây. */
+  detail?: PageKey;
 };
 
 export type LinkCard = {

@@ -58,6 +58,7 @@ export const HOME: HomeContent = {
     products: [
       {
         key: "nhalo",
+        detail: "nhalo",
         chip: "NhàLo",
         mark: { logo: "nhalo" },
         name: { logo: "nhalo" },

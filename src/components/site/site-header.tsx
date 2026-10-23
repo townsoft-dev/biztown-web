@@ -1,12 +1,12 @@
 import Link from "next/link";
 
-import { Icon } from "@/components/ui/icon";
 import { LOCALES, localizedPath, type Locale, type PageKey } from "@/i18n/config";
 import { LOCALE_NAMES, getDictionary } from "@/i18n/dictionaries";
 import { cn } from "@/lib/utils";
 
 import { BrandLogo } from "./brand-logo";
 import { resolveHref } from "./link-target";
+import { ProductsMenu } from "./products-menu";
 import { ThemeToggle } from "./theme-toggle";
 
 type SiteHeaderProps = {
@@ -40,12 +40,22 @@ export function SiteHeader({ locale, page }: SiteHeaderProps) {
           <ul className="ml-[99px] hidden flex-1 items-center gap-6 lg:flex">
             {dict.nav.map((item, index) => {
               const href = resolveHref(locale, item.to);
-              const content = (
-                <>
-                  {index === 0 && <Icon name="chevron-down" size={14.2} />}
-                  {item.label}
-                </>
-              );
+              // Mục đầu ("Sản phẩm") mở danh sách sản phẩm thay vì nhảy thẳng tới section.
+              if (index === 0) {
+                return (
+                  <li key={item.label}>
+                    <ProductsMenu
+                      label={item.label}
+                      menu={dict.productMenu}
+                      hrefs={dict.productMenu.items.map((product) =>
+                        resolveHref(locale, product.to),
+                      )}
+                      allHref={href}
+                    />
+                  </li>
+                );
+              }
+              const content = item.label;
               const className =
                 "flex items-center gap-[5px] text-[15px] leading-6 font-medium whitespace-nowrap text-ink-muted";
               return (
