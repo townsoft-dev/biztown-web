@@ -528,7 +528,7 @@ export const HOME: HomeContent = {
     tag: "BizTown làm gì",
     title: ["Giải phóng sức lao động thủ công cho ", { kw: "hàng triệu người kinh doanh Việt." }],
     lead: "Không chỉ là phần mềm — BizTown mang đến giải pháp, kiến thức và sự đồng hành cho doanh nghiệp của bạn.",
-    inputLabel: "Số điện thoại hoặc Zalo",
+    inputLabel: "Số điện thoại hoặc email",
     cta: "Nhận tư vấn",
   },
 };

@@ -529,7 +529,7 @@ export const HOME: HomeContent = {
     tag: "What BizTown does",
     title: ["Freeing ", { kw: "millions of Vietnamese business owners" }, " from manual work."],
     lead: "More than software — BizTown brings solutions, know-how and partnership to your business.",
-    inputLabel: "Phone number or Zalo",
+    inputLabel: "Phone number or email",
     cta: "Get advice",
   },
 };
