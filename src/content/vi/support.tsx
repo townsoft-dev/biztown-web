@@ -5,7 +5,7 @@ export function SupportContent() {
       <p className="lead">Cần giúp gì, viết cho chúng tôi — thường trả lời trong vòng 72 giờ.</p>
       <h2>Liên hệ</h2>
       <p>
-        Email: <a href="mailto:dreamnguyen@townsoftvina.com">dreamnguyen@townsoftvina.com</a>
+        Email: <a href="mailto:biztownofficial@townsoftvina.com">biztownofficial@townsoftvina.com</a>
         <br /> Đơn vị cung cấp: Công ty Townsoft Vina
       </p>
       <p>

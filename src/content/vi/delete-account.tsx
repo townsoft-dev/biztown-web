@@ -35,8 +35,8 @@ export function DeleteAccountContent() {
       <ul>
         <li>
           Gửi email tới{" "}
-          <a href="mailto:dreamnguyen@townsoftvina.com?subject=Y%C3%AAu%20c%E1%BA%A7u%20xo%C3%A1%20t%C3%A0i%20kho%E1%BA%A3n">
-            dreamnguyen@townsoftvina.com
+          <a href="mailto:biztownofficial@townsoftvina.com?subject=Y%C3%AAu%20c%E1%BA%A7u%20xo%C3%A1%20t%C3%A0i%20kho%E1%BA%A3n">
+            biztownofficial@townsoftvina.com
           </a>
         </li>
         <li>
@@ -146,7 +146,7 @@ export function DeleteAccountContent() {
       <h2>Liên hệ</h2>
       <p>
         Công ty Townsoft Vina —{" "}
-        <a href="mailto:dreamnguyen@townsoftvina.com">dreamnguyen@townsoftvina.com</a>
+        <a href="mailto:biztownofficial@townsoftvina.com">biztownofficial@townsoftvina.com</a>
         <br /> Xem thêm <a href="/privacy">Chính sách quyền riêng tư</a>.
       </p>
     </>

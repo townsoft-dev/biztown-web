@@ -6,6 +6,6 @@ function getSiteUrl() {
 
 export const siteConfig = {
   url: getSiteUrl(),
-  email: "dreamnguyen@townsoftvina.com",
+  email: "biztownofficial@townsoftvina.com",
   themeColor: "#23305e",
 } as const;

@@ -35,8 +35,8 @@ export function DeleteAccountContent() {
       <ul>
         <li>
           Email{" "}
-          <a href="mailto:dreamnguyen@townsoftvina.com?subject=Account%20deletion%20request">
-            dreamnguyen@townsoftvina.com
+          <a href="mailto:biztownofficial@townsoftvina.com?subject=Account%20deletion%20request">
+            biztownofficial@townsoftvina.com
           </a>
         </li>
         <li>
@@ -146,7 +146,7 @@ export function DeleteAccountContent() {
       <h2>Contact</h2>
       <p>
         Townsoft Vina Co. —{" "}
-        <a href="mailto:dreamnguyen@townsoftvina.com">dreamnguyen@townsoftvina.com</a>
+        <a href="mailto:biztownofficial@townsoftvina.com">biztownofficial@townsoftvina.com</a>
         <br /> See also our <a href="/en/privacy">Privacy Policy</a>.
       </p>
     </>
