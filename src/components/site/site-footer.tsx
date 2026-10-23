@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { CSSProperties } from "react";
 
 import { LOCALES, localizedPath, type Locale } from "@/i18n/config";
 import { LOCALE_NAMES, getDictionary } from "@/i18n/dictionaries";
@@ -14,7 +15,24 @@ const SOCIALS = [
   { short: "▶", name: "YouTube" },
 ];
 
-/** Chân trang: logo, mô tả, mạng xã hội, các cột liên kết, dòng bản quyền (Figma: Footer). */
+/** Icon nét (Figma: building-07, map-pin) tô theo màu chữ để đổi theo Day/Night. */
+function FooterIcon({ name, size }: { name: "building" | "map-pin"; size: number }) {
+  return (
+    <span
+      aria-hidden="true"
+      className="bt-icon"
+      style={
+        {
+          width: size,
+          height: size,
+          "--icon": `url(/images/home/icon-${name}.svg)`,
+        } as CSSProperties
+      }
+    />
+  );
+}
+
+/** Chân trang: logo, mô tả, MST + địa chỉ công ty, mạng xã hội, các cột liên kết, dòng bản quyền (Figma: Footer). */
 export function SiteFooter({ locale }: { locale: Locale }) {
   const dict = getDictionary(locale);
   const { footer } = dict;
@@ -34,6 +52,16 @@ export function SiteFooter({ locale }: { locale: Locale }) {
             <p className="max-w-[262px] text-[14px] leading-[22.4px] text-ink-muted">
               {footer.description}
             </p>
+            <address className="flex flex-col text-[14px] leading-[22.4px] text-ink-muted not-italic">
+              <span className="flex items-center gap-1">
+                <FooterIcon name="building" size={18.4} />
+                {footer.taxCode}
+              </span>
+              <span className="flex items-center gap-[3px]">
+                <FooterIcon name="map-pin" size={16.4} />
+                {footer.address}
+              </span>
+            </address>
             <ul aria-label={footer.socialLabel} className="flex gap-2">
               {SOCIALS.map((social) => (
                 <li

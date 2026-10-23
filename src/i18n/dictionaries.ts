@@ -116,6 +116,8 @@ const vi = {
   footer: {
     description:
       "Hệ sinh thái phần mềm cho doanh nghiệp vừa và nhỏ. Một sản phẩm của Townsoft Vina — đội ngũ Việt Nam & Hàn Quốc.",
+    taxCode: "MST: 0109151007",
+    address: "6, Ngõ 7 Lê Đức Thọ, Từ Liêm, Hà Nội",
     socialLabel: "Mạng xã hội",
     columns: [
       [
@@ -283,6 +285,8 @@ const en: Dictionary = {
   footer: {
     description:
       "A software ecosystem for small and medium businesses. A product of Townsoft Vina — a Vietnamese & Korean team.",
+    taxCode: "Tax code: 0109151007",
+    address: "6, Lane 7 Le Duc Tho, Tu Liem, Hanoi",
     socialLabel: "Social media",
     columns: [
       [
