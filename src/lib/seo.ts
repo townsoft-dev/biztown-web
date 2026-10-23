@@ -31,8 +31,8 @@ export function buildPageMetadata(locale: Locale, page: PageKey): Metadata {
   const url = absoluteUrl(locale, page);
 
   return {
-    // Trang chủ dùng nguyên tiêu đề riêng, không ghép title template.
-    title: page === "home" ? { absolute: title } : title,
+    // Trang chủ và trang sản phẩm dùng nguyên tiêu đề riêng, không ghép title template.
+    title: page === "home" || page === "nhalo" ? { absolute: title } : title,
     description,
     alternates: {
       canonical: url,

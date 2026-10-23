@@ -51,6 +51,11 @@ const vi = {
       description:
         "Cách xoá tài khoản BizTown Rent Manager và toàn bộ dữ liệu: các bước thực hiện, dữ liệu bị xoá và thời gian lưu trữ.",
     },
+    nhalo: {
+      title: "NhàLo — Quản lý nhà trọ, ghi điện nước và gửi hoá đơn tự động",
+      description:
+        "NhàLo giúp chủ nhà trọ ghi chỉ số điện nước, tạo hoá đơn cho cả dãy trọ và gửi cho người thuê kèm mã QR chuyển khoản.",
+    },
   } satisfies Record<PageKey, { title: string; description: string }>,
   footer: {
     description:
@@ -61,7 +66,7 @@ const vi = {
         {
           title: "Ứng dụng",
           links: [
-            { label: "NhàLo", to: { section: "products" } },
+            { label: "NhàLo", to: { page: "nhalo" } },
             { label: "Balheh", to: { section: "products" } },
             { label: "BizTown Nhân sự (sắp ra mắt)", to: null },
             { label: "BizTown Hóa đơn (sắp ra mắt)", to: null },
@@ -170,6 +175,11 @@ const en: Dictionary = {
       description:
         "How to delete your BizTown Rent Manager account and all its data: the steps, what gets deleted and how long anything is kept.",
     },
+    nhalo: {
+      title: "NhàLo — Rental management, utility readings and automatic invoices",
+      description:
+        "NhàLo helps landlords record electricity and water readings, create invoices for a whole building and send them to tenants with a bank-transfer QR code.",
+    },
   },
   footer: {
     description:
@@ -180,7 +190,7 @@ const en: Dictionary = {
         {
           title: "Apps",
           links: [
-            { label: "NhàLo", to: { section: "products" } },
+            { label: "NhàLo", to: { page: "nhalo" } },
             { label: "Balheh", to: { section: "products" } },
             { label: "BizTown HR (coming soon)", to: null },
             { label: "BizTown Invoices (coming soon)", to: null },

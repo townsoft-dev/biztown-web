@@ -15,6 +15,7 @@ export const PAGES = {
   support: "/support",
   privacy: "/privacy",
   deleteAccount: "/delete-account",
+  nhalo: "/nhalo",
 } as const;
 export type PageKey = keyof typeof PAGES;
 
@@ -35,6 +36,19 @@ export const HOME_SECTIONS = {
   contact: "lien-he",
 } as const;
 export type HomeSection = keyof typeof HOME_SECTIONS;
+
+/** Các section của trang NhàLo có thể trỏ tới (id dùng chung cho mọi ngôn ngữ). */
+export const NHALO_SECTIONS = {
+  top: "dau-trang",
+  features: "tinh-nang",
+  utilities: "dien-nuoc",
+  contract: "hop-dong",
+  roles: "phan-quyen",
+  start: "huong-dan",
+  faq: "hoi-dap",
+  download: "tai-app",
+} as const;
+export type NhaloSection = keyof typeof NHALO_SECTIONS;
 
 /** Link tới một section của trang chủ, ví dụ ("en", "contact") → /en/#lien-he */
 export function sectionPath(locale: Locale, section: HomeSection) {

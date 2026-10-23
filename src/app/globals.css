@@ -57,6 +57,24 @@
   --warm-grid: url("/images/home/grid-48.png");
   --band-grid: url("/images/home/grid-band.png");
 
+  /* Trang NhàLo (Figma "NhàLo · HTML V7"). */
+  --nl-hero-bg:
+    radial-gradient(
+      835px 748px at 29px 454px,
+      rgba(255, 214, 150, 0.5),
+      rgba(247, 187, 95, 0.25) 50%,
+      transparent
+    ),
+    radial-gradient(950px 748px at 84% 53px, rgba(239, 159, 39, 0.5), transparent),
+    linear-gradient(180deg, #fffaf1 0%, #fff4e3 55%, #fffdf9 100%);
+  --nl-hero-grid: rgba(217, 138, 20, 0.09);
+  --nl-glow: rgba(239, 159, 39, 0.16);
+  --nl-footer-bg:
+    radial-gradient(360px 218px at 100% 145px, rgba(120, 185, 255, 0.42), transparent), #ffffff;
+  --nl-panel-ring: rgba(239, 159, 39, 0.22);
+  --nl-split-old: #23305e;
+  --nl-total-bg: #23305e;
+
   color-scheme: light;
 }
 
@@ -99,6 +117,17 @@
     --band-bg: var(--warm-bg);
     --warm-grid: url("/images/home/grid-hero-night.png");
     --band-grid: url("/images/home/grid-hero-night.png");
+    --nl-hero-bg:
+      radial-gradient(1000px 640px at 84% 4%, rgba(239, 159, 39, 0.2), transparent 62%),
+      radial-gradient(820px 620px at 2% 34%, rgba(239, 159, 39, 0.12), transparent 62%),
+      linear-gradient(180deg, #18213f 0%, #141c38 100%);
+    --nl-hero-grid: rgba(255, 255, 255, 0.04);
+    --nl-glow: rgba(239, 159, 39, 0.08);
+    --nl-footer-bg:
+      radial-gradient(360px 218px at 100% 145px, rgba(120, 185, 255, 0.14), transparent), #141c38;
+    --nl-panel-ring: rgba(255, 255, 255, 0.12);
+    --nl-split-old: #8f95e0;
+    --nl-total-bg: #2c3a6e;
     color-scheme: dark;
   }
 }
@@ -140,6 +169,17 @@
   --band-bg: var(--warm-bg);
   --warm-grid: url("/images/home/grid-hero-night.png");
   --band-grid: url("/images/home/grid-hero-night.png");
+  --nl-hero-bg:
+    radial-gradient(1000px 640px at 84% 4%, rgba(239, 159, 39, 0.2), transparent 62%),
+    radial-gradient(820px 620px at 2% 34%, rgba(239, 159, 39, 0.12), transparent 62%),
+    linear-gradient(180deg, #18213f 0%, #141c38 100%);
+  --nl-hero-grid: rgba(255, 255, 255, 0.04);
+  --nl-glow: rgba(239, 159, 39, 0.08);
+  --nl-footer-bg:
+    radial-gradient(360px 218px at 100% 145px, rgba(120, 185, 255, 0.14), transparent), #141c38;
+  --nl-panel-ring: rgba(255, 255, 255, 0.12);
+  --nl-split-old: #8f95e0;
+  --nl-total-bg: #2c3a6e;
   color-scheme: dark;
 }
 
@@ -179,6 +219,25 @@
   --color-danger: #d9483c;
   --color-danger-soft: #fbe7e5;
   --color-danger-deep: #8e2f27;
+
+  /* Màn hình ứng dụng NhàLo trong mockup điện thoại (Figma: MVP Wireframes) — luôn ở mode sáng. */
+  --color-navy-950: #18213f;
+  --color-app-store: #2a2e5c;
+  --color-app-sub: #c9cee0;
+  --color-app-faint: #767e9c;
+  --color-app-tertiary: #868da7;
+  --color-app-nav-line: #eceef3;
+  --color-app-hairline: #eef0f5;
+  --color-app-secondary: #5a6b8a;
+  --color-app-green: #1e6b3c;
+  --color-app-green-bg: #e3f4ea;
+  --color-app-blue: #3d6fe0;
+  --color-app-blue-bg: #e9effd;
+  --color-app-red: #c0392b;
+  --color-app-red-bg: #fde9e1;
+  --color-chip-paid: #2e9e5b;
+  --color-chip-sent: #3e6bd9;
+  --color-chip-overdue: #d9483c;
 }
 
 @layer base {
@@ -415,6 +474,68 @@
   }
 
   /*
+   * Từ khoá có vạch tô cam phía dưới (Figma NhàLo: Keyword highlight — cao 18px, cách đáy 6px).
+   * Dùng nền gradient thay cho khối tuyệt đối để vạch tự xuống dòng theo chữ trên màn hẹp.
+   */
+  .bt-mark {
+    background-image: linear-gradient(
+      to top,
+      transparent 0.11em,
+      rgba(239, 159, 39, 0.35) 0.11em,
+      rgba(239, 159, 39, 0.35) 0.43em,
+      transparent 0.43em
+    );
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  /* Thanh trượt ngày đổi khách (Figma NhàLo: Day range control). --p là phần trăm đã chọn. */
+  .nl-range {
+    appearance: none;
+    width: 100%;
+    height: 20px;
+    background: transparent;
+    cursor: pointer;
+
+    &::-webkit-slider-runnable-track {
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent) var(--p), var(--line) var(--p));
+    }
+
+    &::-moz-range-track {
+      height: 8px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent) var(--p), var(--line) var(--p));
+    }
+
+    &::-webkit-slider-thumb {
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      margin-top: -6px;
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 2px 6px rgba(35, 48, 94, 0.25);
+    }
+
+    &::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      border: 2px solid #ffffff;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 2px 6px rgba(35, 48, 94, 0.25);
+    }
+  }
+
+  /* Vòng sáng khi con trỏ demo chạm (hero NhàLo). */
+  .nl-tap {
+    animation: nl-tap 0.45s ease-out;
+  }
+
+  /*
    * Kiểu chữ cho nội dung tài liệu (/support, /privacy, /delete-account). Viết bằng selector
    * con vì nội dung /privacy là HTML sinh từ repo biztown-rent (src/content/privacy/*.html).
    */
@@ -629,6 +750,18 @@
 @keyframes bt-fill {
   to {
     width: 100%;
+  }
+}
+
+@keyframes nl-tap {
+  from {
+    transform: scale(0.3);
+    opacity: 1;
+  }
+
+  to {
+    transform: scale(1.6);
+    opacity: 0;
   }
 }
 

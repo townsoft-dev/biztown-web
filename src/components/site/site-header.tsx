@@ -82,7 +82,7 @@ type LocaleSwitcherProps = {
 };
 
 /** Chuyển ngôn ngữ bằng link sang cùng trang ở ngôn ngữ kia — không cần JS, crawl được. */
-function LocaleSwitcher({ locale, page, label }: LocaleSwitcherProps) {
+export function LocaleSwitcher({ locale, page, label }: LocaleSwitcherProps) {
   return (
     <ul aria-label={label} className="flex shrink-0 gap-0.5 rounded-full bg-card-soft p-[3px]">
       {LOCALES.map((target) => {
