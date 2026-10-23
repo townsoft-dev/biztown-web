@@ -26,7 +26,7 @@ export function HomePage({ content, locale }: { content: HomeContent; locale: Lo
           className="pointer-events-none absolute inset-0 bg-[image:var(--grid-tile)] bg-size-[52px_52px]"
         />
         <div className="relative">
-          <Hero content={content.hero} />
+          <Hero content={content.hero} apps={content.discover} />
           <Platform content={content.platform} locale={locale} />
         </div>
       </div>

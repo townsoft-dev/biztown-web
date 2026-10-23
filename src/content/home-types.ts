@@ -21,6 +21,60 @@ export type HeroChapter = {
   scene: HeroScene;
 };
 
+/** Một dòng trong sổ tay giấy (cảnh "Đổi mới"): chuỗi thường, hoặc có đoạn bị gạch xoá. */
+export type NoteLine = string | { before: string; struck: string; after: string };
+
+/** Chữ trong các mockup minh hoạ của hero (dựng bằng HTML để dịch được và nét ở mọi cỡ). */
+export type HeroScenesCopy = {
+  /** Chương 1 — thẻ thống kê dự án (Balheh). */
+  tasks: {
+    title: string;
+    percent: string;
+    percentLabel: string;
+    complete: { label: string; value: string };
+    incomplete: { label: string; value: string };
+    kpis: { label: string; value: string; note: string; tone: "blue" | "green" | "red" }[];
+    progressTitle: string;
+    progressSub: string;
+    /** 4 bảng — màu lấy theo thứ tự (vàng, xanh dương, xanh lá, đỏ). */
+    boards: { name: string; count: string; percent: number }[];
+  };
+  /** Chương 1 — màn hình danh sách phòng (NhàLo). */
+  rooms: {
+    title: string;
+    sub: string;
+    tabs: [string, string];
+    filters: string[];
+    items: { code: string; info: string; status: "occupied" | "empty" | "repair"; label: string }[];
+  };
+  /** Chương 2 — lưới ứng dụng. */
+  apps: { title: string; custom: string };
+  /** Chương 3 — so sánh sổ tay giấy và ứng dụng. */
+  paper: {
+    before: string;
+    after: string;
+    sliderLabel: string;
+    note: { title: string; lines: NoteLine[] };
+    rows: { room: string; amount: string; paid: boolean }[];
+    paid: string;
+    pending: string;
+  };
+  /** Chương 4 — biểu đồ thời gian tiết kiệm và hai thông báo. */
+  growth: {
+    title: string;
+    value: string;
+    note: string;
+    toasts: {
+      app: "nhalo" | "balheh";
+      name: string;
+      time: string;
+      title: string;
+      sub: string;
+      percent: number;
+    }[];
+  };
+};
+
 export type ProductKey = "nhalo" | "balheh" | "hr" | "finance" | "sales" | "custom";
 
 export type Product = {
@@ -87,6 +141,7 @@ export type Principle = {
 export type HomeContent = {
   hero: {
     chapters: HeroChapter[];
+    scenes: HeroScenesCopy;
     paidPill: string;
     pauseLabel: string;
     playLabel: string;
