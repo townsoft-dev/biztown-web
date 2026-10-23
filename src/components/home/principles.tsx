@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { TagChip } from "@/components/ui/tag-chip";
 import type { HomeContent, Principle } from "@/content/home-types";
@@ -8,8 +8,11 @@ import { HOME_SECTIONS } from "@/i18n/config";
 import { cn } from "@/lib/utils";
 
 import { Reveal } from "./reveal";
+
 /** Thẻ rộng 300 + khoảng cách 24 → mỗi lần trượt 324px. */
 const CARD_STEP = 324;
+/** Màn nhỏ hơn sm (640): thẻ đang chọn canh giữa màn hình cho dễ đọc (trừ thẻ đầu/cuối). */
+const CENTER_QUERY = "(max-width: 639.98px)";
 
 const TONES: Record<Principle["tone"], string> = {
   orange: "bg-accent text-on-accent",
@@ -18,11 +21,41 @@ const TONES: Record<Principle["tone"], string> = {
   ink: "bg-ink text-page",
 };
 
-/** Carousel 4 nguyên tắc (Figma: Section / Principles carousel) — 3 vị trí trượt. */
+/** Carousel 4 nguyên tắc (Figma: Section / Principles carousel) — mỗi thẻ một vị trí trượt. */
 export function Principles({ content }: { content: HomeContent["principles"] }) {
-  const positions = content.items.length - 1;
+  const positions = content.items.length;
   const [index, setIndex] = useState(0);
   const go = (next: number) => setIndex(Math.max(0, Math.min(positions - 1, next)));
+
+  // Màn rộng: trượt từng bước 324px như design. Màn nhỏ: đo vị trí thật của thẻ (thẻ hẹp hơn)
+  // rồi trượt theo thẻ đang chọn — khung tràn hết bề ngang màn hình.
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLUListElement>(null);
+  const [offset, setOffset] = useState(0);
+  useEffect(() => {
+    const viewport = viewportRef.current;
+    const track = trackRef.current;
+    if (!viewport || !track) return;
+    const media = window.matchMedia(CENTER_QUERY);
+    const measure = () => {
+      const card = track.children[index] as HTMLElement | undefined;
+      if (!media.matches || !card) {
+        setOffset(index * CARD_STEP);
+        return;
+      }
+      // Thẻ đầu sát mép trái, thẻ cuối sát mép phải nội dung (lề bằng phần khung đã bù ra);
+      // các thẻ giữa canh giữa.
+      const gutter = -parseFloat(getComputedStyle(viewport).marginLeft) || 0;
+      if (index === 0) setOffset(card.offsetLeft - gutter);
+      else if (index === positions - 1)
+        setOffset(card.offsetLeft + card.offsetWidth - (viewport.clientWidth - gutter));
+      else setOffset(card.offsetLeft - (viewport.clientWidth - card.offsetWidth) / 2);
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(viewport);
+    return () => observer.disconnect();
+  }, [index, positions]);
 
   return (
     <section id={HOME_SECTIONS.principles} className="bt-wrap py-14">
@@ -67,10 +100,12 @@ export function Principles({ content }: { content: HomeContent["principles"] }) 
           </div>
         </Reveal>
 
-        <div className="overflow-hidden">
+        {/* Màn nhỏ: bù lề 20px của bt-wrap để khung rộng hết màn hình, lộ thẻ hai bên. */}
+        <div ref={viewportRef} className="overflow-hidden max-sm:-mx-5">
           <ul
+            ref={trackRef}
             className="flex gap-6 transition-transform duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)]"
-            style={{ transform: `translateX(-${index * CARD_STEP}px)` }}
+            style={{ transform: `translateX(${-offset}px)` }}
           >
             {content.items.map((item) => (
               <Reveal as="li" key={item.kicker} className="w-[300px] shrink-0 max-sm:w-[260px]">

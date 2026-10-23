@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 
 import { BrandLogo } from "./brand-logo";
 import { resolveHref } from "./link-target";
+import { MobileMenu } from "./mobile-menu";
 import { ProductsMenu } from "./products-menu";
 import { ThemeToggle } from "./theme-toggle";
 
@@ -18,16 +19,19 @@ type SiteHeaderProps = {
 /**
  * Thanh điều hướng dạng viên thuốc, dính đầu trang khi cuộn (Figma: Nav). Cao 76px (12 lề + 64)
  * và kéo -76px để nằm đè lên phần đầu trang; nội dung bên dưới tự chừa pt-[76px].
+ * Màn hẹp ẩn dần các mục vào menu ☰ (xem MobileMenu): < xl menu chữ, < md nút "Bắt đầu miễn
+ * phí", < sm nút theme + ngôn ngữ.
  */
 export function SiteHeader({ locale, page }: SiteHeaderProps) {
   const dict = getDictionary(locale);
+  const productHrefs = dict.productMenu.items.map((product) => resolveHref(locale, product.to));
 
   return (
     <header className="sticky top-0 z-50 -mb-[76px] pt-3">
       <div className="bt-wrap">
         <nav
           aria-label={dict.navLabel}
-          className="flex h-16 items-center gap-4 rounded-full border border-[var(--nav-ring)] bg-[var(--glass-bg)] pr-2 pl-5 shadow-[0_12px_32px_var(--nav-shadow)] backdrop-blur-[14px]"
+          className="relative flex h-16 items-center gap-4 rounded-full border border-[var(--nav-ring)] bg-[var(--glass-bg)] pr-2 pl-5 shadow-[0_12px_32px_var(--nav-shadow)] backdrop-blur-[14px]"
         >
           <Link
             href={localizedPath(locale, "home")}
@@ -37,7 +41,7 @@ export function SiteHeader({ locale, page }: SiteHeaderProps) {
             <BrandLogo />
           </Link>
 
-          <ul className="ml-[99px] hidden flex-1 items-center gap-6 lg:flex">
+          <ul className="ml-[99px] hidden flex-1 items-center gap-6 xl:flex">
             {dict.nav.map((item, index) => {
               const href = resolveHref(locale, item.to);
               // Mục đầu ("Sản phẩm") mở danh sách sản phẩm thay vì nhảy thẳng tới section.
@@ -47,9 +51,7 @@ export function SiteHeader({ locale, page }: SiteHeaderProps) {
                     <ProductsMenu
                       label={item.label}
                       menu={dict.productMenu}
-                      hrefs={dict.productMenu.items.map((product) =>
-                        resolveHref(locale, product.to),
-                      )}
+                      hrefs={productHrefs}
                       allHref={href}
                     />
                   </li>
@@ -73,11 +75,34 @@ export function SiteHeader({ locale, page }: SiteHeaderProps) {
           </ul>
 
           <div className="ml-auto flex items-center gap-3">
-            <ThemeToggle label={dict.themeToggle} />
-            <LocaleSwitcher locale={locale} page={page} label={dict.localeSwitcherLabel} />
-            <button type="button" className="bt-btn bt-btn-primary hidden sm:inline-flex">
+            <div className="hidden items-center gap-3 sm:flex">
+              <ThemeToggle label={dict.themeToggle} />
+              <LocaleSwitcher locale={locale} page={page} label={dict.localeSwitcherLabel} />
+            </div>
+            <button type="button" className="bt-btn bt-btn-primary hidden md:inline-flex">
               {dict.startFree}
             </button>
+            <MobileMenu
+              className="xl:hidden"
+              label={dict.menuToggle}
+              links={dict.nav.map((item) => ({
+                label: item.label,
+                href: resolveHref(locale, item.to),
+              }))}
+              productMenu={dict.productMenu}
+              productHrefs={productHrefs}
+              settings={
+                <>
+                  <ThemeToggle label={dict.themeToggle} />
+                  <LocaleSwitcher locale={locale} page={page} label={dict.localeSwitcherLabel} />
+                </>
+              }
+              cta={
+                <button type="button" className="bt-btn bt-btn-primary w-full">
+                  {dict.startFree}
+                </button>
+              }
+            />
           </div>
         </nav>
       </div>
