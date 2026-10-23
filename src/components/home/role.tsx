@@ -64,7 +64,7 @@ export function Role({ content }: { content: HomeContent["role"] }) {
                   )}
                   style={{ transitionDelay: `${index * 350}ms` }}
                 >
-                  <AppMark mark={toast.mark} size={36} radius={12} fontSize={14} />
+                  <AppMark mark={toast.mark} size={36} radius={12} fontSize={14} surface="light" />
                   <span className="max-w-[257px]">
                     <span className="block text-[14px] leading-[18.9px] font-semibold">
                       {toast.title}

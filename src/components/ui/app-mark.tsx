@@ -22,6 +22,11 @@ const LOGOS = {
   balheh: "/images/home/balheh-mark.svg",
 } as const;
 
+/** Bản cho nền tối (mode Night): phần đen của logo Balheh (khối góc dưới trái, dấu check) đổi trắng. */
+const DARK_LOGOS: Partial<Record<keyof typeof LOGOS, string>> = {
+  balheh: "/images/home/balheh-mark-dark.svg",
+};
+
 type AppMarkProps = {
   mark: AppMarkKind;
   /** Cạnh (px). */
@@ -30,22 +35,42 @@ type AppMarkProps = {
   radius?: "full" | number;
   /** Cỡ chữ viết tắt (px). */
   fontSize?: number;
+  /**
+   * Nền phía sau logo: "theme" (mặc định) đổi theo Day/Night; "light" khi nền luôn trắng
+   * (thẻ thông báo, ô nền trắng) để giữ logo màu gốc ở mode Night.
+   */
+  surface?: "theme" | "light";
   className?: string;
 };
 
-export function AppMark({ mark, size, radius = "full", fontSize = 11, className }: AppMarkProps) {
+export function AppMark({
+  mark,
+  size,
+  radius = "full",
+  fontSize = 11,
+  surface = "theme",
+  className,
+}: AppMarkProps) {
   const borderRadius = radius === "full" ? 999 : radius;
 
   if ("logo" in mark) {
-    return (
+    const image = (src: string, themeClass?: string) => (
       <Image
-        src={LOGOS[mark.logo]}
+        src={src}
         alt=""
         width={size}
         height={size}
-        className={cn("shrink-0 object-contain", className)}
+        className={cn("shrink-0 object-contain", themeClass, className)}
         style={{ width: size, height: size }}
       />
+    );
+    const dark = surface === "theme" ? DARK_LOGOS[mark.logo] : undefined;
+    if (!dark) return image(LOGOS[mark.logo]);
+    return (
+      <>
+        {image(LOGOS[mark.logo], "theme-light-only")}
+        {image(dark, "theme-dark-only")}
+      </>
     );
   }
 

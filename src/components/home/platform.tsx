@@ -241,13 +241,23 @@ function ProductName({ name }: { name: Product["name"] }) {
       />
     </>
   ) : (
-    <Image
-      src="/images/home/balheh-logo.svg"
-      alt="Balheh"
-      width={158}
-      height={46.5}
-      className="h-[46.5px] w-[158px]"
-    />
+    <>
+      <Image
+        src="/images/home/balheh-logo.svg"
+        alt="Balheh"
+        width={158}
+        height={46.5}
+        className="theme-light-only h-[46.5px] w-[158px]"
+      />
+      {/* Mode Night: chữ "balheh", khối góc dưới trái và dấu check đổi trắng cho dễ đọc. */}
+      <Image
+        src="/images/home/balheh-logo-dark.svg"
+        alt="Balheh"
+        width={158}
+        height={46.5}
+        className="theme-dark-only h-[46.5px] w-[158px]"
+      />
+    </>
   );
 }
 

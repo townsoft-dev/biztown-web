@@ -67,7 +67,7 @@ function AppGrid() {
               mark.logo === "balheh" && "border border-gray-100 bg-white",
             )}
           >
-            <AppMark mark={mark} size={mark.logo === "nhalo" ? 64 : 40} />
+            <AppMark mark={mark} size={mark.logo === "nhalo" ? 64 : 40} surface="light" />
           </span>
         ) : (
           <AppMark

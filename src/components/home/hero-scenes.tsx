@@ -212,7 +212,14 @@ function AppsGrid({
           <div key={app.name} className="hs-tile" style={{ animationDelay: `${index * 70}ms` }}>
             <AppMark mark={app.mark} size={52} radius={15} fontSize={17} />
             <b>{app.name}</b>
-            {app.status && <StatusBadge status={app.status} label={statusLabels[app.status]} />}
+            {app.status && (
+              // Ô hẹp (~118px) nên badge thu nhỏ để "Đang hoạt động" không tràn ra ngoài.
+              <StatusBadge
+                status={app.status}
+                label={statusLabels[app.status]}
+                className="gap-1 px-[7px] text-[11px]"
+              />
+            )}
           </div>
         ))}
         <div className="hs-tile is-ghost" style={{ animationDelay: `${apps.length * 70}ms` }}>
@@ -318,7 +325,7 @@ function Growth({ copy }: { copy: HeroScenesCopy["growth"] }) {
           style={{ "--bob": index === 0 ? "3.5s" : "4s" } as CSSProperties}
         >
           <div className="hs-toast-head">
-            <AppMark mark={{ logo: toast.app }} size={22} />
+            <AppMark mark={{ logo: toast.app }} size={22} surface="light" />
             <span className="flex-1">{toast.name}</span>
             <time>{toast.time}</time>
           </div>
