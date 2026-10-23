@@ -88,6 +88,10 @@
   --hs-bar: rgba(35, 48, 94, 0.12);
   --hs-big: #e08608;
 
+  /* Vùng sáng đi theo con trỏ (CursorGlow). */
+  --glow-color: #ffb84d;
+  --glow-opacity: 0.6;
+
   color-scheme: light;
 }
 
@@ -152,6 +156,8 @@
     --hs-ghost-ink: #b9bdcc;
     --hs-bar: rgba(255, 255, 255, 0.22);
     --hs-big: #ef9f27;
+    --glow-color: #ef9f27;
+    --glow-opacity: 0.45;
     color-scheme: dark;
   }
 }
@@ -215,6 +221,8 @@
   --hs-ghost-ink: #b9bdcc;
   --hs-bar: rgba(255, 255, 255, 0.22);
   --hs-big: #ef9f27;
+  --glow-color: #ef9f27;
+  --glow-opacity: 0.45;
   color-scheme: dark;
 }
 
@@ -756,6 +764,36 @@
 
     > :last-child {
       margin-bottom: 0;
+    }
+  }
+
+  /* Vùng sáng cam đi theo con trỏ (components/home/cursor-glow.tsx, file mẫu v6: v6-light). */
+  .bt-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 30rem;
+    height: 24rem;
+    border-radius: 50%;
+    background: var(--glow-color);
+    filter: blur(110px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+    will-change: transform;
+
+    &[data-on] {
+      opacity: var(--glow-opacity);
+    }
+
+    @media (max-width: 900px) {
+      width: 18rem;
+      height: 16rem;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
     }
   }
 

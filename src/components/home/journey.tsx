@@ -6,6 +6,7 @@ import type { HomeContent } from "@/content/home-types";
 import { HOME_SECTIONS } from "@/i18n/config";
 import { cn } from "@/lib/utils";
 
+import { CursorGlow } from "./cursor-glow";
 import { SectionHead } from "./parts";
 import { Reveal } from "./reveal";
 
@@ -73,7 +74,8 @@ export function Journey({ content }: { content: HomeContent["journey"] }) {
         </div>
       </Reveal>
 
-      <Reveal className="relative mt-8 overflow-hidden rounded-[36px] bg-[image:var(--warm-bg)] p-12 max-sm:p-6">
+      <Reveal className="relative isolate mt-8 overflow-hidden rounded-[36px] bg-[image:var(--warm-bg)] p-12 max-sm:p-6">
+        <CursorGlow />
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 bg-[image:var(--warm-grid)] bg-size-[48px_48px]"

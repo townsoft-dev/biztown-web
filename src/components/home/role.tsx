@@ -7,6 +7,7 @@ import type { HomeContent } from "@/content/home-types";
 import { HOME_SECTIONS } from "@/i18n/config";
 import { cn } from "@/lib/utils";
 
+import { CursorGlow } from "./cursor-glow";
 import { useInView } from "./use-in-view";
 import { Reveal } from "./reveal";
 
@@ -51,8 +52,9 @@ export function Role({ content }: { content: HomeContent["role"] }) {
           <div
             ref={ref}
             aria-hidden="true"
-            className="relative flex min-h-[640px] items-center justify-center overflow-hidden rounded-[32px] bg-[image:var(--warm-bg)] px-4 max-sm:min-h-[480px]"
+            className="relative isolate flex min-h-[640px] items-center justify-center overflow-hidden rounded-[32px] bg-[image:var(--warm-bg)] px-4 max-sm:min-h-[480px]"
           >
+            <CursorGlow />
             <div className="pointer-events-none absolute inset-0 bg-[image:var(--warm-grid)] bg-size-[100px_100px]" />
             <ul className="relative flex w-full max-w-[499.2px] flex-col gap-3">
               {content.toasts.map((toast, index) => (

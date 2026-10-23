@@ -11,6 +11,7 @@ import type { HomeContent, Product, ProductKey } from "@/content/home-types";
 import { HOME_SECTIONS, localizedPath, type Locale } from "@/i18n/config";
 import { cn } from "@/lib/utils";
 
+import { CursorGlow } from "./cursor-glow";
 import { Illustration } from "./parts";
 import { Reveal } from "./reveal";
 
@@ -128,7 +129,8 @@ function ProductSlide({
   const visual = VISUALS[product.key];
 
   return (
-    <div className="bt-fade grid grid-cols-1 gap-12 overflow-hidden rounded-[36px] border border-[rgba(239,159,39,0.22)] bg-[linear-gradient(153deg,rgba(255,255,255,0.96),rgba(255,255,255,0.74))] p-12 shadow-[0_40px_80px_rgba(166,95,0,0.14)] backdrop-blur-[8px] max-md:p-7 lg:grid-cols-2 dark:bg-[linear-gradient(153deg,rgba(28,38,80,0.96),rgba(28,38,80,0.8))] dark:shadow-[0_40px_80px_rgba(0,0,0,0.3)]">
+    <div className="bt-fade relative isolate grid grid-cols-1 gap-12 overflow-hidden rounded-[36px] border border-[rgba(239,159,39,0.22)] bg-[linear-gradient(153deg,rgba(255,255,255,0.96),rgba(255,255,255,0.74))] p-12 shadow-[0_40px_80px_rgba(166,95,0,0.14)] backdrop-blur-[8px] max-md:p-7 lg:grid-cols-2 dark:bg-[linear-gradient(153deg,rgba(28,38,80,0.96),rgba(28,38,80,0.8))] dark:shadow-[0_40px_80px_rgba(0,0,0,0.3)]">
+      <CursorGlow />
       <div className="flex min-w-0 flex-col items-start">
         <div className="flex flex-wrap items-center gap-3">
           <ProductName name={product.name} />
