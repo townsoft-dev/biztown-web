@@ -1,6 +1,6 @@
 import type { AppMarkKind } from "@/components/ui/app-mark";
 import type { ProductStatus } from "@/components/ui/status-badge";
-import type { PageKey } from "@/i18n/config";
+import type { HomeSection, PageKey } from "@/i18n/config";
 
 /**
  * Nội dung trang chủ theo ngôn ngữ (src/content/<locale>/home.ts). Cấu trúc bám các section
@@ -20,6 +20,8 @@ export type HeroChapter = {
   secondary: string;
   /** Nút nào là "Nhận tư vấn" — bấm thì cuộn xuống section liên hệ (#lien-he). */
   consult: "primary" | "secondary";
+  /** Section mà nút chính cuộn tới (khi nút chính không phải "Nhận tư vấn"). */
+  primaryTarget?: HomeSection;
   scene: HeroScene;
 };
 

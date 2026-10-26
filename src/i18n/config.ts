@@ -32,6 +32,7 @@ export const HOME_SECTIONS = {
   discover: "kham-pha",
   audience: "danh-cho-ai",
   about: "ve-biztown",
+  why: "vi-sao-chon",
   principles: "triet-ly",
   contact: "lien-he",
 } as const;

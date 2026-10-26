@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import type { Feature, HomeContent } from "@/content/home-types";
+import { HOME_SECTIONS } from "@/i18n/config";
 import { cn } from "@/lib/utils";
 
 import { SectionHead } from "./parts";
@@ -14,7 +15,7 @@ export function Why({ content }: { content: HomeContent["why"] }) {
   const { media } = content;
 
   return (
-    <section className="bt-wrap py-14">
+    <section id={HOME_SECTIONS.why} className="bt-wrap py-14">
       <Reveal className="flex flex-col items-center gap-8 rounded-[32px] border border-line bg-card p-12 shadow-[0_1px_1px_var(--shadow-soft)] max-sm:p-6">
         <SectionHead tag={content.tag} title={content.title} />
         <div

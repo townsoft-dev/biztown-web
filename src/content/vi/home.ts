@@ -11,6 +11,7 @@ export const HOME: HomeContent = {
         primary: "Tại sao chọn BizTown?",
         secondary: "Nhận tư vấn",
         consult: "secondary",
+        primaryTarget: "why",
         scene: "cards",
       },
       {
