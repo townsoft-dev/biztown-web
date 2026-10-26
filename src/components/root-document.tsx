@@ -40,7 +40,14 @@ export function rootMetadata(locale: Locale): Metadata {
 export function RootDocument({ locale, children }: { locale: Locale; children: ReactNode }) {
   return (
     // data-theme do THEME_INIT_SCRIPT đặt trước khi React hydrate.
-    <html lang={locale} className={lexend.variable} suppressHydrationWarning>
+    // data-scroll-behavior="smooth": Next tạm tắt cuộn mượt (globals.css) khi chuyển trang để
+    // nhảy thẳng lên đầu trang mới; thiếu nó, cuộn mượt bị ngắt giữa chừng và kẹt ở vị trí cũ.
+    <html
+      lang={locale}
+      className={lexend.variable}
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning
+    >
       <head>
         <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>
