@@ -63,12 +63,12 @@ export function Hero({
           <div className="mt-9 flex flex-wrap items-center gap-3">
             <HeroButton
               label={chapter.primary}
-              target={chapter.consult === "primary" ? "contact" : chapter.primaryTarget}
+              target={chapter.primaryTarget}
               className="bt-btn bt-btn-primary"
             />
             <HeroButton
               label={chapter.secondary}
-              target={chapter.consult === "secondary" ? "contact" : undefined}
+              target={chapter.secondaryTarget}
               className="bt-btn bt-btn-outline"
             />
           </div>

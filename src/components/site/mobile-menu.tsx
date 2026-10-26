@@ -17,6 +17,8 @@ type MobileMenuProps = {
   links: MenuLink[];
   productMenu: Dictionary["productMenu"];
   productHrefs: (string | null)[];
+  /** Link "Xem tất cả sản phẩm" cuối danh sách sản phẩm. */
+  productsAllHref: string;
   /** Nút theme + chọn ngôn ngữ — chỉ hiện trong menu khi thanh điều hướng đã ẩn chúng (< sm). */
   settings: ReactNode;
   /** Nút "Bắt đầu miễn phí" — chỉ hiện trong menu khi thanh điều hướng đã ẩn nó (< md). */
@@ -34,6 +36,7 @@ export function MobileMenu({
   links,
   productMenu,
   productHrefs,
+  productsAllHref,
   settings,
   cta,
   className,
@@ -162,16 +165,14 @@ export function MobileMenu({
                           );
                         })}
                       </ul>
-                      {link.href && (
-                        <a
-                          href={link.href}
-                          onClick={close}
-                          className="flex items-center justify-between rounded-2xl py-2.5 pr-3 pl-5 text-[14px] leading-none font-semibold text-accent-text transition-colors hover:text-ink"
-                        >
-                          {productMenu.all}
-                          <Icon name="arrow-up-right" size={18} />
-                        </a>
-                      )}
+                      <a
+                        href={productsAllHref}
+                        onClick={close}
+                        className="flex items-center justify-between rounded-2xl py-2.5 pr-3 pl-5 text-[14px] leading-none font-semibold text-accent-text transition-colors hover:text-ink"
+                      >
+                        {productMenu.all}
+                        <Icon name="arrow-up-right" size={18} />
+                      </a>
                     </div>
                   </li>
                 );

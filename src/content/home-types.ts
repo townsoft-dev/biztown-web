@@ -18,10 +18,9 @@ export type HeroChapter = {
   lead: string;
   primary: string;
   secondary: string;
-  /** Nút nào là "Nhận tư vấn" — bấm thì cuộn xuống section liên hệ (#lien-he). */
-  consult: "primary" | "secondary";
-  /** Section mà nút chính cuộn tới (khi nút chính không phải "Nhận tư vấn"). */
+  /** Section mà từng nút cuộn tới (vd. "Nhận tư vấn" → contact); bỏ trống thì nút chưa dẫn đi đâu. */
   primaryTarget?: HomeSection;
+  secondaryTarget?: HomeSection;
   scene: HeroScene;
 };
 
@@ -96,6 +95,8 @@ export type Product = {
   secondary: string;
   /** Trang chi tiết sản phẩm: nút chính ("Xem chi tiết") dẫn tới đây. */
   detail?: PageKey;
+  /** Không có trang chi tiết: nút chính cuộn tới section này của trang chủ (vd. "Xem dịch vụ"). */
+  primaryTarget?: HomeSection;
 };
 
 export type LinkCard = {

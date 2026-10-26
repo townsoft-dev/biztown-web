@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { LOCALES, localizedPath, type Locale, type PageKey } from "@/i18n/config";
+import { LOCALES, localizedPath, sectionPath, type Locale, type PageKey } from "@/i18n/config";
 import { LOCALE_NAMES, getDictionary } from "@/i18n/dictionaries";
 import { cn } from "@/lib/utils";
 
@@ -25,6 +25,8 @@ type SiteHeaderProps = {
 export function SiteHeader({ locale, page }: SiteHeaderProps) {
   const dict = getDictionary(locale);
   const productHrefs = dict.productMenu.items.map((product) => resolveHref(locale, product.to));
+  // "Xem tất cả sản phẩm" trong danh sách sản phẩm → section Khám phá của trang chủ.
+  const productsAllHref = sectionPath(locale, "discover");
 
   return (
     <header className="sticky top-0 z-50 -mb-[76px] pt-3">
@@ -52,7 +54,7 @@ export function SiteHeader({ locale, page }: SiteHeaderProps) {
                       label={item.label}
                       menu={dict.productMenu}
                       hrefs={productHrefs}
-                      allHref={href}
+                      allHref={productsAllHref}
                     />
                   </li>
                 );
@@ -91,6 +93,7 @@ export function SiteHeader({ locale, page }: SiteHeaderProps) {
               }))}
               productMenu={dict.productMenu}
               productHrefs={productHrefs}
+              productsAllHref={productsAllHref}
               settings={
                 <>
                   <ThemeToggle label={dict.themeToggle} />

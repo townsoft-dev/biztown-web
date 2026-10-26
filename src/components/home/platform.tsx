@@ -185,14 +185,19 @@ function ProductSlide({
             <Link href={localizedPath(locale, product.detail)} className="bt-btn bt-btn-primary">
               {product.primary}
             </Link>
+          ) : product.primaryTarget ? (
+            <a href={`#${HOME_SECTIONS[product.primaryTarget]}`} className="bt-btn bt-btn-primary">
+              {product.primary}
+            </a>
           ) : (
             <button type="button" className="bt-btn bt-btn-primary">
               {product.primary}
             </button>
           )}
-          <button type="button" className="bt-btn bt-btn-outline">
+          {/* "Xem tất cả sản phẩm" → section Khám phá. */}
+          <a href={`#${HOME_SECTIONS.discover}`} className="bt-btn bt-btn-outline">
             {product.secondary}
-          </button>
+          </a>
         </div>
       </div>
 

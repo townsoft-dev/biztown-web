@@ -14,7 +14,7 @@ type ProductsMenuProps = {
   menu: Dictionary["productMenu"];
   /** href đã tính sẵn cho từng sản phẩm (null = chưa có trang). */
   hrefs: (string | null)[];
-  /** Link "Xem tất cả" — section sản phẩm của trang chủ. */
+  /** Link "Xem tất cả" — section Khám phá của trang chủ. */
   allHref: string | null;
 };
 

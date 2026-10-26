@@ -41,9 +41,10 @@ export function Offers({ content }: { content: HomeContent["offers"] }) {
                   <li key={item}>{item}</li>
                 ))}
               </ul>
-              <button type="button" className="bt-btn bt-btn-primary mt-7">
+              {/* "Xem tất cả ứng dụng" / "Xem dịch vụ" → section Khám phá. */}
+              <a href={`#${HOME_SECTIONS.discover}`} className="bt-btn bt-btn-primary mt-7">
                 {card.cta}
-              </button>
+              </a>
             </div>
             <div aria-hidden="true" className="flex items-center justify-center">
               {card.art === "apps" ? <AppGrid /> : <BrowserMock />}
