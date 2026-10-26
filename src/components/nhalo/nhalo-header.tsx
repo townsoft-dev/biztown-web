@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { LocaleSwitcher } from "@/components/site/site-header";
 import { ThemeToggle } from "@/components/site/theme-toggle";
+import { TopLink } from "@/components/site/top-link";
 import type { NhaloContent } from "@/content/nhalo-types";
 import { NHALO_SECTIONS, localizedPath, type Locale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
@@ -58,9 +59,9 @@ export function NhaloHeader({
             <Image src="/images/nhalo/biztown-icon.svg" alt="" width={24} height={24} />
           </Link>
           <span aria-hidden="true" className="h-6 w-px bg-line" />
-          <a href={`#${NHALO_SECTIONS.top}`} className="flex">
+          <TopLink href={localizedPath(locale, "nhalo")} className="flex">
             <NhaloLockup width={120} height={40} />
-          </a>
+          </TopLink>
         </div>
 
         <nav aria-label={content.menuLabel} className="hidden lg:block">

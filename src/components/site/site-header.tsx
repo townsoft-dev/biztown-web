@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import { LOCALES, localizedPath, sectionPath, type Locale, type PageKey } from "@/i18n/config";
 import { LOCALE_NAMES, getDictionary } from "@/i18n/dictionaries";
 import { cn } from "@/lib/utils";
@@ -9,6 +7,7 @@ import { resolveHref } from "./link-target";
 import { MobileMenu } from "./mobile-menu";
 import { ProductsMenu } from "./products-menu";
 import { ThemeToggle } from "./theme-toggle";
+import { TopLink } from "./top-link";
 
 type SiteHeaderProps = {
   locale: Locale;
@@ -35,13 +34,13 @@ export function SiteHeader({ locale, page }: SiteHeaderProps) {
           aria-label={dict.navLabel}
           className="relative flex h-16 items-center gap-4 rounded-full border border-[var(--nav-ring)] bg-[var(--glass-bg)] pr-2 pl-5 shadow-[0_12px_32px_var(--nav-shadow)] backdrop-blur-[14px]"
         >
-          <Link
+          <TopLink
             href={localizedPath(locale, "home")}
             aria-label={dict.homeLabel}
             className="shrink-0"
           >
             <BrandLogo />
-          </Link>
+          </TopLink>
 
           <ul className="ml-[99px] hidden flex-1 items-center gap-6 xl:flex">
             {dict.nav.map((item, index) => {
