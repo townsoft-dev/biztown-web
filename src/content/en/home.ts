@@ -304,6 +304,7 @@ export const HOME: HomeContent = {
         desc: "Rental property management",
         mark: { logo: "nhalo" },
         status: "live",
+        detail: "nhalo",
       },
       {
         name: "Balheh",

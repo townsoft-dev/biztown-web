@@ -1,12 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 
 import { AppMark } from "@/components/ui/app-mark";
 import { Icon } from "@/components/ui/icon";
 import { StatusBadge } from "@/components/ui/status-badge";
 import type { HomeContent, LinkCard } from "@/content/home-types";
-import { HOME_SECTIONS } from "@/i18n/config";
+import { HOME_SECTIONS, localizedPath, type Locale } from "@/i18n/config";
 import { cn } from "@/lib/utils";
 
 import { SectionHead } from "./parts";
@@ -15,7 +16,13 @@ import { Reveal } from "./reveal";
 type Tab = "apps" | "services";
 
 /** Section "Khám phá mọi điều bạn làm được với BizTown" — tab Ứng dụng / Dịch vụ. */
-export function Discover({ content }: { content: HomeContent["discover"] }) {
+export function Discover({
+  content,
+  locale,
+}: {
+  content: HomeContent["discover"];
+  locale: Locale;
+}) {
   const [tab, setTab] = useState<Tab>("apps");
   const cards = tab === "apps" ? content.apps : content.services;
 
@@ -62,7 +69,7 @@ export function Discover({ content }: { content: HomeContent["discover"] }) {
       >
         {cards.map((card) => (
           <Reveal as="li" key={card.name}>
-            <DiscoverCard card={card} statusLabels={content.statusLabels} />
+            <DiscoverCard card={card} statusLabels={content.statusLabels} locale={locale} />
           </Reveal>
         ))}
       </ul>
@@ -70,13 +77,18 @@ export function Discover({ content }: { content: HomeContent["discover"] }) {
   );
 }
 
-/** Thẻ liên kết dạng viên thuốc (Figma: Link card). Sản phẩm đang chạy dẫn tới slide sản phẩm. */
+/**
+ * Thẻ liên kết dạng viên thuốc (Figma: Link card). Sản phẩm đang chạy dẫn tới trang chi tiết
+ * (nếu có, vd. NhàLo) hoặc slide sản phẩm.
+ */
 function DiscoverCard({
   card,
   statusLabels,
+  locale,
 }: {
   card: LinkCard;
   statusLabels: HomeContent["discover"]["statusLabels"];
+  locale: Locale;
 }) {
   const live = card.status !== "soon";
   const body = (
@@ -96,15 +108,15 @@ function DiscoverCard({
     "flex h-full items-center gap-4 rounded-full bg-card-soft py-[18px] pr-7 pl-[18px] max-sm:flex-wrap max-sm:rounded-3xl";
 
   return live ? (
-    <a
-      href={`#${HOME_SECTIONS.products}`}
+    <Link
+      href={card.detail ? localizedPath(locale, card.detail) : `#${HOME_SECTIONS.products}`}
       className={cn(
         className,
         "transition-all hover:-translate-y-0.5 hover:shadow-[0_24px_40px_rgba(166,95,0,0.12)]",
       )}
     >
       {body}
-    </a>
+    </Link>
   ) : (
     <div className={className}>{body}</div>
   );

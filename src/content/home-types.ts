@@ -104,6 +104,8 @@ export type LinkCard = {
   desc: string;
   mark: AppMarkKind;
   status?: ProductStatus;
+  /** Trang chi tiết sản phẩm: bấm thẻ dẫn tới đây (không có thì dẫn tới slide sản phẩm). */
+  detail?: PageKey;
 };
 
 export type AudienceCard = {

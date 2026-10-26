@@ -31,7 +31,7 @@ export function HomePage({ content, locale }: { content: HomeContent; locale: Lo
         </div>
       </div>
       <Offers content={content.offers} />
-      <Discover content={content.discover} />
+      <Discover content={content.discover} locale={locale} />
       <Audience content={content.audience} />
       <Stats content={content.stats} locale={locale} />
       <Journey content={content.journey} />

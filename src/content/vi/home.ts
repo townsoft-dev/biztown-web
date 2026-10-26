@@ -294,7 +294,13 @@ export const HOME: HomeContent = {
     tabs: { apps: "Ứng dụng", services: "Dịch vụ" },
     statusLabels: { live: "Đang hoạt động", soon: "Sắp ra mắt" },
     apps: [
-      { name: "NhàLo", desc: "Quản lý nhà cho thuê", mark: { logo: "nhalo" }, status: "live" },
+      {
+        name: "NhàLo",
+        desc: "Quản lý nhà cho thuê",
+        mark: { logo: "nhalo" },
+        status: "live",
+        detail: "nhalo",
+      },
       {
         name: "Balheh",
         desc: "Quản lý dự án, tài liệu, chat nhóm",
