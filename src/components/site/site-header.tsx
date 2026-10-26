@@ -26,6 +26,8 @@ export function SiteHeader({ locale, page }: SiteHeaderProps) {
   const productHrefs = dict.productMenu.items.map((product) => resolveHref(locale, product.to));
   // "Xem tất cả sản phẩm" trong danh sách sản phẩm → section Khám phá của trang chủ.
   const productsAllHref = sectionPath(locale, "discover");
+  // "Bắt đầu miễn phí" → section liên hệ của trang chủ.
+  const startHref = sectionPath(locale, "contact");
 
   return (
     <header className="sticky top-0 z-50 -mb-[76px] pt-3">
@@ -80,9 +82,9 @@ export function SiteHeader({ locale, page }: SiteHeaderProps) {
               <ThemeToggle label={dict.themeToggle} />
               <LocaleSwitcher locale={locale} page={page} label={dict.localeSwitcherLabel} />
             </div>
-            <button type="button" className="bt-btn bt-btn-primary hidden md:inline-flex">
+            <a href={startHref} className="bt-btn bt-btn-primary hidden md:inline-flex">
               {dict.startFree}
-            </button>
+            </a>
             <MobileMenu
               className="xl:hidden"
               label={dict.menuToggle}
@@ -99,11 +101,7 @@ export function SiteHeader({ locale, page }: SiteHeaderProps) {
                   <LocaleSwitcher locale={locale} page={page} label={dict.localeSwitcherLabel} />
                 </>
               }
-              cta={
-                <button type="button" className="bt-btn bt-btn-primary w-full">
-                  {dict.startFree}
-                </button>
-              }
+              cta={{ label: dict.startFree, href: startHref }}
             />
           </div>
         </nav>

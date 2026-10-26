@@ -22,7 +22,7 @@ type MobileMenuProps = {
   /** Nút theme + chọn ngôn ngữ — chỉ hiện trong menu khi thanh điều hướng đã ẩn chúng (< sm). */
   settings: ReactNode;
   /** Nút "Bắt đầu miễn phí" — chỉ hiện trong menu khi thanh điều hướng đã ẩn nó (< md). */
-  cta: ReactNode;
+  cta: { label: string; href: string };
   className?: string;
 };
 
@@ -198,7 +198,11 @@ export function MobileMenu({
           <div className="mt-1 flex items-center justify-between gap-3 border-t border-line px-3 pt-3 pb-1 sm:hidden">
             {settings}
           </div>
-          <div className="px-1 pt-3 pb-1 md:hidden">{cta}</div>
+          <div className="px-1 pt-3 pb-1 md:hidden">
+            <a href={cta.href} onClick={close} className="bt-btn bt-btn-primary w-full">
+              {cta.label}
+            </a>
+          </div>
         </div>
       </div>
     </div>
