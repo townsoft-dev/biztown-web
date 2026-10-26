@@ -121,7 +121,7 @@ const vi = {
     columns: [
       [
         {
-          title: "Ứng dụng",
+          title: "Sản phẩm",
           links: [
             { label: "NhàLo", to: { page: "nhalo" } },
             { label: "Balheh", to: { section: "products" } },
@@ -130,22 +130,8 @@ const vi = {
             { label: "BizTown Tồn kho (sắp ra mắt)", to: null },
           ],
         },
-        {
-          title: "Bắt đầu",
-          links: [{ label: "Đăng ký dùng thử", to: { section: "contact" } }],
-        },
       ],
       [
-        {
-          title: "Giải pháp theo ngành",
-          links: [
-            { label: "Nhà cho thuê", to: { section: "audience" } },
-            { label: "Bán lẻ & cửa hàng", to: { section: "audience" } },
-            { label: "Dịch vụ & spa", to: { section: "audience" } },
-            { label: "Văn phòng nhỏ", to: { section: "audience" } },
-            { label: "Hộ kinh doanh", to: { section: "audience" } },
-          ],
-        },
         {
           title: "Dịch vụ",
           links: [
@@ -163,7 +149,6 @@ const vi = {
             { label: "Sứ mệnh & tầm nhìn", to: { section: "about" } },
             { label: "Triết lý sản phẩm", to: { section: "principles" } },
             { label: "Townsoft Vina", to: null },
-            { label: "Tuyển dụng", to: null },
             { label: "Tin tức", to: null },
           ],
         },
@@ -183,7 +168,7 @@ const vi = {
           links: [
             { label: "Điều khoản sử dụng", to: null },
             { label: "Chính sách bảo mật", to: { page: "privacy" } },
-            { label: "Xoá tài khoản & dữ liệu", to: { page: "deleteAccount" } },
+            { label: "Bảo vệ dữ liệu", to: { page: "deleteAccount" } },
           ],
         },
       ],
@@ -289,7 +274,7 @@ const en: Dictionary = {
     columns: [
       [
         {
-          title: "Apps",
+          title: "Products",
           links: [
             { label: "NhàLo", to: { page: "nhalo" } },
             { label: "Balheh", to: { section: "products" } },
@@ -298,22 +283,8 @@ const en: Dictionary = {
             { label: "BizTown Inventory (coming soon)", to: null },
           ],
         },
-        {
-          title: "Get started",
-          links: [{ label: "Sign up for a trial", to: { section: "contact" } }],
-        },
       ],
       [
-        {
-          title: "Solutions by industry",
-          links: [
-            { label: "Rental properties", to: { section: "audience" } },
-            { label: "Retail & shops", to: { section: "audience" } },
-            { label: "Services & spas", to: { section: "audience" } },
-            { label: "Small offices", to: { section: "audience" } },
-            { label: "Household businesses", to: { section: "audience" } },
-          ],
-        },
         {
           title: "Services",
           links: [
@@ -331,7 +302,6 @@ const en: Dictionary = {
             { label: "Mission & vision", to: { section: "about" } },
             { label: "Product philosophy", to: { section: "principles" } },
             { label: "Townsoft Vina", to: null },
-            { label: "Careers", to: null },
             { label: "News", to: null },
           ],
         },
@@ -351,7 +321,7 @@ const en: Dictionary = {
           links: [
             { label: "Terms of use", to: null },
             { label: "Privacy policy", to: { page: "privacy" } },
-            { label: "Account & data deletion", to: { page: "deleteAccount" } },
+            { label: "Data protection", to: { page: "deleteAccount" } },
           ],
         },
       ],
