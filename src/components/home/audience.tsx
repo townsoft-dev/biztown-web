@@ -137,7 +137,11 @@ function AudienceItem({
       >
         <span className="whitespace-nowrap">{card.foot}</span>
         {featured && (
-          <span className="flex items-center gap-3 text-[16px] leading-none font-semibold whitespace-nowrap">
+          // "Tìm hiểu thêm" → section sản phẩm.
+          <a
+            href={`#${HOME_SECTIONS.products}`}
+            className="flex items-center gap-3 text-[16px] leading-none font-semibold whitespace-nowrap"
+          >
             <span
               aria-hidden="true"
               className="flex size-7 items-center justify-center rounded-full border border-on-accent text-[14px]"
@@ -145,7 +149,7 @@ function AudienceItem({
               →
             </span>
             {more}
-          </span>
+          </a>
         )}
       </div>
     </div>
