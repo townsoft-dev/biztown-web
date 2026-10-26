@@ -532,47 +532,6 @@
     box-decoration-break: clone;
   }
 
-  /* Thanh trượt ngày đổi khách (Figma NhàLo: Day range control). --p là phần trăm đã chọn. */
-  .nl-range {
-    appearance: none;
-    width: 100%;
-    height: 20px;
-    background: transparent;
-    cursor: pointer;
-
-    &::-webkit-slider-runnable-track {
-      height: 8px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--accent) var(--p), var(--line) var(--p));
-    }
-
-    &::-moz-range-track {
-      height: 8px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--accent) var(--p), var(--line) var(--p));
-    }
-
-    &::-webkit-slider-thumb {
-      appearance: none;
-      width: 20px;
-      height: 20px;
-      margin-top: -6px;
-      border: 2px solid #ffffff;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 2px 6px rgba(35, 48, 94, 0.25);
-    }
-
-    &::-moz-range-thumb {
-      width: 16px;
-      height: 16px;
-      border: 2px solid #ffffff;
-      border-radius: 50%;
-      background: var(--accent);
-      box-shadow: 0 2px 6px rgba(35, 48, 94, 0.25);
-    }
-  }
-
   /* Vòng sáng khi con trỏ demo chạm (hero NhàLo). */
   .nl-tap {
     animation: nl-tap 0.45s ease-out;

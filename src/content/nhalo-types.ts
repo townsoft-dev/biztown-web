@@ -72,6 +72,7 @@ export type NhaloContent = {
     newPays: string;
     whole: string;
     match: string;
+    /** Nhãn cho trình đọc màn hình của nút kéo ngày đổi khách (không hiện trên trang). */
     dayLabel: string;
     safeguards: [Note, Note, Note];
   };

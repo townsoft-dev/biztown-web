@@ -1,9 +1,15 @@
 "use client";
 
-import { useId, useState, type CSSProperties } from "react";
+import {
+  useRef,
+  useState,
+  type KeyboardEvent as ReactKeyboardEvent,
+  type PointerEvent as ReactPointerEvent,
+} from "react";
 
 import type { NhaloContent } from "@/content/nhalo-types";
 import { NHALO_SECTIONS, type Locale } from "@/i18n/config";
+import { cn } from "@/lib/utils";
 
 import { MsIcon } from "./app/app-ui";
 import { NhaloSectionHead } from "./parts";
@@ -19,8 +25,9 @@ const MAX_DAY = 28;
 const SAFEGUARD_ICONS = ["lock", "receipt_long", "history"];
 
 /**
- * "Đổi khách giữa tháng" (Figma: Utilities changeover + NhàLo / UtilitiesTimeline). Kéo thanh
- * ngày đổi khách để xem số kWh và tiền điện chia cho khách cũ/khách mới.
+ * "Đổi khách giữa tháng" (Figma: Utilities changeover + NhàLo / UtilitiesTimeline). Kéo nút
+ * ngày đổi khách trên thanh kỳ điện (hoặc bấm vào thanh, dùng phím mũi tên) để xem số kWh và
+ * tiền điện chia cho khách cũ/khách mới.
  */
 export function NhaloUtilities({
   content,
@@ -30,14 +37,51 @@ export function NhaloUtilities({
   locale: Locale;
 }) {
   const [day, setDay] = useState(15);
-  const rangeId = useId();
+  const [dragging, setDragging] = useState(false);
+  const trackRef = useRef<HTMLDivElement>(null);
   const number = new Intl.NumberFormat(locale === "vi" ? "vi-VN" : "en-US");
 
   const ratio = (day - 1) / PERIOD_DAYS;
   const oldKwh = Math.round(PERIOD_KWH * ratio);
   const newKwh = PERIOD_KWH - oldKwh;
   const date = `${String(day).padStart(2, "0")}/09`;
-  const sliderFill = ((day - MIN_DAY) / (MAX_DAY - MIN_DAY)) * 100;
+  // Đang kéo thì bỏ hiệu ứng trượt để nút bám theo con trỏ.
+  const motion = dragging ? "" : "duration-150";
+
+  /** Đổi vị trí con trỏ trên thanh thành ngày (thanh dài đúng 30 ngày của kỳ). */
+  function dayAt(clientX: number) {
+    const rect = trackRef.current?.getBoundingClientRect();
+    if (!rect || rect.width === 0) return day;
+    const next = Math.round(((clientX - rect.left) / rect.width) * PERIOD_DAYS) + 1;
+    return Math.min(MAX_DAY, Math.max(MIN_DAY, next));
+  }
+
+  function onPointerDown(event: ReactPointerEvent<HTMLDivElement>) {
+    if (event.button !== 0) return;
+    event.currentTarget.setPointerCapture(event.pointerId);
+    setDragging(true);
+    setDay(dayAt(event.clientX));
+  }
+
+  function onPointerMove(event: ReactPointerEvent<HTMLDivElement>) {
+    if (dragging) setDay(dayAt(event.clientX));
+  }
+
+  function onKeyDown(event: ReactKeyboardEvent) {
+    const targets: Record<string, number> = {
+      ArrowLeft: day - 1,
+      ArrowDown: day - 1,
+      ArrowRight: day + 1,
+      ArrowUp: day + 1,
+      PageDown: day - 5,
+      PageUp: day + 5,
+      Home: MIN_DAY,
+      End: MAX_DAY,
+    };
+    if (!(event.key in targets)) return;
+    event.preventDefault();
+    setDay(Math.min(MAX_DAY, Math.max(MIN_DAY, targets[event.key])));
+  }
 
   return (
     <section
@@ -53,8 +97,8 @@ export function NhaloUtilities({
             <Tenant initial="M" person={content.newTenant} accent />
           </div>
 
-          <div aria-hidden="true" className="relative h-40">
-            <div className="flex justify-between whitespace-nowrap">
+          <div className="relative h-40">
+            <div aria-hidden="true" className="flex justify-between whitespace-nowrap">
               <Reading label={content.periodStart} value={`${number.format(START_KWH)} kWh`} />
               <Reading
                 label={content.periodEnd}
@@ -62,21 +106,59 @@ export function NhaloUtilities({
                 end
               />
             </div>
-            <div className="absolute inset-x-0 top-[62px] flex h-3.5 overflow-hidden rounded-full">
+            <div
+              aria-hidden="true"
+              className="absolute inset-x-0 top-[62px] flex h-3.5 overflow-hidden rounded-full"
+            >
               <span
-                className="h-full bg-[var(--nl-split-old)] transition-[width] duration-150"
+                className={cn("h-full bg-[var(--nl-split-old)] transition-[width]", motion)}
                 style={{ width: `${ratio * 100}%` }}
               />
               <span className="h-full flex-1 bg-accent" />
             </div>
-            <span className="absolute top-[55px] left-0 size-7 rounded-full border-4 border-ink bg-card" />
-            <span className="absolute top-[55px] right-0 size-7 rounded-full border-4 border-ink bg-card" />
             <span
-              className="absolute top-[53px] size-8 -translate-x-1/2 rounded-full border-[5px] border-[#d98a14] bg-card transition-[left] duration-150"
-              style={{ left: `${ratio * 100}%` }}
+              aria-hidden="true"
+              className="absolute top-[55px] left-0 size-7 rounded-full border-4 border-ink bg-card"
             />
+            <span
+              aria-hidden="true"
+              className="absolute top-[55px] right-0 size-7 rounded-full border-4 border-ink bg-card"
+            />
+            {/* Vùng kéo phủ cả thanh (cao hơn thanh cho dễ chạm); bấm vào đâu nút nhảy tới đó. */}
             <div
-              className="absolute top-[98px] flex w-[270px] flex-col items-center gap-[3px] rounded-xl border border-[var(--nl-panel-ring)] bg-accent-tint px-3.5 py-2 text-center transition-[left] duration-150 max-sm:w-[220px]"
+              ref={trackRef}
+              onPointerDown={onPointerDown}
+              onPointerMove={onPointerMove}
+              onPointerUp={() => setDragging(false)}
+              onPointerCancel={() => setDragging(false)}
+              className={cn(
+                "absolute inset-x-0 top-[45px] h-12 touch-none",
+                dragging ? "cursor-grabbing" : "cursor-pointer",
+              )}
+            >
+              <span
+                role="slider"
+                tabIndex={0}
+                aria-label={content.dayLabel}
+                aria-valuemin={MIN_DAY}
+                aria-valuemax={MAX_DAY}
+                aria-valuenow={day}
+                aria-valuetext={date}
+                onKeyDown={onKeyDown}
+                className={cn(
+                  "absolute top-2 size-8 -translate-x-1/2 rounded-full border-[5px] border-[#d98a14] bg-card shadow-[0_2px_6px_rgba(35,48,94,0.25)] transition-[left]",
+                  motion,
+                  dragging ? "cursor-grabbing" : "cursor-grab",
+                )}
+                style={{ left: `${ratio * 100}%` }}
+              />
+            </div>
+            <div
+              aria-hidden="true"
+              className={cn(
+                "pointer-events-none absolute top-[98px] flex w-[270px] flex-col items-center gap-[3px] rounded-xl border border-[var(--nl-panel-ring)] bg-accent-tint px-3.5 py-2 text-center transition-[left] max-sm:w-[220px]",
+                motion,
+              )}
               style={{ left: `clamp(0px, calc(${ratio * 100}% - 135px), calc(100% - 270px))` }}
             >
               <span className="text-[12px] leading-[16.2px] text-ink-muted">
@@ -104,26 +186,6 @@ export function NhaloUtilities({
               value={`${PERIOD_KWH} kWh`}
               note={content.match}
               total
-            />
-          </div>
-
-          <div className="flex items-center gap-[18px] max-sm:flex-col max-sm:items-stretch max-sm:gap-1.5">
-            <label
-              htmlFor={rangeId}
-              className="text-[14px] leading-none font-semibold whitespace-nowrap text-ink"
-            >
-              {content.dayLabel}
-            </label>
-            <input
-              id={rangeId}
-              type="range"
-              min={MIN_DAY}
-              max={MAX_DAY}
-              value={day}
-              aria-valuetext={date}
-              onChange={(event) => setDay(Number(event.target.value))}
-              className="nl-range flex-1"
-              style={{ "--p": `${sliderFill}%` } as CSSProperties}
             />
           </div>
         </div>
