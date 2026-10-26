@@ -83,7 +83,6 @@ const vi = {
     { label: "Sản phẩm", to: { section: "products" } },
     { label: "Dịch vụ", to: { section: "services" } },
     { label: "Về BizTown", to: { section: "about" } },
-    { label: "Blog", to: null },
     { label: "Liên hệ", to: { section: "contact" } },
   ] satisfies NavLink[] as NavLink[],
   meta: {
@@ -252,7 +251,6 @@ const en: Dictionary = {
     { label: "Products", to: { section: "products" } },
     { label: "Services", to: { section: "services" } },
     { label: "About", to: { section: "about" } },
-    { label: "Blog", to: null },
     { label: "Contact", to: { section: "contact" } },
   ],
   meta: {
