@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { NhaloMobileMenu } from "@/components/nhalo/nhalo-mobile-menu";
+import { BizTownMark } from "@/components/site/biztown-mark";
 import { LocaleSwitcher } from "@/components/site/site-header";
 import { ThemeToggle } from "@/components/site/theme-toggle";
 import { TopLink } from "@/components/site/top-link";
@@ -66,9 +67,9 @@ export function BalhehHeader({
           <Link
             href={localizedPath(locale, "home")}
             aria-label={content.biztownLabel}
-            className="flex size-10 items-center justify-center"
+            className="flex"
           >
-            <Image src="/images/nhalo/biztown-icon.svg" alt="" width={24} height={24} />
+            <BizTownMark />
           </Link>
           <span aria-hidden="true" className="h-6 w-px bg-line" />
           <TopLink href={localizedPath(locale, "balheh")} className="flex">

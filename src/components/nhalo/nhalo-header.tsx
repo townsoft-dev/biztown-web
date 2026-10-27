@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import { BizTownMark } from "@/components/site/biztown-mark";
 import { LocaleSwitcher } from "@/components/site/site-header";
 import { ThemeToggle } from "@/components/site/theme-toggle";
 import { TopLink } from "@/components/site/top-link";
@@ -54,9 +55,13 @@ export function NhaloHeader({
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-page/95 backdrop-blur-[14px]">
       <div className="bt-wrap relative flex h-20 items-center gap-4">
-        <div className="flex shrink-0 items-center gap-5">
-          <Link href={localizedPath(locale, "home")} aria-label={content.biztownLabel}>
-            <Image src="/images/nhalo/biztown-icon.svg" alt="" width={24} height={24} />
+        <div className="flex shrink-0 items-center gap-[15px]">
+          <Link
+            href={localizedPath(locale, "home")}
+            aria-label={content.biztownLabel}
+            className="flex"
+          >
+            <BizTownMark />
           </Link>
           <span aria-hidden="true" className="h-6 w-px bg-line" />
           <TopLink href={localizedPath(locale, "nhalo")} className="flex">
