@@ -86,8 +86,8 @@ export function Hero({
       <div
         role="tablist"
         aria-label={content.chaptersLabel}
-        // Màn hẹp: 4 chương xếp 2 hàng × 2 cột (như file mẫu), nút tạm dừng đứng bên phải.
-        className="grid grid-cols-[repeat(4,minmax(0,1fr))_44px] items-center gap-6 pt-[25px] pb-2 max-md:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_44px] max-md:gap-x-4 max-md:gap-y-5"
+        // Màn hẹp: vẫn 1 hàng, ẩn tên chương (chỉ còn số + thanh tiến độ) cho vừa chỗ.
+        className="grid grid-cols-[repeat(4,minmax(0,1fr))_44px] items-center gap-6 pt-[25px] pb-2 max-md:gap-4"
       >
         {chapters.map((item, index) => {
           const selected = index === active;
@@ -106,7 +106,7 @@ export function Hero({
                 </span>
                 <span
                   className={cn(
-                    "text-[17px] leading-none font-semibold",
+                    "text-[17px] leading-none font-semibold max-md:sr-only",
                     selected ? "text-ink" : "text-ink-muted",
                   )}
                 >
@@ -134,7 +134,7 @@ export function Hero({
           onClick={() => setPaused((value) => !value)}
           aria-label={paused ? content.playLabel : content.pauseLabel}
           title={paused ? content.playLabel : content.pauseLabel}
-          className="flex size-11 shrink-0 items-center justify-center rounded-full border border-[rgba(35,48,94,0.3)] text-[12px] text-ink max-md:col-start-3 max-md:row-span-2 max-md:row-start-1 dark:border-line"
+          className="flex size-11 shrink-0 items-center justify-center rounded-full border border-[rgba(35,48,94,0.3)] text-[12px] text-ink dark:border-line"
         >
           <span aria-hidden="true">{paused ? "▶" : "❚❚"}</span>
         </button>
