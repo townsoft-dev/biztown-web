@@ -178,6 +178,7 @@ export const HOME: HomeContent = {
       },
       {
         key: "balheh",
+        detail: "balheh",
         chip: "Balheh",
         mark: { logo: "balheh" },
         name: { logo: "balheh" },
@@ -311,6 +312,7 @@ export const HOME: HomeContent = {
         desc: "Projects, documents and team chat",
         mark: { logo: "balheh" },
         status: "live",
+        detail: "balheh",
       },
       {
         name: "BizTown HR",

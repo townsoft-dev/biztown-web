@@ -54,7 +54,7 @@ const vi = {
         desc: "Quản lý dự án, tài liệu, chat nhóm",
         mark: { logo: "balheh" },
         status: "live",
-        to: null,
+        to: { page: "balheh" },
       },
       {
         name: "BizTown Nhân sự",
@@ -111,6 +111,11 @@ const vi = {
       description:
         "NhàLo giúp chủ nhà trọ ghi chỉ số điện nước, tạo hoá đơn cho cả dãy trọ và gửi cho người thuê kèm mã QR chuyển khoản.",
     },
+    balheh: {
+      title: "Balheh — Bảng công việc, chat nhóm và wiki tài liệu trong một dự án",
+      description:
+        "Balheh gom bảng công việc Kanban, chat nhóm và wiki tài liệu vào cùng một dự án để cả đội giao việc, trao đổi và lưu tài liệu ở một nơi.",
+    },
   } satisfies Record<PageKey, { title: string; description: string }>,
   footer: {
     description:
@@ -124,7 +129,7 @@ const vi = {
           title: "Sản phẩm",
           links: [
             { label: "NhàLo", to: { page: "nhalo" } },
-            { label: "Balheh", to: { section: "products" } },
+            { label: "Balheh", to: { page: "balheh" } },
             { label: "BizTown Nhân sự (sắp ra mắt)", to: null },
             { label: "BizTown Hóa đơn (sắp ra mắt)", to: null },
             { label: "BizTown Tồn kho (sắp ra mắt)", to: null },
@@ -207,7 +212,7 @@ const en: Dictionary = {
         desc: "Projects, documents and team chat",
         mark: { logo: "balheh" },
         status: "live",
-        to: null,
+        to: { page: "balheh" },
       },
       {
         name: "BizTown HR",
@@ -264,6 +269,11 @@ const en: Dictionary = {
       description:
         "NhàLo helps landlords record electricity and water readings, create invoices for a whole building and send them to tenants with a bank-transfer QR code.",
     },
+    balheh: {
+      title: "Balheh — Task boards, team chat and a doc wiki in one project",
+      description:
+        "Balheh puts Kanban task boards, team chat and a document wiki in the same project, so your whole team assigns work, talks and keeps docs in one place.",
+    },
   },
   footer: {
     description:
@@ -277,7 +287,7 @@ const en: Dictionary = {
           title: "Products",
           links: [
             { label: "NhàLo", to: { page: "nhalo" } },
-            { label: "Balheh", to: { section: "products" } },
+            { label: "Balheh", to: { page: "balheh" } },
             { label: "BizTown HR (coming soon)", to: null },
             { label: "BizTown Invoices (coming soon)", to: null },
             { label: "BizTown Inventory (coming soon)", to: null },

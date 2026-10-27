@@ -4,18 +4,21 @@ import { useEffect, useId, useState, type ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
 
-/** Nút ☰ và menu thả xuống cho màn hẹp (dưới 1024px). Bấm một link thì tự đóng. */
+/** Nút ☰ và menu thả xuống cho màn hẹp (mặc định dưới 1024px). Bấm một link thì tự đóng. */
 export function NhaloMobileMenu({
   links,
   openLabel,
   closeLabel,
   menuLabel,
+  className = "lg:hidden",
   children,
 }: {
   links: { label: string; href: string }[];
   openLabel: string;
   closeLabel: string;
   menuLabel: string;
+  /** Mốc ẩn nút ☰ — trùng mốc hiện menu ngang của thanh điều hướng. */
+  className?: string;
   /** Phần cuối menu: chọn ngôn ngữ, nút "Dùng miễn phí". */
   children: ReactNode;
 }) {
@@ -32,7 +35,7 @@ export function NhaloMobileMenu({
   }, [open]);
 
   return (
-    <div className="lg:hidden">
+    <div className={className}>
       <button
         type="button"
         aria-expanded={open}

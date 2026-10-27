@@ -13,15 +13,15 @@ type SiteShellProps = {
   locale: Locale;
   /** Trang hiện tại: tạo link chuyển ngôn ngữ cùng trang và chọn kiểu khung nội dung. */
   page: PageKey;
-  /** Header/footer riêng thay cho bản chung của BizTown (trang sản phẩm NhàLo). */
+  /** Header/footer riêng thay cho bản chung của BizTown (trang sản phẩm NhàLo, Balheh). */
   header?: ReactNode;
   footer?: ReactNode;
   children: ReactNode;
 };
 
 /**
- * Khung chung của mọi trang: header, nội dung, chân trang, nút lên đầu trang. Trang chủ và trang
- * NhàLo tự dựng toàn bộ section; các trang tài liệu (/support, /privacy, /delete-account) đặt nội dung trong
+ * Khung chung của mọi trang: header, nội dung, chân trang, nút lên đầu trang. Trang chủ và các
+ * trang sản phẩm (NhàLo, Balheh) tự dựng toàn bộ section; các trang tài liệu (/support, /privacy, /delete-account) đặt nội dung trong
  * một thẻ trắng trên nền đầu trang — giữ nguyên nội dung cũ, chờ design riêng.
  */
 export function SiteShell({ locale, page, header, footer, children }: SiteShellProps) {
@@ -38,7 +38,7 @@ export function SiteShell({ locale, page, header, footer, children }: SiteShellP
 
       {header ?? <SiteHeader locale={locale} page={page} />}
 
-      {page === "home" || page === "nhalo" ? (
+      {page === "home" || page === "nhalo" || page === "balheh" ? (
         <main id={MAIN_ID}>{children}</main>
       ) : (
         <div className="relative overflow-hidden rounded-b-[48px] bg-[image:var(--top-bg)] pt-[76px] pb-14">

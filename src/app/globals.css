@@ -75,6 +75,19 @@
   --nl-split-old: #23305e;
   --nl-total-bg: #23305e;
 
+  /* Trang Balheh (Figma "Balheh · Homepage · VI · 1440"): ánh sáng xanh thay cho cam. */
+  --bh-hero-bg:
+    radial-gradient(900px 304px at 50% 100%, rgba(120, 185, 255, 0.3), transparent 62%),
+    radial-gradient(821px 582px at 2% 344px, rgba(120, 185, 255, 0.425), transparent 62%),
+    radial-gradient(1001px 602px at 84% 40px, rgba(16, 138, 255, 0.385), transparent 62%),
+    linear-gradient(#f6faff, #f6faff);
+  --bh-footer-bg:
+    radial-gradient(360px 227px at 100% 152px, rgba(120, 185, 255, 0.425), transparent), #ffffff;
+  --bh-kw-from: #0052b0;
+  --bh-kw-to: #2a78dd;
+  --bh-tile: #e8eefc;
+  --bh-window-shadow: 0 40px 80px rgba(16, 87, 191, 0.16);
+
   /* Thẻ kính trong minh hoạ hero (file mẫu v6: v6-glass, tile). */
   --hs-glass-bg: linear-gradient(160deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.72));
   --hs-glass-ring: rgba(239, 159, 39, 0.22);
@@ -145,6 +158,17 @@
     --nl-panel-ring: rgba(255, 255, 255, 0.12);
     --nl-split-old: #8f95e0;
     --nl-total-bg: #2c3a6e;
+    --bh-hero-bg:
+      radial-gradient(900px 304px at 50% 100%, rgba(16, 138, 255, 0.16), transparent 62%),
+      radial-gradient(821px 582px at 2% 344px, rgba(58, 72, 128, 0.7), transparent 62%),
+      radial-gradient(1001px 602px at 84% 40px, rgba(16, 138, 255, 0.24), transparent 62%),
+      linear-gradient(#141c38, #141c38);
+    --bh-footer-bg:
+      radial-gradient(360px 227px at 100% 152px, rgba(120, 185, 255, 0.14), transparent), #141c38;
+    --bh-kw-from: #6db6ff;
+    --bh-kw-to: #a9d3ff;
+    --bh-tile: #1b2f5c;
+    --bh-window-shadow: 0 40px 80px rgba(5, 10, 30, 0.5);
     --hs-glass-bg: linear-gradient(160deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04));
     --hs-glass-ring: rgba(255, 255, 255, 0.14);
     --hs-glass-shadow: rgba(5, 10, 30, 0.35);
@@ -210,6 +234,17 @@
   --nl-panel-ring: rgba(255, 255, 255, 0.12);
   --nl-split-old: #8f95e0;
   --nl-total-bg: #2c3a6e;
+  --bh-hero-bg:
+    radial-gradient(900px 304px at 50% 100%, rgba(16, 138, 255, 0.16), transparent 62%),
+    radial-gradient(821px 582px at 2% 344px, rgba(58, 72, 128, 0.7), transparent 62%),
+    radial-gradient(1001px 602px at 84% 40px, rgba(16, 138, 255, 0.24), transparent 62%),
+    linear-gradient(#141c38, #141c38);
+  --bh-footer-bg:
+    radial-gradient(360px 227px at 100% 152px, rgba(120, 185, 255, 0.14), transparent), #141c38;
+  --bh-kw-from: #6db6ff;
+  --bh-kw-to: #a9d3ff;
+  --bh-tile: #1b2f5c;
+  --bh-window-shadow: 0 40px 80px rgba(5, 10, 30, 0.5);
   --hs-glass-bg: linear-gradient(160deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0.04));
   --hs-glass-ring: rgba(255, 255, 255, 0.14);
   --hs-glass-shadow: rgba(5, 10, 30, 0.35);
@@ -535,6 +570,23 @@
   /* Vòng sáng khi con trỏ demo chạm (hero NhàLo). */
   .nl-tap {
     animation: nl-tap 0.45s ease-out;
+  }
+
+  /* Phần tử mới hiện trong cửa sổ ứng dụng Balheh (thẻ, tin nhắn, toast) — file mẫu: .pop. */
+  .bh-pop {
+    animation: bh-pop-in 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+
+  /* Con trỏ nhập liệu nhấp nháy sau chữ đang gõ trong demo Balheh. */
+  .bh-caret::after {
+    content: "";
+    display: inline-block;
+    width: 1.5px;
+    height: 1em;
+    margin-left: 1px;
+    background: #2556c5;
+    vertical-align: -2px;
+    animation: bh-blink 1s steps(2) infinite;
   }
 
   /*
@@ -1481,6 +1533,24 @@
 @keyframes bt-fill {
   to {
     width: 100%;
+  }
+}
+
+@keyframes bh-pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.98);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes bh-blink {
+  to {
+    visibility: hidden;
   }
 }
 

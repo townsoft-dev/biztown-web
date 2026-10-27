@@ -9,6 +9,9 @@ const OG_LOCALES: Record<Locale, string> = {
   en: "en_US",
 };
 
+/** Trang chủ và các trang sản phẩm: dùng nguyên tiêu đề riêng, không ghép title template. */
+const PRODUCT_PAGES = new Set<PageKey>(["home", "nhalo", "balheh"]);
+
 /** URL tuyệt đối của một trang theo ngôn ngữ, ví dụ ("en", "support") → https://biztown.vn/en/support/ */
 export function absoluteUrl(locale: Locale, page: PageKey) {
   return `${siteConfig.url}${localizedPath(locale, page)}`;
@@ -31,8 +34,7 @@ export function buildPageMetadata(locale: Locale, page: PageKey): Metadata {
   const url = absoluteUrl(locale, page);
 
   return {
-    // Trang chủ và trang sản phẩm dùng nguyên tiêu đề riêng, không ghép title template.
-    title: page === "home" || page === "nhalo" ? { absolute: title } : title,
+    title: PRODUCT_PAGES.has(page) ? { absolute: title } : title,
     description,
     alternates: {
       canonical: url,

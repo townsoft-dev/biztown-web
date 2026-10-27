@@ -173,6 +173,7 @@ export const HOME: HomeContent = {
       },
       {
         key: "balheh",
+        detail: "balheh",
         chip: "Balheh",
         mark: { logo: "balheh" },
         name: { logo: "balheh" },
@@ -306,6 +307,7 @@ export const HOME: HomeContent = {
         desc: "Quản lý dự án, tài liệu, chat nhóm",
         mark: { logo: "balheh" },
         status: "live",
+        detail: "balheh",
       },
       {
         name: "BizTown Nhân sự",

@@ -16,6 +16,7 @@ export const PAGES = {
   privacy: "/privacy",
   deleteAccount: "/delete-account",
   nhalo: "/nhalo",
+  balheh: "/balheh",
 } as const;
 export type PageKey = keyof typeof PAGES;
 
@@ -50,6 +51,20 @@ export const NHALO_SECTIONS = {
   download: "tai-app",
 } as const;
 export type NhaloSection = keyof typeof NHALO_SECTIONS;
+
+/** Các section của trang Balheh có thể trỏ tới (id dùng chung cho mọi ngôn ngữ). */
+export const BALHEH_SECTIONS = {
+  top: "dau-trang",
+  features: "tinh-nang",
+  more: "kham-pha",
+  mission: "su-menh",
+  manage: "quan-ly",
+  roles: "phan-quyen",
+  start: "huong-dan",
+  faq: "hoi-dap",
+  contact: "bat-dau",
+} as const;
+export type BalhehSection = keyof typeof BALHEH_SECTIONS;
 
 /** Link tới một section của trang chủ, ví dụ ("en", "contact") → /en/#lien-he */
 export function sectionPath(locale: Locale, section: HomeSection) {
