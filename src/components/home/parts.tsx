@@ -1,7 +1,6 @@
 import Image from "next/image";
 import type { ReactNode } from "react";
 
-import { TagChip } from "@/components/ui/tag-chip";
 import type { RichText } from "@/content/home-types";
 import { cn } from "@/lib/utils";
 
@@ -24,14 +23,12 @@ export function Rich({ text }: { text: RichText }) {
   );
 }
 
-/** Tag chip + tiêu đề H2 căn giữa (Figma: bt-sh). */
+/** Tiêu đề H2 căn giữa (Figma: bt-sh). */
 export function SectionHead({
-  tag,
   title,
   children,
   className,
 }: {
-  tag: string;
   title: ReactNode;
   children?: ReactNode;
   className?: string;
@@ -43,7 +40,6 @@ export function SectionHead({
         className,
       )}
     >
-      <TagChip label={tag} />
       <h2 className="bt-h2">{title}</h2>
       {children}
     </Reveal>

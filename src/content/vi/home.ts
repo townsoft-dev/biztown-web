@@ -259,7 +259,6 @@ export const HOME: HomeContent = {
     ],
   },
   offers: {
-    tag: "BizTown làm gì",
     title: "Hai cách BizTown đồng hành cùng bạn",
     cards: [
       {
@@ -289,7 +288,6 @@ export const HOME: HomeContent = {
     ],
   },
   discover: {
-    tag: "BizTown làm gì",
     title: "Khám phá mọi điều bạn làm được với BizTown",
     support: "Nhận hỗ trợ",
     tabs: { apps: "Ứng dụng", services: "Dịch vụ" },
@@ -352,7 +350,6 @@ export const HOME: HomeContent = {
     ],
   },
   audience: {
-    tag: "Dành cho ai",
     title: "Công nghệ dễ dùng cho mọi mô hình kinh doanh",
     more: "Tìm hiểu thêm",
     cards: [
@@ -380,7 +377,6 @@ export const HOME: HomeContent = {
     ],
   },
   stats: {
-    tag: "BizTown trong số liệu",
     title: "Hiệu quả bằng con số",
     lead: "Doanh nghiệp Việt đang vận hành nhẹ nhàng hơn mỗi ngày cùng các sản phẩm và giải pháp của BizTown.",
     items: [
@@ -401,7 +397,6 @@ export const HOME: HomeContent = {
     ],
   },
   journey: {
-    tag: "Triển khai",
     title: "Đồng hành cùng bạn từ ngày đầu tiên",
     lead: "Không chỉ là phần mềm — đội ngũ BizTown ở bên bạn trong suốt quá trình chuyển đổi.",
     cta: "Đặt lịch tư vấn",
@@ -442,7 +437,6 @@ export const HOME: HomeContent = {
     ],
   },
   role: {
-    tag: "Vai trò của BizTown",
     title: "Người cộng sự công nghệ cho doanh nghiệp ít nhân sự.",
     lead: "BizTown như một “phòng IT thu nhỏ”: hệ thống tự động làm việc 24/7 để bạn tập trung phát triển kinh doanh thay vì sa đà vào sổ sách.",
     cta: "Tìm hiểu thêm",
@@ -472,7 +466,6 @@ export const HOME: HomeContent = {
     ],
   },
   why: {
-    tag: "Lý do chọn BizTown",
     title: "Vì sao chọn BizTown",
     // Chưa có ảnh minh hoạ 4:5 — thêm media: { src, alt } khi có để hiện khung ảnh.
     left: [
@@ -505,7 +498,6 @@ export const HOME: HomeContent = {
     ],
   },
   principles: {
-    tag: "Triết lý phát triển sản phẩm",
     title: "Cách chúng tôi làm ra mỗi ứng dụng",
     prevLabel: "Nguyên tắc trước",
     nextLabel: "Nguyên tắc sau",
@@ -541,7 +533,6 @@ export const HOME: HomeContent = {
     ],
   },
   band: {
-    tag: "BizTown làm gì",
     title: ["Giải phóng sức lao động thủ công cho ", { kw: "hàng triệu người kinh doanh Việt." }],
     lead: "Không chỉ là phần mềm — BizTown mang đến giải pháp, kiến thức và sự đồng hành cho doanh nghiệp của bạn.",
     inputLabel: "Số điện thoại hoặc email",

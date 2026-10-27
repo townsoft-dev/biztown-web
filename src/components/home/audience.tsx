@@ -31,7 +31,7 @@ export function Audience({ content }: { content: HomeContent["audience"] }) {
 
   return (
     <section id={HOME_SECTIONS.audience} className="bt-wrap flex flex-col items-center py-14">
-      <SectionHead tag={content.tag} title={content.title} />
+      <SectionHead title={content.title} />
 
       <Reveal className="mt-8">
         <div

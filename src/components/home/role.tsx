@@ -2,7 +2,6 @@
 
 import { AppMark } from "@/components/ui/app-mark";
 import { Icon } from "@/components/ui/icon";
-import { TagChip } from "@/components/ui/tag-chip";
 import type { HomeContent } from "@/content/home-types";
 import { HOME_SECTIONS } from "@/i18n/config";
 import { cn } from "@/lib/utils";
@@ -19,8 +18,7 @@ export function Role({ content }: { content: HomeContent["role"] }) {
     <section id={HOME_SECTIONS.about} className="bt-wrap py-14">
       <div className="grid grid-cols-1 items-start gap-16 lg:grid-cols-2">
         <Reveal className="flex flex-col items-start">
-          <TagChip label={content.tag} />
-          <h2 className="bt-h2 mt-[22px]">{content.title}</h2>
+          <h2 className="bt-h2">{content.title}</h2>
           <p className="bt-lead mt-4">{content.lead}</p>
           <button type="button" className="bt-btn bt-btn-primary mt-8">
             {content.cta}

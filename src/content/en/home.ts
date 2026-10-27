@@ -264,7 +264,6 @@ export const HOME: HomeContent = {
     ],
   },
   offers: {
-    tag: "What BizTown does",
     title: "Two ways BizTown works with you",
     cards: [
       {
@@ -294,7 +293,6 @@ export const HOME: HomeContent = {
     ],
   },
   discover: {
-    tag: "What BizTown does",
     title: "Discover everything you can do with BizTown",
     support: "Get support",
     tabs: { apps: "Apps", services: "Services" },
@@ -357,7 +355,6 @@ export const HOME: HomeContent = {
     ],
   },
   audience: {
-    tag: "Who it's for",
     title: "Easy technology for every kind of business",
     more: "Learn more",
     cards: [
@@ -385,7 +382,6 @@ export const HOME: HomeContent = {
     ],
   },
   stats: {
-    tag: "BizTown in numbers",
     title: "Results you can count",
     lead: "Vietnamese businesses run more smoothly every day with BizTown's products and solutions.",
     items: [
@@ -401,7 +397,6 @@ export const HOME: HomeContent = {
     ],
   },
   journey: {
-    tag: "Onboarding",
     title: "With you from day one",
     lead: "More than software — the BizTown team stays with you throughout the transition.",
     cta: "Book a consultation",
@@ -438,7 +433,6 @@ export const HOME: HomeContent = {
     ],
   },
   role: {
-    tag: "BizTown's role",
     title: "A technology partner for lean businesses.",
     lead: "BizTown is like a “mini IT department”: the system works automatically 24/7 so you can focus on growing your business instead of paperwork.",
     cta: "Learn more",
@@ -468,7 +462,6 @@ export const HOME: HomeContent = {
     ],
   },
   why: {
-    tag: "Why BizTown",
     title: "Why choose BizTown",
     // Chưa có ảnh minh hoạ 4:5 — thêm media: { src, alt } khi có để hiện khung ảnh.
     left: [
@@ -501,7 +494,6 @@ export const HOME: HomeContent = {
     ],
   },
   principles: {
-    tag: "Product philosophy",
     title: "How we build every app",
     prevLabel: "Previous principle",
     nextLabel: "Next principle",
@@ -537,7 +529,6 @@ export const HOME: HomeContent = {
     ],
   },
   band: {
-    tag: "What BizTown does",
     title: ["Freeing ", { kw: "millions of Vietnamese business owners" }, " from manual work."],
     lead: "More than software — BizTown brings solutions, know-how and partnership to your business.",
     inputLabel: "Phone number or email",

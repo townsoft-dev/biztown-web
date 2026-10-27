@@ -165,12 +165,10 @@ export type HomeContent = {
     products: Product[];
   };
   offers: {
-    tag: string;
     title: string;
     cards: { title: string; items: string[]; cta: string; art: "apps" | "browser" }[];
   };
   discover: {
-    tag: string;
     title: string;
     support: string;
     tabs: { apps: string; services: string };
@@ -179,19 +177,16 @@ export type HomeContent = {
     services: LinkCard[];
   };
   audience: {
-    tag: string;
     title: string;
     more: string;
     cards: AudienceCard[];
   };
   stats: {
-    tag: string;
     title: string;
     lead: string;
     items: Stat[];
   };
   journey: {
-    tag: string;
     title: string;
     lead: string;
     cta: string;
@@ -200,7 +195,6 @@ export type HomeContent = {
     steps: JourneyStep[];
   };
   role: {
-    tag: string;
     title: string;
     lead: string;
     cta: string;
@@ -209,7 +203,6 @@ export type HomeContent = {
     toasts: Toast[];
   };
   why: {
-    tag: string;
     title: string;
     /** Ảnh minh hoạ 4:5 ở giữa. Bỏ trống thì ẩn khung ảnh, 6 lý do xếp 2 cột. */
     media?: { src: string; alt: string };
@@ -217,14 +210,12 @@ export type HomeContent = {
     right: Feature[];
   };
   principles: {
-    tag: string;
     title: string;
     prevLabel: string;
     nextLabel: string;
     items: Principle[];
   };
   band: {
-    tag: string;
     title: RichText;
     lead: string;
     inputLabel: string;

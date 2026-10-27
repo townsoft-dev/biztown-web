@@ -17,7 +17,7 @@ export function Why({ content }: { content: HomeContent["why"] }) {
   return (
     <section id={HOME_SECTIONS.why} className="bt-wrap py-14">
       <Reveal className="flex flex-col items-center gap-8 rounded-[32px] border border-line bg-card p-12 shadow-[0_1px_1px_var(--shadow-soft)] max-sm:p-6">
-        <SectionHead tag={content.tag} title={content.title} />
+        <SectionHead title={content.title} />
         <div
           className={cn(
             "grid w-full grid-cols-1 items-start gap-10",

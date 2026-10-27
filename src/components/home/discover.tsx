@@ -28,7 +28,7 @@ export function Discover({
 
   return (
     <section id={HOME_SECTIONS.discover} className="bt-wrap flex flex-col items-center py-14">
-      <SectionHead tag={content.tag} title={content.title} />
+      <SectionHead title={content.title} />
 
       <Reveal className="mt-8 flex flex-col items-center gap-6">
         <a

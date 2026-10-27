@@ -19,7 +19,7 @@ export function Journey({ content }: { content: HomeContent["journey"] }) {
 
   return (
     <section className="bt-wrap py-14">
-      <SectionHead tag={content.tag} title={content.title} className="gap-4">
+      <SectionHead title={content.title} className="gap-4">
         <p className="bt-lead">{content.lead}</p>
         <a href={`#${HOME_SECTIONS.contact}`} className="bt-btn bt-btn-primary">
           {content.cta}

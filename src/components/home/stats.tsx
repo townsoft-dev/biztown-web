@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 
-import { TagChip } from "@/components/ui/tag-chip";
 import type { HomeContent, Stat } from "@/content/home-types";
 import { cn } from "@/lib/utils";
 
@@ -28,8 +27,7 @@ export function Stats({ content, locale }: { content: HomeContent["stats"]; loca
     <section className="bt-wrap py-14">
       <div className="grid grid-cols-1 items-start gap-14 lg:grid-cols-[0.6fr_1fr]">
         <Reveal className="flex flex-col items-start">
-          <TagChip label={content.tag} />
-          <h2 className="bt-h2 mt-[18px]">{content.title}</h2>
+          <h2 className="bt-h2">{content.title}</h2>
           <p className="bt-lead mt-3.5 max-w-[462px]">{content.lead}</p>
         </Reveal>
 

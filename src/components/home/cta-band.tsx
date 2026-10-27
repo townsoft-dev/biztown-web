@@ -2,7 +2,6 @@
 
 import { useId } from "react";
 
-import { TagChip } from "@/components/ui/tag-chip";
 import type { HomeContent } from "@/content/home-types";
 import { HOME_SECTIONS } from "@/i18n/config";
 
@@ -58,8 +57,7 @@ export function CtaBand({ content }: { content: HomeContent["band"] }) {
         </div>
 
         <div className="relative flex flex-col items-start">
-          <TagChip label={content.tag} />
-          <h2 className="mt-[18px] text-[52px] leading-[57.2px] font-semibold tracking-[-1.56px] text-ink max-sm:text-[34px] max-sm:leading-10">
+          <h2 className="text-[52px] leading-[57.2px] font-semibold tracking-[-1.56px] text-ink max-sm:text-[34px] max-sm:leading-10">
             <Rich text={content.title} />
           </h2>
           <p className="mt-4 max-w-[562px] text-[19px] leading-[30.4px] text-ink-muted">

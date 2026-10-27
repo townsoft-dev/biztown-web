@@ -21,7 +21,7 @@ const APP_GRID: AppMarkKind[] = [
 export function Offers({ content }: { content: HomeContent["offers"] }) {
   return (
     <section id={HOME_SECTIONS.services} className="bt-wrap pt-[72px] pb-14">
-      <SectionHead tag={content.tag} title={content.title} />
+      <SectionHead title={content.title} />
       <div className="mt-8 grid grid-cols-1 items-start gap-5 lg:grid-cols-2">
         {content.cards.map((card) => (
           <Reveal

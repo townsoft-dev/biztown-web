@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 
-import { TagChip } from "@/components/ui/tag-chip";
 import type { HomeContent, Principle } from "@/content/home-types";
 import { HOME_SECTIONS } from "@/i18n/config";
 import { cn } from "@/lib/utils";
@@ -61,8 +60,7 @@ export function Principles({ content }: { content: HomeContent["principles"] }) 
     <section id={HOME_SECTIONS.principles} className="bt-wrap py-14">
       <div className="grid grid-cols-1 gap-12 lg:grid-cols-[0.5fr_1fr]">
         <Reveal className="flex flex-col items-start">
-          <TagChip label={content.tag} />
-          <h2 className="bt-h2 mt-3">{content.title}</h2>
+          <h2 className="bt-h2">{content.title}</h2>
           {/* Nút "Tìm hiểu thêm" đang ẩn trong design (opacity 0) — chỉ giữ khoảng trống. */}
           <div aria-hidden="true" className="mt-6 h-[52px] max-lg:hidden" />
           <div className="mt-8 flex w-full items-center justify-between">
