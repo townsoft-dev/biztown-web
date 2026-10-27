@@ -15,6 +15,10 @@ const SOCIALS = [
   { short: "▶", name: "YouTube" },
 ];
 
+/** Vị trí nhóm liên kết dưới lg, theo chỉ số cột trong `footer.columns`
+ *  (Sản phẩm · Dịch vụ · Về BizTown · Hỗ trợ + Chính sách). */
+const MOBILE_GROUP_PLACEMENT = ["col-span-2", "col-start-1", "col-start-1", "col-start-2"];
+
 /** Icon nét (Figma: building-07, map-pin) tô theo màu chữ để đổi theo Day/Night. */
 function FooterIcon({ name, size }: { name: "building" | "map-pin"; size: number }) {
   return (
@@ -40,8 +44,11 @@ export function SiteFooter({ locale }: { locale: Locale }) {
   return (
     <footer className="border-t border-line pt-[49px] pb-8">
       <div className="bt-wrap">
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-[1fr_0.7fr_0.7fr_0.7fr_0.7fr]">
-          <div className="flex flex-col gap-[23.6px] sm:col-span-2 lg:col-span-1">
+        {/* Dưới lg: lưới 2 cột, cột liên kết dùng `contents` để từng nhóm thành ô lưới —
+            Sản phẩm chiếm cả hàng; Dịch vụ / Về BizTown bên trái, Hỗ trợ / Chính sách bên phải
+            (`grid-flow-dense` để nhóm cột phải lấp lại các hàng phía trên). */}
+        <div className="grid grid-flow-row-dense grid-cols-2 gap-6 lg:grid-cols-[1fr_0.7fr_0.7fr_0.7fr_0.7fr]">
+          <div className="col-span-2 flex flex-col gap-[23.6px] lg:col-span-1">
             <Link
               href={localizedPath(locale, "home")}
               aria-label={dict.homeLabel}
@@ -77,9 +84,12 @@ export function SiteFooter({ locale }: { locale: Locale }) {
           </div>
 
           {footer.columns.map((groups, columnIndex) => (
-            <div key={columnIndex} className="flex flex-col gap-8">
+            <div key={columnIndex} className="contents lg:flex lg:flex-col lg:gap-8">
               {groups.map((group) => (
-                <div key={group.title} className="flex flex-col gap-3">
+                <div
+                  key={group.title}
+                  className={`flex flex-col gap-3 ${MOBILE_GROUP_PLACEMENT[columnIndex] ?? ""}`}
+                >
                   <h2 className="text-[14px] leading-[22.4px] font-semibold text-ink">
                     {group.title}
                   </h2>
