@@ -130,7 +130,8 @@ export function NhaloFeatures({
       <div
         role="tablist"
         aria-label={content.tag}
-        className="mx-auto mt-11 grid max-w-[980px] grid-cols-2 gap-x-5 gap-y-6 md:grid-cols-4"
+        // Màn hẹp: vẫn 4 bước trên 1 hàng, thu nhỏ số và chữ cho vừa chỗ.
+        className="mx-auto mt-11 grid max-w-[980px] grid-cols-4 gap-x-5 max-md:mt-8 max-md:gap-x-2"
       >
         {content.steps.map((step, index) => {
           const selected = index === active;
@@ -148,11 +149,11 @@ export function NhaloFeatures({
               tabIndex={selected ? 0 : -1}
               onClick={() => setActive(index)}
               onKeyDown={(event) => onKey(event, index)}
-              className="flex flex-col items-center gap-3"
+              className="flex flex-col items-center gap-3 max-md:gap-2"
             >
               <span
                 className={cn(
-                  "flex size-12 items-center justify-center rounded-full text-[17px] leading-none font-bold transition-colors",
+                  "flex size-12 items-center justify-center rounded-full text-[17px] leading-none font-bold transition-colors max-md:size-10 max-md:text-[15px]",
                   selected
                     ? "bg-accent text-on-accent"
                     : "border-2 border-line bg-card text-ink-muted",
@@ -162,7 +163,7 @@ export function NhaloFeatures({
               </span>
               <span
                 className={cn(
-                  "text-center text-[18px] leading-[1.3] font-semibold",
+                  "text-center text-[18px] leading-[1.3] font-semibold max-md:text-[13px]",
                   selected ? "text-ink" : "text-ink-muted",
                 )}
               >

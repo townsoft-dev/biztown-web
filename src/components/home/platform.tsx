@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { AppMark } from "@/components/ui/app-mark";
 import { Icon } from "@/components/ui/icon";
@@ -38,6 +38,19 @@ export function Platform({
   const product = products[active];
   const go = (index: number) => setActive((index + products.length) % products.length);
   const first = active === 0;
+  const tabsRef = useRef<HTMLDivElement>(null);
+
+  // Màn hẹp chip cuộn ngang: đổi sản phẩm (mũi tên, chấm) thì kéo chip đang chọn vào giữa.
+  // Chỉ cuộn ngang trong dải chip, không dùng scrollIntoView để trang không bị nhảy dọc.
+  useEffect(() => {
+    const list = tabsRef.current;
+    const chip = list?.children[active] as HTMLElement | undefined;
+    if (!list || !chip || list.scrollWidth <= list.clientWidth) return;
+    list.scrollTo({
+      left: chip.offsetLeft - (list.clientWidth - chip.offsetWidth) / 2,
+      behavior: "smooth",
+    });
+  }, [active]);
 
   return (
     <section id={HOME_SECTIONS.products} className="bt-wrap pt-12 pb-16">
@@ -57,9 +70,11 @@ export function Platform({
         </p>
 
         <div
+          ref={tabsRef}
           role="tablist"
           aria-label={content.pickerLabel}
-          className="mt-8 flex flex-wrap justify-center gap-2.5"
+          // Màn hẹp: chip nằm 1 hàng, vuốt ngang để xem; tràn sát mép màn hình, chừa chỗ cho bóng.
+          className="relative mt-8 flex flex-wrap justify-center gap-2.5 max-md:-mx-5 max-md:mt-6 max-md:[scrollbar-width:none] max-md:flex-nowrap max-md:justify-start max-md:overflow-x-auto max-md:px-5 max-md:pt-1 max-md:pb-6 max-md:[&::-webkit-scrollbar]:hidden"
         >
           {products.map((item, index) => {
             const selected = index === active;
@@ -71,7 +86,7 @@ export function Platform({
                 aria-selected={selected}
                 onClick={() => setActive(index)}
                 className={cn(
-                  "flex items-center gap-2.5 rounded-full border py-1.5 pr-[18px] pl-1.5 text-[15px] leading-none font-medium whitespace-nowrap transition-all",
+                  "flex shrink-0 items-center gap-2.5 rounded-full border py-1.5 pr-[18px] pl-1.5 text-[15px] leading-none font-medium whitespace-nowrap transition-all",
                   selected
                     ? "border-transparent bg-accent text-on-accent shadow-[0_10px_30px_rgba(239,159,39,0.35)]"
                     : "border-chip-ring bg-chip text-ink-muted hover:text-ink",
@@ -86,7 +101,7 @@ export function Platform({
       </Reveal>
 
       <Reveal>
-        <div className="relative mt-8">
+        <div className="relative mt-8 max-md:mt-3">
           <ProductSlide
             key={product.key}
             product={product}
