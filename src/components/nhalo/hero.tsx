@@ -210,7 +210,8 @@ export function NhaloHero({ content, app }: { content: NhaloContent["hero"]; app
           <div
             role="tablist"
             aria-label={content.chaptersLabel}
-            className="grid grid-cols-2 items-end gap-x-5 gap-y-3.5 md:flex md:gap-6"
+            // Màn hẹp: vẫn 1 hàng như hero trang chủ, ẩn tên chương (chỉ còn số + thanh tiến độ).
+            className="flex items-end gap-6 max-md:items-center max-md:gap-4"
           >
             {content.chapters.map((item, index) => {
               const selected = index === chapter;
@@ -234,7 +235,7 @@ export function NhaloHero({ content, app }: { content: NhaloContent["hero"]; app
                     </span>
                     <span
                       className={cn(
-                        "truncate text-[17px] leading-none font-semibold",
+                        "truncate text-[17px] leading-none font-semibold max-md:sr-only",
                         selected ? "text-ink" : "text-ink-muted",
                       )}
                     >
@@ -265,7 +266,7 @@ export function NhaloHero({ content, app }: { content: NhaloContent["hero"]; app
               onClick={() => setPaused((value) => !value)}
               aria-label={paused ? content.playLabel : content.pauseLabel}
               title={paused ? content.playLabel : content.pauseLabel}
-              className="col-span-2 flex size-11 shrink-0 items-center justify-center justify-self-end rounded-full border border-[rgba(35,48,94,0.3)] text-[12px] text-ink dark:border-line"
+              className="flex size-11 shrink-0 items-center justify-center rounded-full border border-[rgba(35,48,94,0.3)] text-[12px] text-ink dark:border-line"
             >
               <span aria-hidden="true">{paused ? "▶" : "❚❚"}</span>
             </button>
