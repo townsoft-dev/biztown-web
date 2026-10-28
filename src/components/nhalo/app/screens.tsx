@@ -743,21 +743,21 @@ const MANAGERS = [
   {
     initials: "NL",
     name: "Nguyễn Thị Lan",
-    phone: "0988 111 222",
+    phone: "0988 xxx xxx",
     grant: "granted3",
     active: true,
   },
   {
     initials: "TH",
     name: "Trần Quốc Hùng",
-    phone: "0977 333 444",
+    phone: "0977 xxx xxx",
     grant: "granted1",
     active: true,
   },
   {
     initials: "VM",
     name: "Võ Thị Mai",
-    phone: "0966 555 666",
+    phone: "0966 xxx xxx",
     grant: "grantedNone",
     active: false,
   },
@@ -830,7 +830,7 @@ export function ManagerGrantScreen({ t }: { t: AppCopy }) {
             </span>
           </div>
         </div>
-        <Field label={g.phone} value="0988 111 222" muted className="flex-none" />
+        <Field label={g.phone} value="0988 xxx xxx" muted className="flex-none" />
         <GroupLabel>{g.access}</GroupLabel>
         {HOUSES.map((house) => (
           <div
