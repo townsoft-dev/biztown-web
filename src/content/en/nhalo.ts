@@ -308,6 +308,7 @@ export const NHALO: NhaloContent = {
     copyright: "© 2026 NhàLo, Townsoft Vina",
   },
   app: {
+    scrollHint: "Scroll inside the screen to see more",
     nav: ["Home", "Tenants", "Bills", "Profile"],
     months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
     reading: {
@@ -403,6 +404,11 @@ export const NHALO: NhaloContent = {
       water: "Water 09/2026 (5 m³)",
       service: "– Service fee",
       wifi: "– Wifi fee",
+      short: {
+        electricity: "Electricity (64 kWh)",
+        water: "Water (5 m³)",
+        fees: "Service & wifi fees",
+      },
       total: "Total",
       due: "Due date",
       scan: "Scan to pay with VietQR",

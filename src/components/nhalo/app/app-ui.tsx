@@ -34,14 +34,33 @@ export function MsIcon({
   );
 }
 
+/**
+ * Cuộn trong màn hình (file mẫu: .dev.sc): "body" — chỉ phần thân (BODY trong screens.tsx) cuộn,
+ * thanh trạng thái/tiêu đề/thanh dưới đứng yên, nút "+" dính đáy; "screen" — cả màn hình cuộn.
+ */
+const SCROLL_CLASSES = {
+  body: "[&_.app-body]:overflow-y-auto [&_.app-body]:overscroll-contain [&_.app-body]:pb-4 [&_.app-body]:[scrollbar-width:none] [&_.app-body::-webkit-scrollbar]:hidden [&_.app-body>*]:shrink-0 [&_.app-fab]:sticky [&_.app-fab]:right-auto [&_.app-fab]:bottom-3 [&_.app-fab]:-mt-[60px] [&_.app-fab]:self-end",
+  screen:
+    "overflow-y-auto overscroll-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden [&>*]:shrink-0",
+} as const;
+
+/**
+ * Tỉ lệ điện thoại ở các section có chú thích: bằng điện thoại hero (Figma 316×666, --s 0.8);
+ * màn rất hẹp thu còn 0.72 cho vừa chiều ngang.
+ */
+export const PHONE_SCALE = "[--s:0.8] max-sm:[--s:0.72]";
+
 /** Khung điện thoại (Figma: Phone shell). Tỉ lệ thu nhỏ đặt bằng biến CSS --s ở className. */
 export function Phone({
   height = 812,
+  scroll,
   className,
   children,
 }: {
   /** Chiều cao màn hình ở khổ gốc 375px. */
   height?: number;
+  /** Cho người xem tự kéo lên xuống trong màn hình. */
+  scroll?: keyof typeof SCROLL_CLASSES;
   className?: string;
   children: ReactNode;
 }) {
@@ -61,7 +80,14 @@ export function Phone({
         className="absolute top-0 left-0 origin-top-left rounded-[54px] bg-navy-950 p-[10px]"
         style={{ width: 395, height: height + 20, transform: "scale(var(--s, 1))" }}
       >
-        <div className="relative flex h-full flex-col overflow-hidden rounded-[44px] bg-gray-50 text-left text-navy">
+        <div
+          data-scroller={scroll === "screen" ? "" : undefined}
+          className={cn(
+            "relative flex h-full flex-col rounded-[44px] bg-gray-50 text-left text-navy",
+            scroll === "screen" ? "overflow-x-hidden" : "overflow-hidden",
+            scroll && SCROLL_CLASSES[scroll],
+          )}
+        >
           {children}
         </div>
       </div>
@@ -156,6 +182,7 @@ export function Field({
   placeholder,
   active,
   demo,
+  anno,
   className,
 }: {
   label: string;
@@ -169,10 +196,12 @@ export function Field({
   active?: boolean;
   /** Mốc cho con trỏ demo ở hero. */
   demo?: string;
+  /** Số chú thích trỏ vào ô này (AnnotatedScreen). */
+  anno?: number;
   className?: string;
 }) {
   return (
-    <div className={cn("flex min-w-0 flex-1 flex-col gap-[5px]", className)}>
+    <div data-anno={anno} className={cn("flex min-w-0 flex-1 flex-col gap-[5px]", className)}>
       <span className="text-[12px] leading-[1.35] text-ink-muted">{label}</span>
       <span
         data-demo={demo}
@@ -207,9 +236,18 @@ const BADGE_TONES = {
 export type BadgeTone = keyof typeof BADGE_TONES;
 
 /** Nhãn trạng thái dạng viên thuốc (Figma: Status). */
-export function Badge({ tone, children }: { tone: BadgeTone; children: ReactNode }) {
+export function Badge({
+  tone,
+  anno,
+  children,
+}: {
+  tone: BadgeTone;
+  anno?: number;
+  children: ReactNode;
+}) {
   return (
     <span
+      data-anno={anno}
       className={cn(
         "shrink-0 rounded-full px-[9px] py-1 text-[12px] leading-[1.35] font-semibold whitespace-nowrap transition-colors duration-300",
         BADGE_TONES[tone],
@@ -232,17 +270,20 @@ export function AppButton({
   size = "md",
   pressed,
   demo,
+  anno,
   children,
 }: {
   variant: keyof typeof BUTTON_VARIANTS;
   size?: "md" | "sm";
   pressed?: boolean;
   demo?: string;
+  anno?: number;
   children: ReactNode;
 }) {
   return (
     <span
       data-demo={demo}
+      data-anno={anno}
       className={cn(
         "flex min-w-0 flex-1 items-center justify-center rounded-xl font-semibold whitespace-nowrap transition-transform duration-150",
         size === "md" ? "h-[38.4px] text-[11.2px]" : "h-[30.7px] text-[9px]",
@@ -256,8 +297,12 @@ export function AppButton({
 }
 
 /** Nhãn nhóm chữ hoa (Figma: Label · line-strong). */
-export function GroupLabel({ children }: { children: ReactNode }) {
-  return <span className="text-[12px] leading-[1.35] text-app-faint uppercase">{children}</span>;
+export function GroupLabel({ anno, children }: { anno?: number; children: ReactNode }) {
+  return (
+    <span data-anno={anno} className="text-[12px] leading-[1.35] text-app-faint uppercase">
+      {children}
+    </span>
+  );
 }
 
 /** Một dòng khoá/giá trị có gạch chân (Figma: Detail row). */
@@ -265,16 +310,19 @@ export function DetailRow({
   label,
   value,
   strong,
+  anno,
   className,
 }: {
   label: ReactNode;
   value: ReactNode;
   /** Giá trị in đậm (màn Hợp đồng, hoá đơn người thuê). */
   strong?: boolean;
+  anno?: number;
   className?: string;
 }) {
   return (
     <div
+      data-anno={anno}
       className={cn(
         "flex items-start gap-2 border-b border-gray-100 py-[9px] last:border-b-0",
         className,
@@ -305,13 +353,15 @@ export function PeriodChips({
   chips,
   size = "md",
   demo,
+  anno,
 }: {
   chips: { kind: ChipKind; label: string }[];
   size?: "md" | "sm";
   demo?: string;
+  anno?: number;
 }) {
   return (
-    <span data-demo={demo} className="flex gap-1.5">
+    <span data-demo={demo} data-anno={anno} className="flex gap-1.5">
       {chips.map((chip, index) => (
         <span
           key={index}
@@ -331,12 +381,22 @@ export function PeriodChips({
 }
 
 /** Nút tròn cam "+" góc dưới (Figma: FAB). */
-export function Fab({ className, demo }: { className?: string; demo?: string }) {
+export function Fab({
+  className,
+  demo,
+  anno,
+}: {
+  className?: string;
+  demo?: string;
+  anno?: number;
+}) {
   return (
     <span
       data-demo={demo}
+      data-anno={anno}
       className={cn(
-        "absolute flex size-12 items-center justify-center rounded-2xl bg-accent text-white shadow-[0_8px_8px_rgba(239,159,39,0.4)]",
+        // app-fab: mốc để Phone scroll="body" đổi nút sang dính đáy vùng cuộn.
+        "app-fab absolute flex size-12 items-center justify-center rounded-2xl bg-accent text-white shadow-[0_8px_8px_rgba(239,159,39,0.4)]",
         className,
       )}
     >

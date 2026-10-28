@@ -119,6 +119,8 @@ export type NhaloContent = {
  * như dữ liệu mẫu trong Figma; chỗ có số thay đổi theo demo dùng {n}.
  */
 export type AppCopy = {
+  /** Dòng nhắc dưới điện thoại có chú thích: người xem tự cuộn trong màn hình. */
+  scrollHint: string;
   nav: [string, string, string, string];
   /** Tên tháng ngắn trên ô lịch hoá đơn, index 0 = tháng 1. */
   months: string[];
@@ -215,6 +217,8 @@ export type AppCopy = {
     water: string;
     service: string;
     wifi: string;
+    /** Tên dòng ở bản rút gọn (hero, Figma "Người thuê nhận được"). */
+    short: { electricity: string; water: string; fees: string };
     total: string;
     due: string;
     scan: string;

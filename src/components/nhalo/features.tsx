@@ -6,94 +6,30 @@ import type { AppCopy, NhaloContent } from "@/content/nhalo-types";
 import { NHALO_SECTIONS } from "@/i18n/config";
 import { cn } from "@/lib/utils";
 
-import { MsIcon, Phone } from "./app/app-ui";
-import {
-  BATCH_SCREEN_HEIGHT,
-  BatchScreen,
-  BillsScreen,
-  ReadingScreen,
-  TenantBillScreen,
-} from "./app/screens";
-import { AnnotatedScreen, NhaloSectionHead, type AnnotationLayout } from "./parts";
+import { AnnotatedScreen, type AnnoSide } from "./annotated-screen";
+import { MsIcon, PHONE_SCALE, Phone } from "./app/app-ui";
+import { BatchScreen, BillsScreen, ReadingScreen, TenantBillScreen } from "./app/screens";
+import { NhaloSectionHead } from "./parts";
 
 const STEP_ICONS = ["bolt", "receipt_long", "send", "account_balance_wallet"];
 
-/** Toạ độ chú thích theo Figma "NhàLo / How it works" (Selected=1…4). */
-const LAYOUTS: AnnotationLayout[] = [
-  {
-    height: 616,
-    calloutWidth: 347.5,
-    phoneWidth: 292.3,
-    callouts: [
-      { side: "left", slot: 85, pin: 129 },
-      { side: "left", slot: 272.5, pin: 196 },
-      { side: "left", slot: 460, pin: 286 },
-      { side: "right", slot: 165, pin: 348 },
-      { side: "right", slot: 342.5, pin: 403 },
-      { side: "right", slot: 520, pin: 546 },
-    ],
-  },
-  {
-    // Màn B-03 dài hơn khung chuẩn (BATCH_SCREEN_HEIGHT) để hiện đủ nút cuối, nên khung và
-    // chấm 4–6 dời xuống theo vị trí thật của hàng P.104, ô tổng tiền và nút "Tạo & gửi".
-    height: 652,
-    calloutWidth: 347.5,
-    phoneWidth: 292.3,
-    callouts: [
-      { side: "left", slot: 85, pin: 129 },
-      { side: "left", slot: 272.5, pin: 187 },
-      { side: "left", slot: 460, pin: 294 },
-      { side: "right", slot: 165, pin: 455 },
-      { side: "right", slot: 342.5, pin: 564 },
-      { side: "right", slot: 520, pin: 609 },
-    ],
-  },
-  {
-    height: 717,
-    calloutWidth: 367.5,
-    phoneWidth: 252.8,
-    callouts: [
-      { side: "left", slot: 85, pin: 119 },
-      { side: "left", slot: 323, pin: 271 },
-      { side: "left", slot: 561, pin: 413 },
-      { side: "right", slot: 165, pin: 456 },
-      { side: "right", slot: 393, pin: 526 },
-      { side: "right", slot: 621, pin: 646 },
-    ],
-  },
-  {
-    height: 616,
-    calloutWidth: 347.5,
-    phoneWidth: 292.3,
-    callouts: [
-      { side: "left", slot: 85, pin: 141 },
-      { side: "left", slot: 272.5, pin: 193 },
-      { side: "left", slot: 460, pin: 229 },
-      { side: "right", slot: 165, pin: 418 },
-      { side: "right", slot: 342.5, pin: 376 },
-      { side: "right", slot: 520, pin: 556 },
-    ],
-  },
-];
+/** Ba chú thích đầu bên trái, ba chú thích sau bên phải (Figma "NhàLo / How it works"). */
+const SIDES: AnnoSide[] = ["left", "left", "left", "right", "right", "right"];
 
+/** Điện thoại cỡ như hero (Figma 316×666), người xem tự kéo trong màn hình. */
 function stepPhone(index: number, app: AppCopy): ReactNode {
+  // Trang hoá đơn người thuê không có thanh tiêu đề/thanh dưới: cả màn hình cuộn.
   if (index === 2) {
     return (
-      <Phone height={1100} className="[--s:0.64]">
+      <Phone scroll="screen" className={PHONE_SCALE}>
         <TenantBillScreen t={app} />
       </Phone>
     );
   }
-  if (index === 1) {
-    return (
-      <Phone height={BATCH_SCREEN_HEIGHT} className="[--s:0.74]">
-        <BatchScreen t={app} selected={4} />
-      </Phone>
-    );
-  }
   return (
-    <Phone className="[--s:0.74]">
+    <Phone scroll="body" className={PHONE_SCALE}>
       {index === 0 && <ReadingScreen t={app} />}
+      {index === 1 && <BatchScreen t={app} selected={4} />}
       {index === 3 && <BillsScreen t={app} />}
     </Phone>
   );
@@ -191,8 +127,9 @@ export function NhaloFeatures({
               {step.title}
             </h3>
             <AnnotatedScreen
-              layout={LAYOUTS[index]}
+              sides={SIDES}
               callouts={step.callouts}
+              hint={app.scrollHint}
               phone={stepPhone(index, app)}
             />
           </div>

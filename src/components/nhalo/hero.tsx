@@ -21,7 +21,6 @@ import {
   InvoiceScreen,
   ReadingScreen,
   TenantBillScreen,
-  BATCH_SCREEN_HEIGHT,
   batchTotal,
   type InvoiceStatus,
 } from "./app/screens";
@@ -390,7 +389,8 @@ function ChapterDemo({
 
       {/* Điện thoại + thông báo thành công (Figma: Demo phone). */}
       <div className="relative justify-self-center [--s:0.66] sm:[--s:0.8]">
-        <Phone height={chapter === 1 ? BATCH_SCREEN_HEIGHT : undefined}>
+        {/* Cả 4 chương cùng một khung 316×666 (màn 812, --s 0.8) như Figma Hero / Stage. */}
+        <Phone>
           <DemoScreen chapter={chapter} demo={demo} app={app} />
         </Phone>
         <div
@@ -509,8 +509,9 @@ function Summary({
         <p className="text-center text-[14px] leading-none font-semibold text-ink">
           {s.tenantLabel}
         </p>
-        <Phone height={1100} className="[--s:0.5]">
-          <TenantBillScreen t={app} />
+        {/* Figma: khung 197.5×417 — màn 812 chuẩn ở tỉ lệ 0.5, nội dung rút gọn. */}
+        <Phone className="[--s:0.5]">
+          <TenantBillScreen t={app} compact />
         </Phone>
       </div>
     );

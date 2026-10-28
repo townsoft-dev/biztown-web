@@ -25,10 +25,12 @@ import {
 /*
  * Các màn hình ứng dụng dùng trong trang NhàLo (Figma: H-06, B-03, B-04, B-01, T-05, P-05, P-06
  * và trang hoá đơn người thuê). Dữ liệu mẫu (tên, số tiền) giữ nguyên như design; phần thay đổi
- * theo demo ở hero nhận qua props.
+ * theo demo ở hero nhận qua props. data-anno="n" đánh dấu chỗ chú thích số n trỏ tới
+ * (AnnotatedScreen, theo file mẫu).
  */
 
-const BODY = "relative flex min-h-0 flex-1 flex-col overflow-hidden";
+// app-body: mốc để Phone scroll="body" cho phần thân cuộn được.
+const BODY = "app-body relative flex min-h-0 flex-1 flex-col overflow-hidden";
 
 /** H-06 — Ghi chỉ số hàng tháng. */
 export function ReadingScreen({
@@ -54,11 +56,11 @@ export function ReadingScreen({
       <StatusBar />
       <TopBar title={r.title} sub={fill(r.sub, done)} />
       <div className={cn(BODY, "gap-3 px-4 pt-3.5")}>
-        <div className="flex gap-2.5">
+        <div data-anno={1} className="flex gap-2.5">
           <Field label={r.monthLabel} value={r.month} icon="expand_more" />
           <Field label={r.dateLabel} value="30/09/2026" icon="calendar_month" />
         </div>
-        <div className="flex flex-col gap-2 rounded-[14px] bg-white p-3.5">
+        <div data-anno={2} className="flex flex-col gap-2 rounded-[14px] bg-white p-3.5">
           <div className="flex justify-between text-[15px] leading-[20.25px] whitespace-nowrap">
             <span>{r.progress}</span>
             <span>{fill(r.rooms, done)}</span>
@@ -77,6 +79,7 @@ export function ReadingScreen({
           current="1.216"
           usage="96 kWh"
           recorded
+          annos={{ previous: 3, usage: 4 }}
         />
         <MeterCard
           t={t}
@@ -87,9 +90,10 @@ export function ReadingScreen({
           recorded={recorded}
           typing={typing}
           demo="cv"
+          annos={{ badge: 5 }}
         />
         <div className="flex">
-          <AppButton variant="primary" pressed={pressed} demo="save">
+          <AppButton variant="primary" pressed={pressed} demo="save" anno={6}>
             {r.save}
           </AppButton>
         </div>
@@ -108,6 +112,7 @@ function MeterCard({
   recorded,
   typing,
   demo,
+  annos = {},
 }: {
   t: AppCopy;
   room: string;
@@ -117,6 +122,8 @@ function MeterCard({
   recorded: boolean;
   typing?: boolean;
   demo?: string;
+  /** Số chú thích trỏ vào ô số cũ, dòng số đã dùng, nhãn trạng thái. */
+  annos?: { previous?: number; usage?: number; badge?: number };
 }) {
   const r = t.reading;
   return (
@@ -136,10 +143,12 @@ function MeterCard({
           </span>
           <span className="text-[12px] leading-[1.35] text-app-faint">{r.lastReading}</span>
         </span>
-        <Badge tone={recorded ? "green" : "orange"}>{recorded ? r.recorded : r.notRecorded}</Badge>
+        <Badge tone={recorded ? "green" : "orange"} anno={annos.badge}>
+          {recorded ? r.recorded : r.notRecorded}
+        </Badge>
       </div>
       <div className="flex gap-2.5">
-        <Field label={r.previous} value={previous} muted />
+        <Field label={r.previous} value={previous} muted anno={annos.previous} />
         <Field
           label={r.current}
           value={current || r.enter}
@@ -148,7 +157,7 @@ function MeterCard({
           demo={demo}
         />
       </div>
-      <span className="min-h-4 text-[12px] leading-[1.35] text-app-green">
+      <span data-anno={annos.usage} className="min-h-4 text-[12px] leading-[1.35] text-app-green">
         {usage && fill(r.usage, usage)}
       </span>
     </div>
@@ -171,12 +180,9 @@ export function batchTotal(selected: number) {
 }
 
 /**
- * Chiều cao màn hình B-03 (khổ gốc 375px): dài hơn khung 812 chuẩn để hiện đủ hai nút
- * "Lưu tất cả bản nháp" / "Tạo & gửi tất cả" ở cuối.
+ * B-03 — Tạo hoá đơn hàng loạt. Dòng hợp đồng gọn như file mẫu (đệm 9px, số tiền 13px) để cả
+ * màn hình vừa khung 812 chuẩn, cùng cỡ điện thoại với các chương khác ở hero.
  */
-export const BATCH_SCREEN_HEIGHT = 860;
-
-/** B-03 — Tạo hoá đơn hàng loạt. */
 export function BatchScreen({
   t,
   selected = 4,
@@ -200,11 +206,14 @@ export function BatchScreen({
       <StatusBar />
       <TopBar title={b.title} sub={b.sub} />
       <div className={cn(BODY, "gap-[9px] p-4")}>
-        <div className="flex gap-2.5">
+        <div data-anno={1} className="flex gap-2.5">
           <Field label={b.house} value="Nhà trọ Bình An" icon="expand_more" />
           <Field label={b.period} value="09/2026" icon="expand_more" />
         </div>
-        <p className="rounded-xl bg-app-blue-bg p-3 text-[15px] leading-[20.25px] text-app-blue">
+        <p
+          data-anno={2}
+          className="rounded-xl bg-app-blue-bg p-3 text-[15px] leading-[20.25px] text-app-blue"
+        >
           {b.summary}
         </p>
         <div className="flex gap-2.5">
@@ -220,23 +229,29 @@ export function BatchScreen({
           return (
             <div
               key={row.room}
+              data-anno={index === 0 ? 3 : index === 3 ? 4 : undefined}
               className={cn(
-                "flex items-center gap-2.5 rounded-[14px] bg-white px-3.5 py-2.5",
+                "flex items-center gap-2.5 rounded-[14px] bg-white px-3.5 py-[9px]",
                 !ready && "opacity-50",
               )}
             >
               <Checkbox checked={checked} />
-              <span className="flex min-w-0 flex-1 flex-col gap-[3px] text-[15px] leading-[20.25px]">
+              <span className="flex min-w-0 flex-1 flex-col text-[15px] leading-[20.25px]">
                 <span className="truncate">
                   {row.room} · {row.name}
                 </span>
-                <span className="text-ink-muted">{ready ? dots(row.amount) : "—"}</span>
+                <span className="text-[13px] leading-[1.35] text-ink-muted tabular-nums">
+                  {ready ? dots(row.amount) : "—"}
+                </span>
               </span>
               <Badge tone={ready ? "green" : "orange"}>{ready ? b.ready : b.noReading}</Badge>
             </div>
           );
         })}
-        <div className="flex items-start justify-between rounded-[14px] bg-navy p-4 text-white">
+        <div
+          data-anno={5}
+          className="flex items-start justify-between rounded-[14px] bg-navy p-4 text-white"
+        >
           <span className="text-[15px] leading-[20.25px]">{fill(b.selected, selected)}</span>
           <span className="text-[26.25px] leading-[34px] font-semibold">
             {dots(batchTotal(selected))}
@@ -244,7 +259,7 @@ export function BatchScreen({
         </div>
         <div className="flex gap-2.5">
           <AppButton variant="outline">{b.saveDrafts}</AppButton>
-          <AppButton variant="primary" pressed={pressGo} demo="go">
+          <AppButton variant="primary" pressed={pressGo} demo="go" anno={6}>
             {b.createSend}
           </AppButton>
         </div>
@@ -417,15 +432,15 @@ export function BillsScreen({
       <StatusBar />
       <TopBar title={b.title} sub={fill(b.sub, paid ? 13 : 12)} />
       <div className={cn(BODY, "gap-2.5 px-4 pt-3.5")}>
-        <div className="flex gap-2.5">
+        <div data-anno={1} className="flex gap-2.5">
           <StatCard value="72.400.000" label={b.totalPeriod} />
           <StatCard value={paid ? "14.916.800" : "18.100.000"} label={b.unpaid} />
         </div>
-        <div className="flex gap-2">
+        <div data-anno={2} className="flex gap-2">
           <FilterChip active>{b.period}</FilterChip>
           <FilterChip active>{b.allHouses}</FilterChip>
         </div>
-        <div className="flex gap-2">
+        <div data-anno={3} className="flex gap-2">
           <FilterChip active>{b.all}</FilterChip>
           <FilterChip>{b.notCreatedCount}</FilterChip>
           <FilterChip>{b.draftCount}</FilterChip>
@@ -460,11 +475,16 @@ export function BillsScreen({
           ])}
           highlight={highlight}
           demo="c103"
+          chipsAnno={5}
         />
         <BillCard
           title="P.106 · Hoàng Gia Huy"
           sub={`3.100.000${b.perMonth} · ${b.late}`}
-          status={<Badge tone="red">{b.overdue}</Badge>}
+          status={
+            <Badge tone="red" anno={4}>
+              {b.overdue}
+            </Badge>
+          }
           chips={chips([
             ["paid", 6],
             ["paid", 7],
@@ -488,7 +508,7 @@ export function BillsScreen({
             ["scheduled", 10],
           ])}
         />
-        <Fab className="right-7 bottom-7" />
+        <Fab className="right-7 bottom-7" anno={6} />
       </div>
       <BottomNav labels={t.nav} active={2} />
     </>
@@ -524,6 +544,7 @@ function BillCard({
   chips,
   highlight,
   demo,
+  chipsAnno,
 }: {
   title: string;
   sub: string;
@@ -531,6 +552,8 @@ function BillCard({
   chips: { kind: ChipKind; label: string }[];
   highlight?: boolean;
   demo?: string;
+  /** Số chú thích trỏ vào dải lịch các kỳ. */
+  chipsAnno?: number;
 }) {
   return (
     <div
@@ -545,19 +568,23 @@ function BillCard({
         {status}
       </div>
       <span className="text-[12px] leading-[1.35] text-app-faint">{sub}</span>
-      <PeriodChips chips={chips} />
+      <PeriodChips chips={chips} anno={chipsAnno} />
     </div>
   );
 }
 
-/** Trang hoá đơn người thuê mở từ link SMS/Email (Figma: Tenant invoice). */
-export function TenantBillScreen({ t }: { t: AppCopy }) {
+/**
+ * Trang hoá đơn người thuê mở từ link SMS/Email (Figma: Tenant invoice). compact: bản rút gọn
+ * vừa khung 812 ở hero (Figma: Hero / Stage · Chapter=3 · "Người thuê nhận được") — bỏ dòng
+ * người thuê/mã hợp đồng/mã hoá đơn, gộp phí dịch vụ và wifi.
+ */
+export function TenantBillScreen({ t, compact = false }: { t: AppCopy; compact?: boolean }) {
   const b = t.tenantBill;
   return (
     <>
       <div className="flex shrink-0 flex-col gap-3 bg-navy px-5 pt-[52px] pb-[18px]">
         <Image src="/images/nhalo/nhalo-lockup-alt.svg" alt="" width={51} height={17} />
-        <div className="flex items-center justify-between gap-2">
+        <div data-anno={1} className="flex items-center justify-between gap-2">
           <span className="text-[21px] leading-[1.35] font-semibold text-white">{b.title}</span>
           <span className="rounded-full bg-orange-50 px-[9px] py-1 text-[12px] leading-[1.35] font-semibold whitespace-nowrap text-orange-800">
             {b.unpaid}
@@ -566,26 +593,46 @@ export function TenantBillScreen({ t }: { t: AppCopy }) {
         <span className="text-[14px] leading-[1.35] text-slate-200">{b.sub}</span>
       </div>
       <div className="flex flex-1 flex-col gap-[5px] bg-white px-5 py-4 text-[14px] leading-[1.35]">
-        <DetailRow label={b.tenant} value="Trần Thị Cẩm" strong />
-        <DetailRow label={b.contractCode} value="HD-20260315-003" strong />
-        <DetailRow label={b.invoiceCode} value="000027" strong />
-        <DetailRow label={b.room} value="2.800.000đ" strong />
-        <DetailRow label={b.electricity} value="243.200đ" strong />
-        <DetailRow label={b.water} value="90.000đ" strong />
-        <DetailRow label={b.service} value="30.000đ" strong />
-        <DetailRow label={b.wifi} value="20.000đ" strong />
-        <div className="flex items-start justify-between rounded-xl bg-orange-50 p-3.5 font-semibold whitespace-nowrap">
+        {compact ? (
+          <>
+            <DetailRow label={b.room} value="2.800.000đ" strong />
+            <DetailRow label={b.short.electricity} value="243.200đ" strong />
+            <DetailRow label={b.short.water} value="90.000đ" strong />
+            <DetailRow label={b.short.fees} value="50.000đ" strong />
+          </>
+        ) : (
+          <>
+            <DetailRow label={b.tenant} value="Trần Thị Cẩm" strong />
+            <DetailRow label={b.contractCode} value="HD-20260315-003" strong />
+            <DetailRow label={b.invoiceCode} value="000027" strong />
+            <DetailRow label={b.room} value="2.800.000đ" strong anno={2} />
+            <DetailRow label={b.electricity} value="243.200đ" strong />
+            <DetailRow label={b.water} value="90.000đ" strong />
+            <DetailRow label={b.service} value="30.000đ" strong />
+            <DetailRow label={b.wifi} value="20.000đ" strong />
+          </>
+        )}
+        <div
+          data-anno={3}
+          className="flex items-start justify-between rounded-xl bg-orange-50 p-3.5 font-semibold whitespace-nowrap"
+        >
           <span className="uppercase">{b.total}</span>
           <span className="text-[21px] leading-[1.35] text-orange-800">3.183.200đ</span>
         </div>
-        <div className="flex justify-between font-semibold whitespace-nowrap text-app-red">
+        <div
+          data-anno={4}
+          className="flex justify-between font-semibold whitespace-nowrap text-app-red"
+        >
           <span>{b.due}</span>
           <span>05/10/2026</span>
         </div>
         <div className="flex flex-col items-center gap-2.5 rounded-[14px] border-2 border-dashed border-gray-100 p-3.5">
           <span className="text-center font-semibold">{b.scan}</span>
-          <Image src="/images/nhalo/vietqr.svg" alt="" width={150} height={150} />
-          <span className="flex w-full flex-col rounded-[10px] bg-gray-50 p-2.5 text-[12px] leading-[1.35]">
+          <Image src="/images/nhalo/vietqr.svg" alt="" width={150} height={150} data-anno={5} />
+          <span
+            data-anno={6}
+            className="flex w-full flex-col rounded-[10px] bg-gray-50 p-2.5 text-[12px] leading-[1.35]"
+          >
             <BankRow label={b.bank} value="Vietcombank" />
             <BankRow label={b.account} value="0071000123456" />
             <BankRow label={b.holder} value="NGUYEN VAN HAI" />
@@ -627,24 +674,24 @@ export function ContractScreen({ t }: { t: AppCopy }) {
             <span>0909 123 456</span>
           </span>
         </div>
-        <GroupLabel>{c.terms}</GroupLabel>
+        <GroupLabel anno={1}>{c.terms}</GroupLabel>
         <div className="rounded-[14px] bg-white px-3.5 text-[14px] leading-[1.35]">
           <DetailRow label={c.start} value="15/03/2026" strong />
           <DetailRow label={c.end} value="15/03/2027" strong />
           <DetailRow label={c.deposit} value="3.200.000" strong />
           <DetailRow label={c.rent} value="3.200.000" strong />
           <DetailRow label={c.electricity} value="3.800 / kWh" strong />
-          <DetailRow label={c.service} value="15.000 × 22 m² = 330.000" strong />
-          <DetailRow label={c.rentCycle} value={c.rentCycleValue} strong />
+          <DetailRow label={c.service} value="15.000 × 22 m² = 330.000" strong anno={3} />
+          <DetailRow label={c.rentCycle} value={c.rentCycleValue} strong anno={2} />
           <DetailRow label={c.otherCycle} value={c.otherCycleValue} strong />
           <DetailRow label={c.due} value={c.dueValue} strong />
         </div>
         <GroupLabel>{c.meters}</GroupLabel>
         <div className="rounded-[14px] bg-white px-3.5 text-[14px] leading-[1.35]">
-          <DetailRow label={c.moveIn} value="15/03/2026 · 980 kWh · 40 m³" strong />
+          <DetailRow label={c.moveIn} value="15/03/2026 · 980 kWh · 40 m³" strong anno={4} />
           <DetailRow label={c.latest} value="01/09/2026 · 1.216 kWh · 59 m³" strong />
         </div>
-        <div className="flex gap-2.5">
+        <div data-anno={5} className="flex gap-2.5">
           <AppButton variant="dark" size="sm">
             {c.renew}
           </AppButton>
@@ -663,6 +710,7 @@ export function ContractScreen({ t }: { t: AppCopy }) {
         <GroupLabel>{c.schedule}</GroupLabel>
         <PeriodChips
           size="sm"
+          anno={6}
           chips={[
             { kind: "paid", label: m(7) },
             { kind: "paid", label: m(8) },
