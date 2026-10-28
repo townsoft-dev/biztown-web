@@ -111,6 +111,11 @@ const vi = {
       description:
         "NhàLo giúp chủ nhà trọ ghi chỉ số điện nước, tạo hoá đơn cho cả dãy trọ và gửi cho người thuê kèm mã QR chuyển khoản.",
     },
+    nhaloPrivacy: {
+      title: "Chính sách quyền riêng tư NhàLo",
+      description:
+        "Chính sách quyền riêng tư của ứng dụng NhàLo: dữ liệu thu thập, cách sử dụng, chia sẻ, lưu trữ và quyền của người dùng.",
+    },
     balheh: {
       title: "Balheh — Bảng công việc, chat nhóm và wiki tài liệu trong một dự án",
       description:
@@ -268,6 +273,11 @@ const en: Dictionary = {
       title: "NhàLo — Rental management, utility readings and automatic invoices",
       description:
         "NhàLo helps landlords record electricity and water readings, create invoices for a whole building and send them to tenants with a bank-transfer QR code.",
+    },
+    nhaloPrivacy: {
+      title: "NhàLo privacy policy",
+      description:
+        "NhàLo privacy policy: what data is collected, how it is used, shared and stored, and your rights.",
     },
     balheh: {
       title: "Balheh — Task boards, team chat and a doc wiki in one project",

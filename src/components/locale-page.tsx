@@ -29,8 +29,10 @@ import { SiteShell } from "./site-shell";
  * Chính sách quyền riêng tư là HTML sinh từ repo biztown-rent (xem scripts/import-privacy.mjs).
  * Đọc lúc build — site xuất tĩnh nên không có lần đọc nào lúc chạy.
  */
-function PrivacyContent({ locale }: { locale: Locale }) {
-  const html = readFileSync(join(process.cwd(), "src/content/privacy", `${locale}.html`), "utf8");
+function PrivacyContent({ locale, app }: { locale: Locale; app?: string }) {
+  let html = readFileSync(join(process.cwd(), "src/content/privacy", `${locale}.html`), "utf8");
+  // Bản cho app khác (/nhalo/privacy): cùng nội dung, chỉ đổi tên app.
+  if (app) html = html.replaceAll("BizTown Rent Manager", app);
   return <div className="contents" dangerouslySetInnerHTML={{ __html: html }} />;
 }
 
@@ -44,6 +46,10 @@ const CONTENT: Record<PageKey, Record<Locale, () => ReactNode>> = {
   },
   support: { vi: () => <SupportVi />, en: () => <SupportEn /> },
   privacy: { vi: () => <PrivacyContent locale="vi" />, en: () => <PrivacyContent locale="en" /> },
+  nhaloPrivacy: {
+    vi: () => <PrivacyContent locale="vi" app="NhàLo" />,
+    en: () => <PrivacyContent locale="en" app="NhàLo" />,
+  },
   deleteAccount: { vi: () => <DeleteAccountVi />, en: () => <DeleteAccountEn /> },
   nhalo: {
     vi: () => <NhaloPage content={NHALO_VI} locale="vi" />,

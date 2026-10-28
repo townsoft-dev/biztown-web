@@ -301,7 +301,7 @@ export const NHALO: NhaloContent = {
         title: "Chính sách",
         links: [
           { label: "Điều khoản sử dụng", to: null },
-          { label: "Chính sách bảo mật", to: { page: "privacy" } },
+          { label: "Chính sách bảo mật", to: { page: "nhaloPrivacy" } },
           { label: "Bảo vệ dữ liệu", to: { page: "deleteAccount" } },
         ],
       },

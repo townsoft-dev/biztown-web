@@ -300,7 +300,7 @@ export const NHALO: NhaloContent = {
         title: "Policies",
         links: [
           { label: "Terms of use", to: null },
-          { label: "Privacy policy", to: { page: "privacy" } },
+          { label: "Privacy policy", to: { page: "nhaloPrivacy" } },
           { label: "Data protection", to: { page: "deleteAccount" } },
         ],
       },
