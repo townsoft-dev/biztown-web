@@ -37,34 +37,47 @@ export function NhaloUtilities({
   locale: Locale;
 }) {
   const [day, setDay] = useState(15);
-  const [dragging, setDragging] = useState(false);
+  // Vị trí nút khi đang kéo, tính bằng ngày nhưng không làm tròn (để nút trượt liên tục);
+  // null khi không kéo — lúc đó nút nằm đúng ở `day`.
+  const [dragPos, setDragPos] = useState<number | null>(null);
+  const dragging = dragPos !== null;
   const trackRef = useRef<HTMLDivElement>(null);
   const number = new Intl.NumberFormat(locale === "vi" ? "vi-VN" : "en-US");
 
-  const ratio = (day - 1) / PERIOD_DAYS;
-  const oldKwh = Math.round(PERIOD_KWH * ratio);
+  const oldKwh = Math.round((PERIOD_KWH * (day - 1)) / PERIOD_DAYS);
   const newKwh = PERIOD_KWH - oldKwh;
   const date = `${String(day).padStart(2, "0")}/09`;
-  // Đang kéo thì bỏ hiệu ứng trượt để nút bám theo con trỏ.
-  const motion = dragging ? "" : "duration-150";
+  // Tỉ lệ vị trí nút, nhãn và phần thanh khách cũ trên thanh.
+  const ratio = ((dragPos ?? day) - 1) / PERIOD_DAYS;
+  // Đang kéo thì tắt hẳn hiệu ứng trượt để nút bám theo con trỏ (chỉ bỏ `duration-*` thì
+  // `transition-[left]` vẫn dùng 150ms mặc định); thả ra thì nút trượt về ngày gần nhất.
+  const motion = dragging ? "transition-none" : "duration-150";
 
-  /** Đổi vị trí con trỏ trên thanh thành ngày (thanh dài đúng 30 ngày của kỳ). */
-  function dayAt(clientX: number) {
+  /** Đổi vị trí con trỏ trên thanh thành ngày, chưa làm tròn (thanh dài đúng 30 ngày của kỳ). */
+  function posAt(clientX: number) {
     const rect = trackRef.current?.getBoundingClientRect();
-    if (!rect || rect.width === 0) return day;
-    const next = Math.round(((clientX - rect.left) / rect.width) * PERIOD_DAYS) + 1;
+    if (!rect || rect.width === 0) return dragPos ?? day;
+    const next = ((clientX - rect.left) / rect.width) * PERIOD_DAYS + 1;
     return Math.min(MAX_DAY, Math.max(MIN_DAY, next));
+  }
+
+  function dragTo(clientX: number) {
+    const pos = posAt(clientX);
+    setDragPos(pos);
+    setDay(Math.round(pos));
   }
 
   function onPointerDown(event: ReactPointerEvent<HTMLDivElement>) {
     if (event.button !== 0) return;
+    // Bấm nhanh nhiều lần có thể bôi đen chữ quanh thanh; nhấn trúng vùng bôi đen rồi kéo thì
+    // trình duyệt tưởng là kéo-thả đoạn chữ (con trỏ 🚫, bắn pointercancel). Bỏ chọn trước.
+    window.getSelection()?.removeAllRanges();
     event.currentTarget.setPointerCapture(event.pointerId);
-    setDragging(true);
-    setDay(dayAt(event.clientX));
+    dragTo(event.clientX);
   }
 
   function onPointerMove(event: ReactPointerEvent<HTMLDivElement>) {
-    if (dragging) setDay(dayAt(event.clientX));
+    if (dragging) dragTo(event.clientX);
   }
 
   function onKeyDown(event: ReactKeyboardEvent) {
@@ -97,7 +110,7 @@ export function NhaloUtilities({
             <Tenant initial="M" person={content.newTenant} accent />
           </div>
 
-          <div className="relative h-40">
+          <div className="relative h-40 select-none">
             <div aria-hidden="true" className="flex justify-between whitespace-nowrap">
               <Reading label={content.periodStart} value={`${number.format(START_KWH)} kWh`} />
               <Reading
@@ -129,8 +142,8 @@ export function NhaloUtilities({
               ref={trackRef}
               onPointerDown={onPointerDown}
               onPointerMove={onPointerMove}
-              onPointerUp={() => setDragging(false)}
-              onPointerCancel={() => setDragging(false)}
+              onPointerUp={() => setDragPos(null)}
+              onPointerCancel={() => setDragPos(null)}
               className={cn(
                 "absolute inset-x-0 top-[45px] h-12 touch-none",
                 dragging ? "cursor-grabbing" : "cursor-pointer",
