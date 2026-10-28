@@ -348,7 +348,7 @@ export function InvoiceScreen({
         <span className="mx-auto mb-3.5 block h-[5px] w-10 rounded-full bg-gray-100" />
         <span className="block text-[18px] leading-[1.35] font-semibold">{i.sheet.title}</span>
         <span className="mt-2 mb-3.5 block text-[14px] leading-[1.35] text-ink-muted">
-          {i.sheet.to} Trần Thị Cẩm · 0909 123 456
+          {i.sheet.to} Trần Thị Cẩm · 0909 xxx xxx
         </span>
         <SendOption
           icon="chat"
@@ -634,7 +634,7 @@ export function TenantBillScreen({ t, compact = false }: { t: AppCopy; compact?:
             className="flex w-full flex-col rounded-[10px] bg-gray-50 p-2.5 text-[12px] leading-[1.35]"
           >
             <BankRow label={b.bank} value="Vietcombank" />
-            <BankRow label={b.account} value="0071000123456" />
+            <BankRow label={b.account} value="0071000xxxxxx" />
             <BankRow label={b.holder} value="NGUYEN VAN HAI" />
             <BankRow label={b.note} value="HD P103 09/2026" />
           </span>
@@ -671,7 +671,7 @@ export function ContractScreen({ t }: { t: AppCopy }) {
           </span>
           <span className="flex flex-col gap-[3px] text-[14px] leading-[1.35]">
             <span className="font-semibold">Nguyễn Thị Anh</span>
-            <span>0909 123 456</span>
+            <span>0909 xxx xxx</span>
           </span>
         </div>
         <GroupLabel anno={1}>{c.terms}</GroupLabel>
