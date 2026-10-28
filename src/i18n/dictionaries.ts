@@ -116,6 +116,11 @@ const vi = {
       description:
         "Chính sách quyền riêng tư của ứng dụng NhàLo: dữ liệu thu thập, cách sử dụng, chia sẻ, lưu trữ và quyền của người dùng.",
     },
+    nhaloDeleteAccount: {
+      title: "Yêu cầu xoá tài khoản NhàLo",
+      description:
+        "Cách xoá tài khoản NhàLo và toàn bộ dữ liệu: các bước thực hiện, dữ liệu bị xoá và thời gian lưu trữ.",
+    },
     balheh: {
       title: "Balheh — Bảng công việc, chat nhóm và wiki tài liệu trong một dự án",
       description:
@@ -175,11 +180,7 @@ const vi = {
         },
         {
           title: "Chính sách",
-          links: [
-            { label: "Điều khoản sử dụng", to: null },
-            { label: "Chính sách bảo mật", to: { page: "privacy" } },
-            { label: "Bảo vệ dữ liệu", to: { page: "deleteAccount" } },
-          ],
+          links: [{ label: "Điều khoản sử dụng", to: null }],
         },
       ],
     ] satisfies FooterColumn[] as FooterColumn[],
@@ -279,6 +280,11 @@ const en: Dictionary = {
       description:
         "NhàLo privacy policy: what data is collected, how it is used, shared and stored, and your rights.",
     },
+    nhaloDeleteAccount: {
+      title: "Request NhàLo account deletion",
+      description:
+        "How to delete your NhàLo account and all its data: the steps, what gets deleted and how long anything is kept.",
+    },
     balheh: {
       title: "Balheh — Task boards, team chat and a doc wiki in one project",
       description:
@@ -338,11 +344,7 @@ const en: Dictionary = {
         },
         {
           title: "Policies",
-          links: [
-            { label: "Terms of use", to: null },
-            { label: "Privacy policy", to: { page: "privacy" } },
-            { label: "Data protection", to: { page: "deleteAccount" } },
-          ],
+          links: [{ label: "Terms of use", to: null }],
         },
       ],
     ],

@@ -4,3 +4,5 @@ pnpm-lock.yaml
 public
 out
 src/content/privacy
+src/content/nhalo-privacy
+src/content/nhalo-delete-account

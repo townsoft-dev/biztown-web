@@ -6,7 +6,7 @@ import { LocaleSwitcher } from "@/components/site/site-header";
 import { ThemeToggle } from "@/components/site/theme-toggle";
 import { TopLink } from "@/components/site/top-link";
 import type { NhaloContent } from "@/content/nhalo-types";
-import { NHALO_SECTIONS, localizedPath, type Locale } from "@/i18n/config";
+import { NHALO_SECTIONS, localizedPath, type Locale, type PageKey } from "@/i18n/config";
 import { getDictionary } from "@/i18n/dictionaries";
 
 import { NhaloMobileMenu } from "./nhalo-mobile-menu";
@@ -37,19 +37,23 @@ export function NhaloLockup({ width, height }: { width: number; height: number }
 /**
  * Thanh điều hướng của trang NhàLo (Figma: Nav · Balheh): biểu tượng BizTown về trang chủ,
  * lockup NhàLo, menu nhảy tới các section, nút sáng/tối, ngôn ngữ, "Dùng miễn phí".
- * Màn hẹp gom menu vào nút ☰.
+ * Màn hẹp gom menu vào nút ☰. Dùng chung cho các trang con (/nhalo/privacy…): khi đó link
+ * section trỏ về trang NhàLo và nút đổi ngôn ngữ giữ nguyên trang con.
  */
 export function NhaloHeader({
   locale,
   content,
+  page = "nhalo",
 }: {
   locale: Locale;
   content: NhaloContent["header"];
+  page?: PageKey;
 }) {
   const dict = getDictionary(locale);
+  const base = page === "nhalo" ? "" : localizedPath(locale, "nhalo");
   const links = content.menu.map((item) => ({
     label: item.label,
-    href: `#${NHALO_SECTIONS[item.to]}`,
+    href: `${base}#${NHALO_SECTIONS[item.to]}`,
   }));
 
   return (
@@ -87,10 +91,10 @@ export function NhaloHeader({
         <div className="ml-auto flex items-center gap-2.5">
           <ThemeToggle label={dict.themeToggle} />
           <div className="hidden sm:block">
-            <LocaleSwitcher locale={locale} page="nhalo" label={dict.localeSwitcherLabel} />
+            <LocaleSwitcher locale={locale} page={page} label={dict.localeSwitcherLabel} />
           </div>
           <a
-            href={`#${NHALO_SECTIONS.download}`}
+            href={`${base}#${NHALO_SECTIONS.download}`}
             className="bt-btn bt-btn-primary hidden sm:inline-flex"
           >
             {content.cta}
@@ -101,8 +105,8 @@ export function NhaloHeader({
             closeLabel={content.closeMenu}
             menuLabel={content.menuLabel}
           >
-            <LocaleSwitcher locale={locale} page="nhalo" label={dict.localeSwitcherLabel} />
-            <a href={`#${NHALO_SECTIONS.download}`} className="bt-btn bt-btn-primary">
+            <LocaleSwitcher locale={locale} page={page} label={dict.localeSwitcherLabel} />
+            <a href={`${base}#${NHALO_SECTIONS.download}`} className="bt-btn bt-btn-primary">
               {content.cta}
             </a>
           </NhaloMobileMenu>

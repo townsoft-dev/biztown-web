@@ -26,13 +26,11 @@ import { NhaloPage } from "./nhalo/nhalo-page";
 import { SiteShell } from "./site-shell";
 
 /**
- * Chính sách quyền riêng tư là HTML sinh từ repo biztown-rent (xem scripts/import-privacy.mjs).
- * Đọc lúc build — site xuất tĩnh nên không có lần đọc nào lúc chạy.
+ * Trang pháp lý dạng HTML sinh từ repo app (xem scripts/import-privacy.mjs): `dir` là thư mục
+ * trong src/content. Đọc lúc build — site xuất tĩnh nên không có lần đọc nào lúc chạy.
  */
-function PrivacyContent({ locale, app }: { locale: Locale; app?: string }) {
-  let html = readFileSync(join(process.cwd(), "src/content/privacy", `${locale}.html`), "utf8");
-  // Bản cho app khác (/nhalo/privacy): cùng nội dung, chỉ đổi tên app.
-  if (app) html = html.replaceAll("BizTown Rent Manager", app);
+function HtmlContent({ dir, locale }: { dir: string; locale: Locale }) {
+  const html = readFileSync(join(process.cwd(), "src/content", dir, `${locale}.html`), "utf8");
   return <div className="contents" dangerouslySetInnerHTML={{ __html: html }} />;
 }
 
@@ -45,10 +43,17 @@ const CONTENT: Record<PageKey, Record<Locale, () => ReactNode>> = {
     en: () => <HomePage content={HOME_EN} locale="en" />,
   },
   support: { vi: () => <SupportVi />, en: () => <SupportEn /> },
-  privacy: { vi: () => <PrivacyContent locale="vi" />, en: () => <PrivacyContent locale="en" /> },
+  privacy: {
+    vi: () => <HtmlContent dir="privacy" locale="vi" />,
+    en: () => <HtmlContent dir="privacy" locale="en" />,
+  },
   nhaloPrivacy: {
-    vi: () => <PrivacyContent locale="vi" app="NhàLo" />,
-    en: () => <PrivacyContent locale="en" app="NhàLo" />,
+    vi: () => <HtmlContent dir="nhalo-privacy" locale="vi" />,
+    en: () => <HtmlContent dir="nhalo-privacy" locale="en" />,
+  },
+  nhaloDeleteAccount: {
+    vi: () => <HtmlContent dir="nhalo-delete-account" locale="vi" />,
+    en: () => <HtmlContent dir="nhalo-delete-account" locale="en" />,
   },
   deleteAccount: { vi: () => <DeleteAccountVi />, en: () => <DeleteAccountEn /> },
   nhalo: {
@@ -61,10 +66,13 @@ const CONTENT: Record<PageKey, Record<Locale, () => ReactNode>> = {
   },
 };
 
+const NHALO_PAGES = new Set<PageKey>(["nhalo", "nhaloPrivacy", "nhaloDeleteAccount"]);
+
 /** Một trang hoàn chỉnh (khung + nội dung) theo ngôn ngữ. File page.tsx chỉ gọi component này. */
 export function LocalePage({ locale, page }: { locale: Locale; page: PageKey }) {
-  // Trang sản phẩm NhàLo, Balheh có thanh điều hướng và chân trang riêng theo design.
-  const nhalo = page === "nhalo" ? NHALO[locale] : null;
+  // Trang sản phẩm NhàLo, Balheh có thanh điều hướng và chân trang riêng theo design; các trang
+  // con của NhàLo (chính sách, xoá tài khoản) dùng chung header/footer với trang NhàLo.
+  const nhalo = NHALO_PAGES.has(page) ? NHALO[locale] : null;
   const balheh = page === "balheh" ? BALHEH[locale] : null;
 
   return (
@@ -72,11 +80,11 @@ export function LocalePage({ locale, page }: { locale: Locale; page: PageKey }) 
       locale={locale}
       page={page}
       header={
-        (nhalo && <NhaloHeader locale={locale} content={nhalo.header} />) ||
+        (nhalo && <NhaloHeader locale={locale} content={nhalo.header} page={page} />) ||
         (balheh && <BalhehHeader locale={locale} content={balheh.header} />)
       }
       footer={
-        (nhalo && <NhaloFooter locale={locale} content={nhalo.footer} />) ||
+        (nhalo && <NhaloFooter locale={locale} content={nhalo.footer} page={page} />) ||
         (balheh && <BalhehFooter locale={locale} content={balheh.footer} />)
       }
     >

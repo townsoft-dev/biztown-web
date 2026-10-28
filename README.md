@@ -53,7 +53,9 @@ src/
 │  └─ locale-page.tsx        # Ghép khung + nội dung theo (ngôn ngữ, trang)
 ├─ content/
 │  ├─ vi/  en/               # Nội dung trang chủ, hỗ trợ, xoá tài khoản (TSX viết tay)
-│  └─ privacy/               # vi.html, en.html — SINH RA, đừng sửa tay
+│  ├─ privacy/               # vi.html, en.html — SINH RA, đừng sửa tay
+│  ├─ nhalo-privacy/         # /nhalo/privacy — SINH RA, đừng sửa tay
+│  └─ nhalo-delete-account/  # /nhalo/delete-account — SINH RA, đừng sửa tay
 ├─ i18n/
 │  ├─ config.ts              # Danh sách ngôn ngữ, danh sách trang, localizedPath()
 │  └─ dictionaries.ts        # Chữ dùng chung: điều hướng, title, description, chân trang
@@ -95,6 +97,14 @@ pnpm import:privacy <biztown-rent>/web/privacy/index.html
 
 Script cắt hai khối `data-lang="vi"` / `"en"` ra hai file HTML và đổi link nội bộ của bản
 tiếng Anh sang `/en/...`. Sửa tay hai file đó sẽ bị ghi đè ở lần nhập sau.
+
+Trang của NhàLo nhập cùng cách, thêm tham số đích (link `/privacy`, `/delete-account` trong file
+gốc được đổi thành `/nhalo/...`):
+
+```sh
+pnpm import:privacy <nhalo>/privacy/index.html nhalo-privacy               # /nhalo/privacy
+pnpm import:privacy <nhalo>/delete-account/index.html nhalo-delete-account # /nhalo/delete-account
+```
 
 ## Triển khai
 

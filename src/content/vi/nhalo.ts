@@ -302,7 +302,7 @@ export const NHALO: NhaloContent = {
         links: [
           { label: "Điều khoản sử dụng", to: null },
           { label: "Chính sách bảo mật", to: { page: "nhaloPrivacy" } },
-          { label: "Bảo vệ dữ liệu", to: { page: "deleteAccount" } },
+          { label: "Bảo vệ dữ liệu", to: { page: "nhaloDeleteAccount" } },
         ],
       },
     ],
