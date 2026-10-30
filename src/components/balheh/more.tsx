@@ -190,7 +190,7 @@ export function BalhehMore({ content, app }: { content: BalhehMoreContent; app: 
         <div
           role="tablist"
           aria-label={content.tag}
-          className="mt-10 flex flex-wrap justify-center gap-2 max-[980px]:-mx-5 max-[980px]:flex-nowrap max-[980px]:justify-start max-[980px]:overflow-x-auto max-[980px]:px-5 max-[980px]:pb-1"
+          className="mt-10 flex flex-wrap justify-center gap-2 max-[980px]:-mx-5 max-[980px]:[scrollbar-width:none] max-[980px]:flex-nowrap max-[980px]:justify-start max-[980px]:overflow-x-auto max-[980px]:px-5 max-[980px]:pb-1 max-[980px]:[&::-webkit-scrollbar]:hidden"
         >
           {content.tabs.map((item, index) => {
             const selected = index === active;

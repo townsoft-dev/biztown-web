@@ -332,7 +332,8 @@ export function BalhehHero({
           <div
             role="tablist"
             aria-label={content.chaptersLabel}
-            className="grid grid-cols-2 items-end gap-x-5 gap-y-3.5 px-1 pb-[18px] md:flex md:gap-6"
+            // Màn hẹp: vẫn 1 hàng như hero NhàLo, ẩn tên chương (chỉ còn số + thanh tiến độ).
+            className="flex items-end gap-6 px-1 pb-[18px] max-md:items-center max-md:gap-4"
           >
             {content.chapters.map((label, index) => {
               const selected = index === chapter;
@@ -356,7 +357,7 @@ export function BalhehHero({
                     </span>
                     <span
                       className={cn(
-                        "truncate text-[17px] leading-none font-semibold",
+                        "truncate text-[17px] leading-none font-semibold max-md:sr-only",
                         selected ? "text-ink" : "text-ink-muted",
                       )}
                     >
