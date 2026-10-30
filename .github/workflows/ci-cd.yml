@@ -35,10 +35,12 @@ jobs:
       - run: pnpm format:check
       - run: pnpm build
 
-      # Đóng gói out/ thành tar: giữ file ẩn và quyền file; job deploy dùng đúng bản đã kiểm tra.
+      # Đóng gói .next/standalone/ (server.js + node_modules cần thiết + public, .next/static do
+      # `pnpm build` chép vào) thành tar: giữ file ẩn, symlink của pnpm và quyền file; job deploy
+      # dùng đúng bản đã kiểm tra, server không phải cài gì thêm.
       - name: Pack build
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-        run: tar -czf site.tar.gz -C out .
+        run: tar -czf site.tar.gz -C .next/standalone .
 
       - uses: actions/upload-artifact@v4
         if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
@@ -55,8 +57,11 @@ jobs:
     env:
       # Thư mục đã tạo sẵn trên server, cạnh các project Docker khác ở /home/ubuntu.
       REMOTE_DIR: /home/ubuntu/biztown-web
-    # CI chỉ ghi thư mục build/ (nginx phục vụ /srv/site/build). docker-compose.yml và
-    # nginx/default.conf trên server được tạo và sửa tay — CI không chép, không chạy docker compose.
+      # Tên container trong docker-compose.yml trên server.
+      CONTAINER: biztown-web
+    # CI chỉ ghi thư mục build/ (container chạy node /srv/app/build/server.js) và restart
+    # container. docker-compose.yml và .env trên server được tạo và sửa tay — CI không chép,
+    # không chạy docker compose.
     steps:
       - uses: actions/download-artifact@v4
         with:
@@ -83,14 +88,14 @@ jobs:
           ssh server "rm -rf '$REMOTE_DIR/build.new' && mkdir -p '$REMOTE_DIR/build.new'"
           ssh server "tar -xzf - -C '$REMOTE_DIR/build.new'" < site.tar.gz
 
-      - name: Replace build
+      - name: Replace build and restart
         run: |
-          ssh server "REMOTE_DIR='$REMOTE_DIR' bash -s" <<'EOF'
+          ssh server "REMOTE_DIR='$REMOTE_DIR' CONTAINER='$CONTAINER' bash -s" <<'EOF'
           set -euo pipefail
           cd "$REMOTE_DIR"
 
-          # nginx trong container chạy bằng user nginx (uid 101), không phải ubuntu:
-          # thư mục và file phải cho "others" đọc, nếu không trang trả 403.
+          # Container chạy bằng user node (uid 1000), không chắc trùng chủ thư mục:
+          # thư mục và file phải cho "others" đọc.
           chmod a+rx .
           chmod -R a+rX build.new
 
@@ -99,6 +104,15 @@ jobs:
           rm -rf build.old
           if [ -d build ]; then mv build build.old; fi
           mv build.new build
+
+          # Node đã nạp code cũ vào bộ nhớ: restart để chạy bản mới (gián đoạn vài giây).
+          # Lần deploy đầu container chưa có: tạo bằng `docker compose up -d` trên server.
+          if docker inspect "$CONTAINER" >/dev/null 2>&1; then
+            docker restart "$CONTAINER"
+            echo "Đã restart $CONTAINER"
+          else
+            echo "::warning::Chưa có container $CONTAINER — chạy 'docker compose up -d' trong $REMOTE_DIR"
+          fi
           rm -rf build.old
           echo "Đã cập nhật $REMOTE_DIR/build"
           EOF

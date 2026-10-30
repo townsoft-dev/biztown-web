@@ -4,9 +4,11 @@
 
 Xem README.md cho cấu trúc và cách sửa nội dung. Những điểm bắt buộc:
 
-- **Site xuất tĩnh** (`output: "export"`). Không dùng thứ cần server: proxy/middleware,
-  Server Actions, route handler đọc Request, `cookies()`/`headers()`, redirects/rewrites
-  trong `next.config.ts`, next/image tối ưu ảnh. Mọi route khi build phải là `○`.
+- **Chạy server Node** (`output: "standalone"`) chỉ để có route handler `src/app/api/**`
+  (hiện có `POST /api/contact/` gửi mail). **Mọi trang vẫn phải là `○`** khi build: không dùng
+  `cookies()`/`headers()`/searchParams động trong trang, không Server Actions, không
+  proxy/middleware. Code chỉ chạy phía server (secret, nodemailer) đặt ở `src/lib/server/`,
+  không import vào component client. Biến môi trường mới thêm vào `.env.example`.
 - **Không đổi** `/`, `/support`, `/privacy`, `/delete-account` — đã khai với App Store và
   Google Play. Tiếng Anh nằm dưới `/en`.
 - **Không sửa tay `src/content/privacy/*.html`** — nhập bằng `pnpm import:privacy` từ repo

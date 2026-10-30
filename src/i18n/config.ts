@@ -19,6 +19,7 @@ export const PAGES = {
   nhaloPrivacy: "/nhalo/privacy",
   nhaloDeleteAccount: "/nhalo/delete-account",
   balheh: "/balheh",
+  contact: "/lien-he",
 } as const;
 export type PageKey = keyof typeof PAGES;
 

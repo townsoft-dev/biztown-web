@@ -3,24 +3,34 @@
 #
 # /home/ubuntu/biztown-web/
 # ├─ docker-compose.yml       # sửa tay trên server
-# ├─ nginx/default.conf       # sửa tay trên server
-# └─ build/                   # CI ghi: nội dung out/ của lần deploy mới nhất
+# ├─ .env                     # sửa tay trên server (chmod 600): MAIL_*, MS_* (xem .env.example)
+# └─ build/                   # CI ghi: nội dung .next/standalone/ của lần deploy mới nhất
 #
-# CI cần cấu hình trên server: nginx phục vụ thư mục build
-# (mount cả /home/ubuntu/biztown-web, root .../build).
+# Sau khi thay build/, CI chạy `docker restart biztown-web` — user SSH phải thuộc nhóm docker.
 #
-# gateway-nginx (network host) nhận 80/443 của biztown.vn và proxy về cổng 8090 —
+# gateway-nginx (network host) nhận 80/443 của biztown.vn và proxy về 127.0.0.1:8090 —
 # giống frontend Balheh (8080), dev (8088), storage (8081).
 services:
   web:
-    image: nginx:1.26.3
+    # Cùng major với Node dùng để build trong CI (.github/workflows/ci-cd.yml).
+    image: node:22-alpine
     container_name: biztown-web
     restart: unless-stopped
+    user: node
+    working_dir: /srv/app
+    command: ["node", "build/server.js"]
+    environment:
+      HOSTNAME: 0.0.0.0
+      PORT: 3000
+      NODE_ENV: production
+    # MAIL_USER, MAIL_TO và MS_TENANT_ID, MS_CLIENT_ID, MS_CLIENT_SECRET (Microsoft 365) hoặc
+    # MAIL_PASS (Gmail) — để trong .env cạnh file này (chmod 600), không commit. Danh sách đủ ở
+    # .env.example. Thiếu thì form liên hệ báo lỗi (API trả 503).
+    env_file: .env
     ports:
-      - "8090:80"
+      # Chỉ mở trên loopback: gateway-nginx chạy network host nên vẫn tới được, Internet thì không.
+      - "127.0.0.1:8090:3000"
     volumes:
       # Mount cả thư mục (không mount riêng build): CI thay build/ bằng cách đổi tên thư mục,
       # mount riêng build/ thì container vẫn giữ thư mục cũ đã bị đổi tên.
-      - ./:/srv/site:ro
-      # Mount thư mục chứ không mount file: file ghi đè bằng inode mới vẫn hiện trong container.
-      - ./nginx:/etc/nginx/conf.d:ro
+      - ./:/srv/app:ro

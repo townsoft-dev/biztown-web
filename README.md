@@ -1,8 +1,9 @@
 # biztown.vn — website của BizTown Rent Manager
 
 Các trang công khai phục vụ việc nộp ứng dụng lên App Store và Google Play, song ngữ
-Việt/Anh. Viết bằng **Next.js, xuất tĩnh** (`output: "export"`): build ra thư mục `out/`
-chỉ gồm HTML/CSS/JS, chạy được trên bất kỳ static host nào (ở đây: Nginx trên server Lightsail).
+Việt/Anh. Viết bằng **Next.js, chạy server Node** (`output: "standalone"`): các trang vẫn render
+sẵn lúc build (`○`), server chỉ để chạy route handler `/api/contact` (form liên hệ gửi mail —
+giống `townsoft-homepage`). Chạy bằng container Node trên server Lightsail.
 
 | Đường dẫn (VI)    | Bản tiếng Anh        | Khai vào đâu                                                        |
 | ----------------- | -------------------- | ------------------------------------------------------------------- |
@@ -10,6 +11,7 @@ chỉ gồm HTML/CSS/JS, chạy được trên bất kỳ static host nào (ở 
 | `/support`        | `/en/support`        | **Support URL** — App Store Connect, bắt buộc                       |
 | `/privacy`        | `/en/privacy`        | **Privacy Policy URL** — App Store Connect và Google Play, bắt buộc |
 | `/delete-account` | `/en/delete-account` | **Delete Account URL** — Google Play → Data safety, bắt buộc        |
+| `/lien-he`        | `/en/lien-he`        | — (form liên hệ, gửi mail qua `POST /api/contact/`)                 |
 
 **Không đổi bốn đường dẫn tiếng Việt** — chúng đã khai với hai store.
 
@@ -28,12 +30,17 @@ Yêu cầu: Node.js ≥ 20.9, pnpm ≥ 10.
 ```sh
 pnpm install
 pnpm dev          # http://localhost:3000
-pnpm build        # xuất tĩnh ra out/
-pnpm preview      # phục vụ out/ tại http://localhost:8899 — giống môi trường thật nhất
+pnpm build        # build ra .next/standalone/ (kèm public/, .next/static/)
+pnpm preview      # chạy bản build tại http://localhost:8899 — giống môi trường thật nhất
 pnpm lint         # ESLint
 pnpm typecheck    # TypeScript
 pnpm format       # Prettier
 ```
+
+Form liên hệ cần cấu hình gửi mail: chép `.env.example` thành `.env.local` rồi điền `MAIL_USER`,
+`MAIL_TO` và **một** trong hai cách — Microsoft 365 qua Microsoft Graph (`MS_TENANT_ID`,
+`MS_CLIENT_ID`, `MS_CLIENT_SECRET`; app trên Entra có quyền Application `Mail.Send`) hoặc Gmail
+(`MAIL_PASS` là App Password). Không điền thì form vẫn hiện, bấm gửi báo lỗi.
 
 Trước khi commit: `pnpm lint` và `pnpm build` phải không lỗi.
 
@@ -44,7 +51,8 @@ src/
 ├─ app/
 │  ├─ (vi)/                  # Root layout + trang tiếng Việt: /, /support, /privacy, /delete-account
 │  ├─ (en)/en/               # Root layout ở (en)/ + trang tiếng Anh dưới /en
-│  ├─ global-not-found.tsx   # Trang 404 (out/404.html)
+│  ├─ api/contact/route.ts   # POST /api/contact/: kiểm tra form liên hệ, gửi mail (src/lib/server/mail.ts)
+│  ├─ global-not-found.tsx   # Trang 404
 │  ├─ sitemap.ts  robots.ts
 │  └─ globals.css            # Design tokens (màu lấy từ theme.dart của app) + kiểu chữ .doc
 ├─ components/
@@ -60,12 +68,16 @@ src/
 │  ├─ config.ts              # Danh sách ngôn ngữ, danh sách trang, localizedPath()
 │  └─ dictionaries.ts        # Chữ dùng chung: điều hướng, title, description, chân trang
 ├─ config/site.ts            # URL site, email liên hệ
-└─ lib/seo.ts                # Metadata: canonical, hreflang, Open Graph
+├─ lib/seo.ts                # Metadata: canonical, hreflang, Open Graph
+├─ lib/contact-form.ts       # Kiểm tra dữ liệu form liên hệ — dùng chung trình duyệt và server
+└─ lib/server/               # Chỉ chạy phía server: gửi mail (mail.ts), giới hạn tần suất
 scripts/import-privacy.mjs   # Nhập chính sách quyền riêng tư từ repo biztown-rent
+scripts/pack-standalone.mjs  # Sau next build: chép public/, .next/static/ vào .next/standalone/
+scripts/preview.mjs          # pnpm preview: chạy .next/standalone/server.js ở cổng 8899
 ```
 
-Vì sao không dùng next-intl và URL `/vi`: xuất tĩnh thì không có server/proxy để chuyển
-hướng theo ngôn ngữ, mà bốn URL tiếng Việt phải giữ nguyên ở gốc. Nên mỗi ngôn ngữ là một
+Vì sao không dùng next-intl và URL `/vi`: site vốn xuất tĩnh (không có proxy để chuyển
+hướng theo ngôn ngữ), mà bốn URL tiếng Việt phải giữ nguyên ở gốc. Nên mỗi ngôn ngữ là một
 route group có root layout riêng (`<html lang>` đúng ngay trong HTML), file `page.tsx` chỉ
 là lớp mỏng gọi `LocalePage`.
 
@@ -118,24 +130,25 @@ Trên server, mọi thứ nằm trong `/home/ubuntu/biztown-web`:
 
 ```
 docker-compose.yml       # SỬA TAY trên server (mẫu: deploy/docker-compose.yml)
-nginx/default.conf       # SỬA TAY trên server (mẫu: deploy/nginx/default.conf)
-build/                   # CI ghi: nội dung out/ của lần deploy mới nhất
+.env                     # SỬA TAY trên server, chmod 600: MAIL_*, MS_* (xem .env.example)
+build/                   # CI ghi: nội dung .next/standalone/ của lần deploy mới nhất
 ```
 
-Container `biztown-web` (`nginx:1.26.3`) phục vụ `build/` ở cổng `8090`.
+Container `biztown-web` (`node:22-alpine`) chạy `node build/server.js`, mở `127.0.0.1:8090`.
 `gateway-nginx` (network host, giữ 80/443) nhận `biztown.vn` và proxy về cổng này — giống
 frontend Balheh (8080), dev (8088), storage (8081).
 
-`docker-compose.yml` và `nginx/default.conf` do người quản lý server tạo và sửa tay; CI **không**
-chép hai file này và không chạy `docker compose`. Hai file trong `deploy/` chỉ là mẫu tham khảo.
+`docker-compose.yml` và `.env` do người quản lý server tạo và sửa tay; CI **không** chép hai file
+này và không chạy `docker compose`. File trong `deploy/` chỉ là mẫu tham khảo.
 
 Mỗi lần deploy, CI giải nén bản build vào `build.new/`, đổi tên `build/` → `build.old/` và
-`build.new/` → `build/` (gần như tức thì), rồi xoá `build.old/`. CI không kiểm tra site sau khi
+`build.new/` → `build/` (gần như tức thì), `docker restart biztown-web` để Node nạp bản mới (gián
+đoạn vài giây), rồi xoá `build.old/`. User SSH phải thuộc nhóm `docker`. CI không kiểm tra site sau khi
 deploy — xem trên server bằng `curl -sI http://127.0.0.1:8090/support/`. Muốn quay về một
 bản cũ hơn: chạy lại workflow của commit đó (Actions → Re-run) hoặc `git revert` rồi push.
 
-`trailingSlash: true` nên mỗi trang là `<trang>/index.html`; `/support` chuyển hướng sang
-`/support/`. Trang 404 là `out/404.html`. Domain dùng cho canonical, hreflang, sitemap:
+`trailingSlash: true` nên `/support` chuyển hướng sang `/support/` (API cũng vậy: gọi
+`/api/contact/`). Domain dùng cho canonical, hreflang, sitemap:
 `NEXT_PUBLIC_SITE_URL` (mặc định `https://biztown.vn`).
 
 ### Tên miền

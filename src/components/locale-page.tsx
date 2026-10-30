@@ -3,6 +3,7 @@ import { join } from "node:path";
 import type { ReactNode } from "react";
 
 import type { BalhehContent } from "@/content/balheh-types";
+import { CONTACT as CONTACT_EN } from "@/content/en/contact";
 import { BALHEH as BALHEH_EN } from "@/content/en/balheh";
 import { DeleteAccountContent as DeleteAccountEn } from "@/content/en/delete-account";
 import { HOME as HOME_EN } from "@/content/en/home";
@@ -10,6 +11,7 @@ import { NHALO as NHALO_EN } from "@/content/en/nhalo";
 import { SupportContent as SupportEn } from "@/content/en/support";
 import type { NhaloContent } from "@/content/nhalo-types";
 import { BALHEH as BALHEH_VI } from "@/content/vi/balheh";
+import { CONTACT as CONTACT_VI } from "@/content/vi/contact";
 import { DeleteAccountContent as DeleteAccountVi } from "@/content/vi/delete-account";
 import { HOME as HOME_VI } from "@/content/vi/home";
 import { NHALO as NHALO_VI } from "@/content/vi/nhalo";
@@ -19,6 +21,7 @@ import type { Locale, PageKey } from "@/i18n/config";
 import { BalhehFooter } from "./balheh/balheh-footer";
 import { BalhehHeader } from "./balheh/balheh-header";
 import { BalhehPage } from "./balheh/balheh-page";
+import { ContactPage } from "./contact/contact-page";
 import { HomePage } from "./home/home-page";
 import { NhaloFooter } from "./nhalo/nhalo-footer";
 import { NhaloHeader } from "./nhalo/nhalo-header";
@@ -63,6 +66,10 @@ const CONTENT: Record<PageKey, Record<Locale, () => ReactNode>> = {
   balheh: {
     vi: () => <BalhehPage content={BALHEH_VI} />,
     en: () => <BalhehPage content={BALHEH_EN} />,
+  },
+  contact: {
+    vi: () => <ContactPage content={CONTACT_VI} locale="vi" />,
+    en: () => <ContactPage content={CONTACT_EN} locale="en" />,
   },
 };
 

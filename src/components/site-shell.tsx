@@ -9,6 +9,9 @@ import { SiteHeader } from "./site/site-header";
 
 const MAIN_ID = "main-content";
 
+/** Trang tự dựng toàn bộ section (không đặt trong thẻ trắng của trang tài liệu). */
+const FULL_PAGES = new Set<PageKey>(["home", "nhalo", "balheh", "contact"]);
+
 type SiteShellProps = {
   locale: Locale;
   /** Trang hiện tại: tạo link chuyển ngôn ngữ cùng trang và chọn kiểu khung nội dung. */
@@ -20,8 +23,8 @@ type SiteShellProps = {
 };
 
 /**
- * Khung chung của mọi trang: header, nội dung, chân trang, nút lên đầu trang. Trang chủ và các
- * trang sản phẩm (NhàLo, Balheh) tự dựng toàn bộ section; các trang tài liệu (/support, /privacy, /delete-account) đặt nội dung trong
+ * Khung chung của mọi trang: header, nội dung, chân trang, nút lên đầu trang. Trang chủ, các
+ * trang sản phẩm (NhàLo, Balheh) và trang Liên hệ tự dựng toàn bộ section; các trang tài liệu (/support, /privacy, /delete-account) đặt nội dung trong
  * một thẻ trắng trên nền đầu trang — giữ nguyên nội dung cũ, chờ design riêng.
  */
 export function SiteShell({ locale, page, header, footer, children }: SiteShellProps) {
@@ -38,7 +41,7 @@ export function SiteShell({ locale, page, header, footer, children }: SiteShellP
 
       {header ?? <SiteHeader locale={locale} page={page} />}
 
-      {page === "home" || page === "nhalo" || page === "balheh" ? (
+      {FULL_PAGES.has(page) ? (
         <main id={MAIN_ID}>{children}</main>
       ) : (
         <div className="relative overflow-hidden rounded-b-[48px] bg-[image:var(--top-bg)] pt-[76px] pb-14">

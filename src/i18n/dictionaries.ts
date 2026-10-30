@@ -83,7 +83,7 @@ const vi = {
     { label: "Sản phẩm", to: { section: "products" } },
     { label: "Dịch vụ", to: { section: "services" } },
     { label: "Về BizTown", to: { section: "about" } },
-    { label: "Liên hệ", to: { section: "contact" } },
+    { label: "Liên hệ", to: { page: "contact" } },
   ] satisfies NavLink[] as NavLink[],
   meta: {
     home: {
@@ -125,6 +125,11 @@ const vi = {
       title: "Balheh — Bảng công việc, chat nhóm và wiki tài liệu trong một dự án",
       description:
         "Balheh gom bảng công việc Kanban, chat nhóm và wiki tài liệu vào cùng một dự án để cả đội giao việc, trao đổi và lưu tài liệu ở một nơi.",
+    },
+    contact: {
+      title: "Liên hệ",
+      description:
+        "Liên hệ BizTown để được tư vấn sản phẩm NhàLo, Balheh, làm website/app theo yêu cầu hoặc hợp tác. Để lại thông tin, chúng tôi sẽ phản hồi sớm.",
     },
   } satisfies Record<PageKey, { title: string; description: string }>,
   footer: {
@@ -174,7 +179,7 @@ const vi = {
           links: [
             { label: "Trung tâm trợ giúp", to: { page: "support" } },
             { label: "Hướng dẫn sử dụng", to: { page: "support" } },
-            { label: "Liên hệ", to: { section: "contact" } },
+            { label: "Liên hệ", to: { page: "contact" } },
             { label: "Báo lỗi", to: { page: "support" } },
           ],
         },
@@ -247,7 +252,7 @@ const en: Dictionary = {
     { label: "Products", to: { section: "products" } },
     { label: "Services", to: { section: "services" } },
     { label: "About", to: { section: "about" } },
-    { label: "Contact", to: { section: "contact" } },
+    { label: "Contact", to: { page: "contact" } },
   ],
   meta: {
     home: {
@@ -289,6 +294,11 @@ const en: Dictionary = {
       title: "Balheh — Task boards, team chat and a doc wiki in one project",
       description:
         "Balheh puts Kanban task boards, team chat and a document wiki in the same project, so your whole team assigns work, talks and keeps docs in one place.",
+    },
+    contact: {
+      title: "Contact",
+      description:
+        "Contact BizTown for advice on NhàLo, Balheh, custom website/app development or partnerships. Leave your details and we'll get back to you soon.",
     },
   },
   footer: {
@@ -338,7 +348,7 @@ const en: Dictionary = {
           links: [
             { label: "Help center", to: { page: "support" } },
             { label: "User guides", to: { page: "support" } },
-            { label: "Contact", to: { section: "contact" } },
+            { label: "Contact", to: { page: "contact" } },
             { label: "Report a bug", to: { page: "support" } },
           ],
         },
