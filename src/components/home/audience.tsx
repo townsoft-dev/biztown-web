@@ -131,7 +131,8 @@ function AudienceItem({
       </p>
       <div
         className={cn(
-          "mt-7 flex items-center justify-between gap-3 border-t pt-[19px] text-[15px] leading-6",
+          // flex-wrap: màn hẹp không đủ chỗ thì "Tìm hiểu thêm" xuống dòng thay vì tràn khỏi thẻ.
+          "mt-7 flex flex-wrap items-center justify-between gap-3 border-t pt-[19px] text-[15px] leading-6",
           featured ? "border-[rgba(24,33,63,0.15)]" : "border-line",
         )}
       >
