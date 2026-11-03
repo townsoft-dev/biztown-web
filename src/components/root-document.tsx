@@ -33,6 +33,7 @@ export function rootMetadata(locale: Locale): Metadata {
     title: { default: dict.siteName, template: `%s — ${dict.siteName}` },
     applicationName: dict.siteName,
     formatDetection: { telephone: false, email: false, address: false },
+    verification: { google: siteConfig.googleSiteVerification },
   };
 }
 
