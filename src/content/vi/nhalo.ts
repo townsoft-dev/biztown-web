@@ -1,4 +1,7 @@
+import { siteConfig } from "@/config/site";
 import type { NhaloContent } from "@/content/nhalo-types";
+
+const NHALO_STORES = siteConfig.nhaloStores;
 
 /** Trang NhàLo — tiếng Việt (Figma "NhàLo · HTML V7 · VI · 1440"). */
 export const NHALO: NhaloContent = {
@@ -18,7 +21,7 @@ export const NHALO: NhaloContent = {
   hero: {
     title: ["Quản lý trọ,", "để NhàLo"],
     lead: "Ghi số điện nước, tạo hoá đơn cho cả dãy trọ và gửi cho người thuê kèm mã QR chuyển khoản. Tất cả trên điện thoại.",
-    store: { prefix: "Tải trên", badge: "Sắp có" },
+    store: { prefix: "Tải trên" },
     note: "Miễn phí cho chủ nhà. Người thuê không cần cài app.",
     chaptersLabel: "Demo NhàLo",
     pauseLabel: "Tạm dừng",
@@ -262,7 +265,7 @@ export const NHALO: NhaloContent = {
   },
   band: {
     title: ["Kỳ này, để NhàLo", "tính tiền giúp bạn."],
-    store: { prefix: "Tải về trên", badge: "Sắp có" },
+    store: { prefix: "Tải về trên" },
     consult: "Cần hướng dẫn thiết lập? Để lại số điện thoại:",
     inputLabel: "Số điện thoại hoặc mail",
     cta: "Nhận tư vấn",
@@ -296,8 +299,8 @@ export const NHALO: NhaloContent = {
       {
         title: "Tài khoản",
         links: [
-          { label: "Appstore", to: null },
-          { label: "Google Play", to: null },
+          { label: "Appstore", to: { external: NHALO_STORES.ios.url } },
+          { label: "Google Play", to: { external: NHALO_STORES.android.url } },
         ],
       },
       {

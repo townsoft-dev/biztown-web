@@ -21,6 +21,7 @@ function MaskIcon({ src, size }: { src: string; size: number }) {
 function resolveNhaloHref(locale: Locale, to: NhaloLink, base: string) {
   if (!to) return null;
   if ("section" in to) return `${base}#${NHALO_SECTIONS[to.section]}`;
+  if ("external" in to) return to.external;
   return localizedPath(locale, to.page);
 }
 
@@ -85,11 +86,16 @@ export function NhaloFooter({
               <ul aria-label={column.title} className="flex flex-col gap-1.5">
                 {column.links.map((link) => {
                   const href = resolveNhaloHref(locale, link.to, base);
+                  // Link ra ngoài (App Store, Google Play) mở tab mới để người dùng không mất
+                  // trang đang đọc; rel="noopener" là bắt buộc khi dùng target="_blank".
+                  const external = Boolean(link.to && "external" in link.to);
                   return (
                     <li key={link.label} className="text-[15px] leading-6 text-ink-muted">
                       {href ? (
                         <a
                           href={href}
+                          target={external ? "_blank" : undefined}
+                          rel={external ? "noopener" : undefined}
                           className="underline-offset-2 hover:text-ink hover:underline"
                         >
                           {link.label}

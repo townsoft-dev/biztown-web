@@ -8,8 +8,11 @@ import type { NhaloSection, PageKey } from "@/i18n/config";
 /** Tiêu đề hai dòng: dòng sau có vạch tô cam phía dưới (Figma: Highlighted phrase). */
 export type MarkTitle = { lead: string; mark: string };
 
-/** Đích liên kết: một section trong trang, một trang khác của site, hoặc chưa có (chữ thường). */
-export type NhaloLink = { section: NhaloSection } | { page: PageKey } | null;
+/**
+ * Đích liên kết: một section trong trang, một trang khác của site, một URL ngoài (mở tab mới),
+ * hoặc chưa có (hiện chữ thường, không bấm được).
+ */
+export type NhaloLink = { section: NhaloSection } | { page: PageKey } | { external: string } | null;
 
 /** Một mục chú thích: tiêu đề đậm + mô tả. */
 export type Note = { title: string; desc: string };
@@ -23,7 +26,8 @@ export type HeroChapter = {
   toast: { title: string; sub: string };
 };
 
-export type StoreBadge = { prefix: string; badge: string };
+/** `badge`: nhãn nhỏ góc trên nút tải (vd. "Sắp có"). Bỏ trống khi app đã lên store. */
+export type StoreBadge = { prefix: string; badge?: string };
 
 export type NhaloContent = {
   header: {

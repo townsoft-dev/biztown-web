@@ -17,6 +17,22 @@ export const siteConfig = {
    */
   ogImage: { width: 1200, height: 630 },
   /**
+   * Link tải ứng dụng NhàLo. Bỏ tham số theo dõi của nút "Chia sẻ" trên store
+   * (`pcampaignid`, `l=vi`) — chúng chỉ phục vụ việc đo nguồn chia sẻ, không nên nằm trong
+   * link cố định trên site. Phần slug trong URL App Store không ảnh hưởng, Apple phân giải
+   * theo `id`.
+   */
+  nhaloStores: {
+    ios: {
+      url: "https://apps.apple.com/vn/app/nh%C3%A0lo/id6812593676",
+      appId: "6812593676",
+    },
+    android: {
+      url: "https://play.google.com/store/apps/details?id=com.townsoftvina.biztown.nhalo",
+      packageName: "com.townsoftvina.biztown.nhalo",
+    },
+  },
+  /**
    * Thông tin pháp nhân, dùng cho JSON-LD Organization (src/lib/structured-data.ts). Tách
    * từng phần thay vì một chuỗi địa chỉ để khai đúng schema.org/PostalAddress.
    *

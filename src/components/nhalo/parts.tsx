@@ -2,6 +2,7 @@ import Image from "next/image";
 
 import { Reveal } from "@/components/home/reveal";
 import { TagChip } from "@/components/ui/tag-chip";
+import { siteConfig } from "@/config/site";
 import type { MarkTitle, StoreBadge } from "@/content/nhalo-types";
 import { cn } from "@/lib/utils";
 
@@ -65,18 +66,41 @@ export function Mascot({
 
 const STORES = {
   hero: [
-    { name: "App Store", icon: "/images/nhalo/icon-apple.svg", width: 160 },
-    { name: "Google Play", icon: "/images/nhalo/icon-google-play.svg", width: 179 },
+    {
+      name: "App Store",
+      icon: "/images/nhalo/icon-apple.svg",
+      width: 160,
+      href: siteConfig.nhaloStores.ios.url,
+    },
+    {
+      name: "Google Play",
+      icon: "/images/nhalo/icon-google-play.svg",
+      width: 179,
+      href: siteConfig.nhaloStores.android.url,
+    },
   ],
   band: [
-    { name: "App Store", icon: "/images/nhalo/icon-apple-dark.svg", width: 145 },
-    { name: "Google Play", icon: "/images/nhalo/icon-google-play-dark.svg", width: 163 },
+    {
+      name: "App Store",
+      icon: "/images/nhalo/icon-apple-dark.svg",
+      width: 145,
+      href: siteConfig.nhaloStores.ios.url,
+    },
+    {
+      name: "Google Play",
+      icon: "/images/nhalo/icon-google-play-dark.svg",
+      width: 163,
+      href: siteConfig.nhaloStores.android.url,
+    },
   ],
 } as const;
 
 /**
- * Hai nút tải app kèm nhãn "Sắp có" (Figma: pill / store). Ứng dụng chưa lên store nên chưa có
- * link — hiện dạng nhãn, không bấm được.
+ * Hai nút tải app (Figma: pill / store). NhàLo đã lên cả hai store nên đây là link thật;
+ * `store.badge` chỉ còn dùng nếu cần gắn lại nhãn kiểu "Sắp có" cho một sản phẩm khác.
+ *
+ * Không đặt rel="nofollow": đây là link biên tập chính đáng tới trang chính thức của ứng
+ * dụng, và chính nó giúp Google nối thực thể NhàLo trên web với listing trên store.
  */
 export function StoreBadges({
   store,
@@ -93,44 +117,50 @@ export function StoreBadges({
       className={cn("flex flex-wrap items-center", dark ? "gap-[23px]" : "gap-[33px]", className)}
     >
       {STORES[tone].map((item) => (
-        <li
-          key={item.name}
-          className={cn(
-            "relative flex shrink-0 items-center gap-3 text-left",
-            dark
-              ? "h-[58px] rounded-[14px] bg-app-store pl-[18px] text-[#fff6e2]"
-              : "h-[52px] rounded-[14px] bg-white pl-3.5 text-on-accent",
-          )}
-          style={{ width: item.width }}
-        >
-          <Image src={item.icon} alt="" width={dark ? 20 : 22} height={dark ? 20 : 22} />
-          <span className="flex flex-col whitespace-nowrap">
-            <span
-              className={cn(
-                dark
-                  ? "text-[11.5px] leading-[12.65px] font-medium"
-                  : "text-[10px] leading-[11px] opacity-70",
-              )}
-            >
-              {store.prefix}
-            </span>
-            <span
-              className={cn(
-                "font-semibold",
-                dark ? "text-[17px] leading-[18.7px]" : "text-[16px] leading-[17.6px]",
-              )}
-            >
-              {item.name}
-            </span>
-          </span>
-          <span
+        <li key={item.name} className="relative shrink-0">
+          <a
+            href={item.href}
+            target="_blank"
+            rel="noopener"
             className={cn(
-              "absolute right-[-11px] rounded-[11px] bg-accent px-2 py-[3px] text-[10px] leading-4 font-bold whitespace-nowrap text-on-accent",
-              dark ? "top-[-11px]" : "top-[-9px]",
+              "flex items-center gap-3 text-left transition-opacity hover:opacity-90",
+              dark
+                ? "h-[58px] rounded-[14px] bg-app-store pl-[18px] text-[#fff6e2]"
+                : "h-[52px] rounded-[14px] bg-white pl-3.5 text-on-accent",
             )}
+            style={{ width: item.width }}
           >
-            {store.badge}
-          </span>
+            <Image src={item.icon} alt="" width={dark ? 20 : 22} height={dark ? 20 : 22} />
+            <span className="flex flex-col whitespace-nowrap">
+              <span
+                className={cn(
+                  dark
+                    ? "text-[11.5px] leading-[12.65px] font-medium"
+                    : "text-[10px] leading-[11px] opacity-70",
+                )}
+              >
+                {store.prefix}
+              </span>
+              <span
+                className={cn(
+                  "font-semibold",
+                  dark ? "text-[17px] leading-[18.7px]" : "text-[16px] leading-[17.6px]",
+                )}
+              >
+                {item.name}
+              </span>
+            </span>
+          </a>
+          {store.badge && (
+            <span
+              className={cn(
+                "absolute right-[-11px] rounded-[11px] bg-accent px-2 py-[3px] text-[10px] leading-4 font-bold whitespace-nowrap text-on-accent",
+                dark ? "top-[-11px]" : "top-[-9px]",
+              )}
+            >
+              {store.badge}
+            </span>
+          )}
         </li>
       ))}
     </ul>

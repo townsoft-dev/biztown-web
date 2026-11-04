@@ -68,6 +68,8 @@ function website(locale: Locale): JsonLdObject {
 }
 
 /** Ứng dụng NhàLo / Balheh. Cả hai đang miễn phí nên khai Offer giá 0. */
+const storeUrls = [siteConfig.nhaloStores.ios.url, siteConfig.nhaloStores.android.url];
+
 function softwareApplication(locale: Locale, page: "nhalo" | "balheh"): JsonLdObject {
   const dict = getDictionary(locale);
   const { title, description } = dict.meta[page];
@@ -89,8 +91,19 @@ function softwareApplication(locale: Locale, page: "nhalo" | "balheh"): JsonLdOb
       priceCurrency: "VND",
       availability: "https://schema.org/InStock",
     },
+    // NhàLo đã lên App Store và Google Play: khai đường tải và trang chính thức trên store
+    // để Google nối trang web với hai listing đó.
+    ...(page === "nhalo"
+      ? {
+          downloadUrl: storeUrls,
+          installUrl: storeUrls,
+          sameAs: storeUrls,
+        }
+      : {}),
     publisher: { "@id": ORG_ID },
   };
+  // Cố ý KHÔNG khai aggregateRating: Google yêu cầu điểm đánh giá phải hiển thị ngay trên
+  // trang, khai mà trang không hiện là một trong những lý do bị phạt thủ công phổ biến nhất.
 }
 
 /**
