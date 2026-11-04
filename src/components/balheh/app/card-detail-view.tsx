@@ -17,7 +17,9 @@ export const CARD_SHOT_H = 641;
  */
 export function CardDetailShot({ t }: { t: BalhehFeaturesContent["card"] }) {
   return (
+    // data-nosnippet: giao diện mẫu, xem app-ui.tsx.
     <div
+      data-nosnippet
       className={cn(
         bxInter.className,
         "relative w-[1120px] overflow-hidden rounded-[14px] bg-white text-left text-[#1d1f24] shadow-[0_0_0_1px_rgba(35,48,94,0.08),var(--bh-window-shadow)]",
@@ -49,7 +51,7 @@ export function CardDetailShot({ t }: { t: BalhehFeaturesContent["card"] }) {
             <BxIcon name="x" size={15} />
           </span>
         </div>
-        <h5 className="mt-3 text-[14px] font-bold">{t.title}</h5>
+        <p className="mt-3 text-[14px] font-bold">{t.title}</p>
 
         <div className="mt-3 grid grid-cols-[1fr_368px] gap-4">
           {/* Cột trái: thông tin thẻ + checklist. */}
@@ -131,7 +133,7 @@ export function CardDetailShot({ t }: { t: BalhehFeaturesContent["card"] }) {
             <b className="border-l-[3px] border-[#2556c5] pl-2 text-[12.5px] leading-[1.3]">
               Task Detail
             </b>
-            <h6 className="text-[14px] font-bold">{t.task}</h6>
+            <p className="text-[14px] font-bold">{t.task}</p>
             <div
               data-anno="6"
               className="grid grid-cols-[0.9fr_1.05fr_0.75fr_1.3fr] rounded-[7px] text-[9px] shadow-[inset_0_0_0_1px_#c7cbd3]"

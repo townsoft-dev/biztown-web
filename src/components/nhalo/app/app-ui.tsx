@@ -65,8 +65,11 @@ export function Phone({
   children: ReactNode;
 }) {
   return (
+    // data-nosnippet: nội dung trong màn hình là dữ liệu mẫu (tên nhà trọ, số phòng, số tiền),
+    // không nên xuất hiện trong đoạn trích trên Google. Xem hero.tsx của trang chủ.
     <div
       aria-hidden="true"
+      data-nosnippet
       className={cn(
         "relative shrink-0 rounded-[calc(54px*var(--s,1))] shadow-[0_12px_32px_rgba(35,48,94,0.14)] select-none",
         className,

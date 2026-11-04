@@ -118,7 +118,7 @@ function GalleryWindow({
 function PlainHead({ title, bell }: { title?: string; bell?: boolean }) {
   return (
     <div className="flex h-[49px] shrink-0 items-center justify-between gap-3 border-b border-[#e5e7eb] px-4">
-      <h5 className="text-[17px] font-bold tracking-[-0.01em] text-[#1d1f24]">{title}</h5>
+      <p className="text-[17px] font-bold tracking-[-0.01em] text-[#1d1f24]">{title}</p>
       <div className="flex shrink-0 items-center gap-2.5 text-[#2556c5]">
         <span className="inline-flex items-center gap-1 rounded-[5px] bg-[#2556c5] px-2.5 py-1.5 text-[11.5px] font-semibold text-white">
           <BxIcon name="plus" size={13} />
@@ -1111,9 +1111,9 @@ export function LinksShot({ app, shots, mode }: ShotProps) {
 
           <div className="grid flex-1 grid-cols-[1fr_210px] overflow-hidden">
             <div className="min-w-0 px-[22px] py-4 text-[11.5px]">
-              <h4 className="mb-1.5 text-[22px] font-bold tracking-[-0.01em]">{t.title}</h4>
+              <p className="mb-1.5 text-[22px] font-bold tracking-[-0.01em]">{t.title}</p>
               <p className="text-[#30343c]">{t.desc}</p>
-              <h6 className="mt-3.5 mb-1.5 text-[15px] font-semibold">{t.h1}</h6>
+              <p className="mt-3.5 mb-1.5 text-[15px] font-semibold">{t.h1}</p>
               <p className="text-[#30343c]">
                 <span
                   className={cn("transition-colors duration-[400ms]", step >= 1 && "bg-[#cfe0ff]")}

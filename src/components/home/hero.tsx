@@ -170,7 +170,14 @@ function HeroButton({
  */
 function HeroSceneBox(props: ComponentProps<typeof HeroSceneArt>) {
   return (
-    <div aria-hidden="true" className="relative h-[540px] max-lg:h-[460px] max-sm:h-[292px]">
+    // data-nosnippet: chữ trong ảnh minh hoạ ("Phân bổ công việc", "Nhà trọ Bình An", "P.101
+    // 22 m²"…) là dữ liệu giả. Google vẫn crawl được, nhưng sẽ không lấy làm đoạn trích trên
+    // kết quả tìm kiếm. aria-hidden không có tác dụng này — nó chỉ ẩn khỏi trình đọc màn hình.
+    <div
+      aria-hidden="true"
+      data-nosnippet
+      className="relative h-[540px] max-lg:h-[460px] max-sm:h-[292px]"
+    >
       {/* Quầng cam mờ phía sau (Figma: before). */}
       <div className="pointer-events-none absolute top-[81px] left-[65px] h-[845px] w-[1064px] bg-[radial-gradient(closest-side,rgba(239,159,39,0.45),rgba(239,159,39,0))] blur-[15px]" />
       <div

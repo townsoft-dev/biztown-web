@@ -379,10 +379,10 @@ function SideRail({ view, hover }: { view: RailView; hover: string | null }) {
 export function BxHead({ title, sub }: { title: string; sub: string }) {
   return (
     <div className="flex shrink-0 items-center justify-between gap-3 border-b border-[#e5e7eb] px-4 py-2.5">
-      <h5 className="truncate text-[17px] font-bold tracking-[-0.01em] text-[#1d1f24]">
+      <p className="truncate text-[17px] font-bold tracking-[-0.01em] text-[#1d1f24]">
         {title}
         <span className="text-[13px] font-normal text-[#6b7280]"> / {sub}</span>
-      </h5>
+      </p>
       <div className="flex shrink-0 items-center gap-2.5 text-[#2556c5]">
         <span className="inline-flex items-center gap-1 rounded-[5px] bg-[#2556c5] px-2.5 py-1.5 text-[11.5px] font-semibold text-white">
           <BxIcon name="plus" size={13} />
@@ -441,7 +441,10 @@ export function AppWindow({
 }) {
   const rail = view === "wiki" || view === "dash";
   return (
+    // data-nosnippet: toàn bộ chữ bên trong là giao diện mẫu, phần lớn bằng tiếng Anh
+    // ("MY PROJECTS", "Add new card"…) trên trang tiếng Việt. Xem hero.tsx của trang chủ.
     <div
+      data-nosnippet
       className={cn(
         bxInter.className,
         "relative w-[1120px] overflow-hidden rounded-[14px] bg-white text-left text-[#1d1f24] shadow-[0_0_0_1px_rgba(35,48,94,0.08),var(--bh-window-shadow)]",

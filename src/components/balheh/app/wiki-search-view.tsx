@@ -107,13 +107,13 @@ export function WikiSearchShot({
           </div>
           <div className="grid flex-1 grid-cols-[1fr_228px] overflow-hidden">
             <div className="min-w-0 px-[22px] py-4 text-[11.5px] text-[#30343c]">
-              <h4 className="text-[22px] font-bold tracking-[-0.01em] text-[#1d1f24]">{t.title}</h4>
+              <p className="text-[22px] font-bold tracking-[-0.01em] text-[#1d1f24]">{t.title}</p>
               <p className="mt-1">{t.desc}</p>
-              <h6 data-anno="5" className="mt-4 w-max text-[14px] font-bold text-[#1d1f24]">
+              <p data-anno="5" className="mt-4 w-max text-[14px] font-bold text-[#1d1f24]">
                 {t.h1}
-              </h6>
+              </p>
               <Todos items={t.todo1} />
-              <h6 className="mt-4 text-[14px] font-bold text-[#1d1f24]">{t.h2}</h6>
+              <p className="mt-4 text-[14px] font-bold text-[#1d1f24]">{t.h2}</p>
               <Todos items={t.todo2} />
               <div className="mt-4 flex items-center gap-2">
                 {t.rel}

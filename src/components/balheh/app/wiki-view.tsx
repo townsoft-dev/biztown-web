@@ -253,9 +253,9 @@ function Commands() {
 function KickoffPage({ t }: { t: BalhehAppCopy["wiki"] }) {
   return (
     <>
-      <h4 className="mb-1.5 text-[22px] font-bold tracking-[-0.01em]">{t.title}</h4>
+      <p className="mb-1.5 text-[22px] font-bold tracking-[-0.01em]">{t.title}</p>
       <p className="text-[11.5px] text-[#30343c]">{t.desc}</p>
-      <h6 className="mt-3.5 mb-1.5 text-[15px] font-semibold">{t.h1}</h6>
+      <p className="mt-3.5 mb-1.5 text-[15px] font-semibold">{t.h1}</p>
       {t.todo1.map((item) => (
         <Todo key={item} text={item} />
       ))}
@@ -263,7 +263,7 @@ function KickoffPage({ t }: { t: BalhehAppCopy["wiki"] }) {
         <BxIcon name="plus" size={11} />
         Add action item...
       </div>
-      <h6 className="mt-3.5 mb-1.5 text-[15px] font-semibold">{t.h2}</h6>
+      <p className="mt-3.5 mb-1.5 text-[15px] font-semibold">{t.h2}</p>
       {t.todo2.map((item) => (
         <Todo key={item} text={item} />
       ))}
@@ -277,7 +277,7 @@ function KickoffPage({ t }: { t: BalhehAppCopy["wiki"] }) {
 function Draft({ t, draft }: { t: BalhehAppCopy["wiki"]; draft: WikiDraft }) {
   return (
     <>
-      <h4
+      <p
         data-demo="wiki-title"
         className={cn(
           "mb-1.5 min-h-[30px] text-[22px] font-bold tracking-[-0.01em]",
@@ -289,14 +289,14 @@ function Draft({ t, draft }: { t: BalhehAppCopy["wiki"]; draft: WikiDraft }) {
         ) : (
           <Typed text={draft.title} caret={draft.typing === "title"} />
         )}
-      </h4>
+      </p>
       <p className="min-h-[18px] text-[11.5px] text-[#30343c]">
         <Typed text={draft.attend} caret={draft.typing === "attend"} />
       </p>
       {draft.dec && (
-        <h6 className="mt-3.5 mb-1.5 text-[15px] font-semibold">
+        <p className="mt-3.5 mb-1.5 text-[15px] font-semibold">
           <Typed text={draft.dec} caret={draft.typing === "dec"} />
-        </h6>
+        </p>
       )}
       {draft.todos.map((item, index) => (
         <div key={index} data-demo={index === 0 ? "wiki-check" : undefined}>
