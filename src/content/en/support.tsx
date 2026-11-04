@@ -41,7 +41,7 @@ export function SupportContent() {
       </p>
       <h3>I want to delete my account</h3>
       <p>
-        See the <a href="/en/delete-account">account deletion page</a>.
+        See the <a href="/en/delete-account/">account deletion page</a>.
       </p>
     </>
   );

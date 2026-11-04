@@ -40,7 +40,7 @@ export function SupportContent() {
       </p>
       <h3>Tôi muốn xoá tài khoản</h3>
       <p>
-        Xem hướng dẫn tại trang <a href="/delete-account">Yêu cầu xoá tài khoản</a>.
+        Xem hướng dẫn tại trang <a href="/delete-account/">Yêu cầu xoá tài khoản</a>.
       </p>
     </>
   );

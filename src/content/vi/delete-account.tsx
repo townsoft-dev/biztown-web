@@ -147,7 +147,7 @@ export function DeleteAccountContent() {
       <p>
         Công ty Townsoft Vina —{" "}
         <a href="mailto:biztownofficial@townsoftvina.com">biztownofficial@townsoftvina.com</a>
-        <br /> Xem thêm <a href="/privacy">Chính sách quyền riêng tư</a>.
+        <br /> Xem thêm <a href="/privacy/">Chính sách quyền riêng tư</a>.
       </p>
     </>
   );

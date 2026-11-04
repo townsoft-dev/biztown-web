@@ -48,11 +48,14 @@ const dedent = (block) => block.replace(/^ {4}/gm, "").trim() + "\n";
 /**
  * Link nội bộ trỏ sang trang tương ứng theo ngôn ngữ (/en/...) và theo app (/nhalo/...).
  * /support chỉ có ở gốc site nên không gắn tiền tố app.
+ *
+ * Luôn kết thúc bằng "/" cho khớp trailingSlash: true của next.config.ts — thiếu dấu này thì
+ * mỗi lần bấm link phải đi qua một lần chuyển hướng 308.
  */
 const localizeLinks = (block, prefix) =>
   block.replace(/href="\/(support|privacy|delete-account)?"/g, (_, page) => {
     if (!page) return `href="${prefix || "/"}"`;
-    return `href="${prefix}${page === "support" ? "" : base}/${page}"`;
+    return `href="${prefix}${page === "support" ? "" : base}/${page}/"`;
   });
 
 const outDir = join(dirname(fileURLToPath(import.meta.url)), "../src/content", target);
