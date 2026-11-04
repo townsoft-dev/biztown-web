@@ -12,6 +12,20 @@ const OG_LOCALES: Record<Locale, string> = {
 /** Trang chủ và các trang sản phẩm: dùng nguyên tiêu đề riêng, không ghép title template. */
 const PRODUCT_PAGES = new Set<PageKey>(["home", "nhalo", "balheh"]);
 
+/**
+ * Ảnh xem trước khi chia sẻ link, theo từng trang (file ở public/og/). Trang không có tên
+ * trong bảng này dùng ảnh mặc định. Ảnh không phụ thuộc ngôn ngữ để chỉ phải xuất một bộ từ
+ * Figma; muốn tách theo ngôn ngữ thì đổi thành Record<Locale, …>.
+ */
+const OG_IMAGES: Partial<Record<PageKey, string>> = {
+  home: "/og/biztown.png",
+  nhalo: "/og/nhalo.png",
+  balheh: "/og/balheh.png",
+  contact: "/og/lien-he.png",
+};
+
+const OG_IMAGE_DEFAULT = "/og/biztown.png";
+
 /** URL tuyệt đối của một trang theo ngôn ngữ, ví dụ ("en", "support") → https://biztown.vn/en/support/ */
 export function absoluteUrl(locale: Locale, page: PageKey) {
   return `${siteConfig.url}${localizedPath(locale, page)}`;
@@ -27,11 +41,18 @@ export function languageAlternates(page: PageKey) {
   return languages;
 }
 
-/** Metadata đầy đủ cho một trang: title, description, canonical, hreflang, Open Graph. */
+/** Metadata đầy đủ cho một trang: title, description, canonical, hreflang, Open Graph, Twitter. */
 export function buildPageMetadata(locale: Locale, page: PageKey): Metadata {
   const dict = getDictionary(locale);
   const { title, description } = dict.meta[page];
   const url = absoluteUrl(locale, page);
+  // metadataBase (root-document.tsx) biến đường dẫn tương đối thành URL tuyệt đối.
+  const image = {
+    url: OG_IMAGES[page] ?? OG_IMAGE_DEFAULT,
+    width: siteConfig.ogImage.width,
+    height: siteConfig.ogImage.height,
+    alt: title,
+  };
 
   return {
     title: PRODUCT_PAGES.has(page) ? { absolute: title } : title,
@@ -48,6 +69,13 @@ export function buildPageMetadata(locale: Locale, page: PageKey): Metadata {
       description,
       locale: OG_LOCALES[locale],
       alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => OG_LOCALES[l]),
+      images: [image],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [image],
     },
   };
 }

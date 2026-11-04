@@ -87,49 +87,49 @@ const vi = {
   ] satisfies NavLink[] as NavLink[],
   meta: {
     home: {
-      title: "BizTown — Bình dân hoá công nghệ cho mọi doanh nghiệp",
+      title: "BizTown — Phần mềm quản lý cho hộ kinh doanh và SME",
       description:
-        "Hệ sinh thái phần mềm quản trị và tự động hoá dành cho cá nhân, hộ kinh doanh và doanh nghiệp SME: NhàLo, Balheh và web/app theo yêu cầu.",
-    },
-    support: {
-      title: "Hỗ trợ",
-      description:
-        "Hướng dẫn sử dụng, câu hỏi thường gặp và cách liên hệ hỗ trợ BizTown Rent Manager.",
-    },
-    privacy: {
-      title: "Chính sách quyền riêng tư",
-      description:
-        "Chính sách quyền riêng tư của ứng dụng BizTown Rent Manager: dữ liệu thu thập, cách sử dụng, chia sẻ, lưu trữ và quyền của người dùng.",
-    },
-    deleteAccount: {
-      title: "Yêu cầu xoá tài khoản",
-      description:
-        "Cách xoá tài khoản BizTown Rent Manager và toàn bộ dữ liệu: các bước thực hiện, dữ liệu bị xoá và thời gian lưu trữ.",
+        "Hệ sinh thái phần mềm quản lý nhà trọ, dự án và vận hành cho hộ kinh doanh, doanh nghiệp nhỏ. Dùng thử miễn phí, hỗ trợ cài đặt bởi đội ngũ Việt – Hàn.",
     },
     nhalo: {
-      title: "NhàLo — Quản lý nhà trọ, ghi điện nước và gửi hoá đơn tự động",
+      title: "Phần mềm quản lý nhà trọ NhàLo — Miễn phí cho chủ nhà",
       description:
-        "NhàLo giúp chủ nhà trọ ghi chỉ số điện nước, tạo hoá đơn cho cả dãy trọ và gửi cho người thuê kèm mã QR chuyển khoản.",
-    },
-    nhaloPrivacy: {
-      title: "Chính sách quyền riêng tư NhàLo",
-      description:
-        "Chính sách quyền riêng tư của ứng dụng NhàLo: dữ liệu thu thập, cách sử dụng, chia sẻ, lưu trữ và quyền của người dùng.",
-    },
-    nhaloDeleteAccount: {
-      title: "Yêu cầu xoá tài khoản NhàLo",
-      description:
-        "Cách xoá tài khoản NhàLo và toàn bộ dữ liệu: các bước thực hiện, dữ liệu bị xoá và thời gian lưu trữ.",
+        "Ghi điện nước, tạo hoá đơn cho cả dãy trọ và gửi cho người thuê kèm mã QR chuyển khoản, ngay trên điện thoại. Miễn phí, người thuê không cần cài app.",
     },
     balheh: {
-      title: "Balheh — Bảng công việc, chat nhóm và wiki tài liệu trong một dự án",
+      title: "Balheh — Phần mềm quản lý dự án, chat nhóm và wiki",
       description:
-        "Balheh gom bảng công việc Kanban, chat nhóm và wiki tài liệu vào cùng một dự án để cả đội giao việc, trao đổi và lưu tài liệu ở một nơi.",
+        "Giao việc trên bảng Kanban, trao đổi theo kênh và lưu tài liệu wiki trong cùng một dự án. Dùng miễn phí, đăng nhập bằng Google hoặc Microsoft, không cần cài.",
     },
     contact: {
-      title: "Liên hệ",
+      title: "Liên hệ tư vấn phần mềm và thiết kế web, app",
       description:
-        "Liên hệ BizTown để được tư vấn sản phẩm NhàLo, Balheh, làm website/app theo yêu cầu hoặc hợp tác. Để lại thông tin, chúng tôi sẽ phản hồi sớm.",
+        "Cần tư vấn phần mềm quản lý nhà trọ, quản lý dự án hay làm website, app theo yêu cầu? Để lại thông tin, chúng tôi liên hệ lại trong một ngày làm việc.",
+    },
+    support: {
+      title: "Hỗ trợ khách hàng và hướng dẫn sử dụng phần mềm",
+      description:
+        "Hướng dẫn cài đặt và sử dụng, câu hỏi thường gặp, cách báo lỗi và liên hệ đội hỗ trợ cho ứng dụng BizTown Rent Manager cùng các sản phẩm BizTown khác.",
+    },
+    privacy: {
+      title: "Chính sách quyền riêng tư ứng dụng Rent Manager",
+      description:
+        "Ứng dụng BizTown Rent Manager thu thập dữ liệu gì, dùng và chia sẻ ra sao, lưu trong bao lâu, cùng quyền truy cập, chỉnh sửa và xoá dữ liệu của bạn.",
+    },
+    deleteAccount: {
+      title: "Xoá tài khoản Rent Manager và toàn bộ dữ liệu",
+      description:
+        "Các bước xoá tài khoản BizTown Rent Manager ngay trong ứng dụng hoặc qua email: dữ liệu nào bị xoá, dữ liệu nào còn lưu lại và lưu trong bao lâu.",
+    },
+    nhaloPrivacy: {
+      title: "Chính sách quyền riêng tư ứng dụng NhàLo",
+      description:
+        "Ứng dụng NhàLo thu thập dữ liệu gì của chủ nhà và người thuê, dùng và chia sẻ ra sao, lưu trong bao lâu, cùng quyền xem, chỉnh sửa và xoá dữ liệu đó.",
+    },
+    nhaloDeleteAccount: {
+      title: "Xoá tài khoản NhàLo và toàn bộ dữ liệu nhà trọ",
+      description:
+        "Các bước xoá tài khoản NhàLo ngay trong ứng dụng hoặc qua email: dữ liệu phòng, hợp đồng và hoá đơn nào bị xoá, cùng thời gian lưu trữ còn lại.",
     },
   } satisfies Record<PageKey, { title: string; description: string }>,
   footer: {
@@ -256,49 +256,49 @@ const en: Dictionary = {
   ],
   meta: {
     home: {
-      title: "BizTown — Technology made accessible for every business",
+      title: "BizTown — Management software for small businesses",
       description:
-        "A management and automation software ecosystem for individuals, household businesses and SMEs: NhàLo, Balheh and custom web/app development.",
-    },
-    support: {
-      title: "Support",
-      description:
-        "How-to guides, frequently asked questions and how to contact BizTown Rent Manager support.",
-    },
-    privacy: {
-      title: "Privacy policy",
-      description:
-        "BizTown Rent Manager privacy policy: what data is collected, how it is used, shared and stored, and your rights.",
-    },
-    deleteAccount: {
-      title: "Request account deletion",
-      description:
-        "How to delete your BizTown Rent Manager account and all its data: the steps, what gets deleted and how long anything is kept.",
+        "A software ecosystem for household businesses and SMEs in Vietnam: rental management, project management and custom web and app development. Free to start.",
     },
     nhalo: {
-      title: "NhàLo — Rental management, utility readings and automatic invoices",
+      title: "NhàLo — Rental property management, free for landlords",
       description:
-        "NhàLo helps landlords record electricity and water readings, create invoices for a whole building and send them to tenants with a bank-transfer QR code.",
-    },
-    nhaloPrivacy: {
-      title: "NhàLo privacy policy",
-      description:
-        "NhàLo privacy policy: what data is collected, how it is used, shared and stored, and your rights.",
-    },
-    nhaloDeleteAccount: {
-      title: "Request NhàLo account deletion",
-      description:
-        "How to delete your NhàLo account and all its data: the steps, what gets deleted and how long anything is kept.",
+        "Record utility readings, create invoices for a whole building and send them to tenants with a bank-transfer QR code, from your phone. Tenants need no app.",
     },
     balheh: {
-      title: "Balheh — Task boards, team chat and a doc wiki in one project",
+      title: "Balheh — Project boards, team chat and a document wiki",
       description:
-        "Balheh puts Kanban task boards, team chat and a document wiki in the same project, so your whole team assigns work, talks and keeps docs in one place.",
+        "Assign work on Kanban boards, talk in channels and keep documents in a wiki, all in one project. Free to use, sign in with Google or Microsoft, no install.",
     },
     contact: {
-      title: "Contact",
+      title: "Contact us — software advice and custom builds",
       description:
-        "Contact BizTown for advice on NhàLo, Balheh, custom website/app development or partnerships. Leave your details and we'll get back to you soon.",
+        "Need advice on rental or project management software, or a custom website or app? Leave your details and the BizTown team will reply within one business day.",
+    },
+    support: {
+      title: "Help centre, user guides and how to report a bug",
+      description:
+        "Setup and how-to guides, frequently asked questions, how to report a bug and how to reach the support team for BizTown Rent Manager and other BizTown apps.",
+    },
+    privacy: {
+      title: "Rent Manager privacy policy and your data rights",
+      description:
+        "What the BizTown Rent Manager app collects, how it is used, shared and stored, how long it is kept, and your rights to access, correct and delete that data.",
+    },
+    deleteAccount: {
+      title: "Delete your Rent Manager account and all data",
+      description:
+        "How to delete your BizTown Rent Manager account from inside the app or by email: what data is removed, what is retained afterwards and for how long.",
+    },
+    nhaloPrivacy: {
+      title: "NhàLo app privacy policy for landlords and tenants",
+      description:
+        "What the NhàLo app collects from landlords and tenants, how it is used, shared and stored, how long it is kept, and your rights over that data.",
+    },
+    nhaloDeleteAccount: {
+      title: "Delete your NhàLo account and all rental data",
+      description:
+        "How to delete your NhàLo account from inside the app or by email: which rooms, contracts and invoices are removed, and how long anything is retained.",
     },
   },
   footer: {

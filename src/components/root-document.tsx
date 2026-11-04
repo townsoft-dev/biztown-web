@@ -34,6 +34,19 @@ export function rootMetadata(locale: Locale): Metadata {
     applicationName: dict.siteName,
     formatDetection: { telephone: false, email: false, address: false },
     verification: { google: siteConfig.googleSiteVerification },
+    // Mặc định Google vẫn index, nhưng phải khai max-image-preview mới được ảnh xem trước cỡ
+    // lớn trên kết quả tìm kiếm di động; max-snippet: -1 bỏ giới hạn độ dài đoạn trích.
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
+      },
+    },
   };
 }
 
