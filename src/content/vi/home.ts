@@ -7,7 +7,7 @@ export const HOME: HomeContent = {
       {
         tab: "Sứ mệnh",
         title: ["Chúng tôi bình dân hoá ", { kw: "công nghệ" }, " cho mọi doanh nghiệp"],
-        lead: "Hệ sinh thái phần mềm quản trị và tự động hoá dành cho cá nhân, hộ kinh doanh và doanh nghiệp SME giúp tối giản hoá công quy trình và nâng cao năng suất.",
+        lead: "Hệ sinh thái phần mềm quản trị và tự động hoá dành cho cá nhân, hộ kinh doanh và doanh nghiệp SME giúp tối giản hoá quy trình và nâng cao năng suất.",
         primary: "Tại sao chọn BizTown?",
         secondary: "Nhận tư vấn",
         primaryTarget: "why",
