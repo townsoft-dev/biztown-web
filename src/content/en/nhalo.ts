@@ -278,6 +278,8 @@ export const NHALO: NhaloContent = {
           { label: "Key features", to: { section: "features" } },
           { label: "Permissions", to: { section: "roles" } },
           { label: "Guide", to: { section: "start" } },
+          { label: "Balheh — project management", to: { page: "balheh" } },
+          { label: "All BizTown products", to: { page: "home" } },
         ],
       },
       {
@@ -287,6 +289,7 @@ export const NHALO: NhaloContent = {
           { label: "How to use", to: { page: "support" } },
           { label: "Contact", to: { section: "download" } },
           { label: "Report a bug", to: { page: "support" } },
+          { label: "Contact BizTown", to: { page: "contact" } },
         ],
       },
       {

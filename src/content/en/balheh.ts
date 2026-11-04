@@ -425,6 +425,8 @@ export const BALHEH: BalhehContent = {
           { label: "Management", to: { section: "manage" } },
           { label: "Permissions", to: { section: "roles" } },
           { label: "Get started", to: { section: "start" } },
+          { label: "NhàLo — rental management", to: { page: "nhalo" } },
+          { label: "All BizTown products", to: { page: "home" } },
         ],
       },
       {
@@ -434,6 +436,7 @@ export const BALHEH: BalhehContent = {
           { label: "User guides", to: null },
           { label: "Contact", to: { section: "contact" } },
           { label: "Report a bug", to: null },
+          { label: "Contact BizTown", to: { page: "contact" } },
         ],
       },
       {

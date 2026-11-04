@@ -431,6 +431,8 @@ export const BALHEH: BalhehContent = {
           { label: "Quản lý", to: { section: "manage" } },
           { label: "Phân quyền", to: { section: "roles" } },
           { label: "Hướng dẫn", to: { section: "start" } },
+          { label: "NhàLo — quản lý nhà trọ", to: { page: "nhalo" } },
+          { label: "Tất cả sản phẩm BizTown", to: { page: "home" } },
         ],
       },
       {
@@ -440,6 +442,7 @@ export const BALHEH: BalhehContent = {
           { label: "Hướng dẫn sử dụng", to: null },
           { label: "Liên hệ", to: { section: "contact" } },
           { label: "Báo lỗi", to: null },
+          { label: "Liên hệ BizTown", to: { page: "contact" } },
         ],
       },
       {

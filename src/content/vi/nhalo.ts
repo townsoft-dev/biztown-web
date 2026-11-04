@@ -279,6 +279,8 @@ export const NHALO: NhaloContent = {
           { label: "Tính năng chính", to: { section: "features" } },
           { label: "Phân quyền", to: { section: "roles" } },
           { label: "Hướng dẫn", to: { section: "start" } },
+          { label: "Balheh — quản lý dự án", to: { page: "balheh" } },
+          { label: "Tất cả sản phẩm BizTown", to: { page: "home" } },
         ],
       },
       {
@@ -288,6 +290,7 @@ export const NHALO: NhaloContent = {
           { label: "Hướng dẫn sử dụng", to: { page: "support" } },
           { label: "Liên hệ", to: { section: "download" } },
           { label: "Báo lỗi", to: { page: "support" } },
+          { label: "Liên hệ BizTown", to: { page: "contact" } },
         ],
       },
       {

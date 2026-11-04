@@ -60,10 +60,13 @@ export function SiteFooter({ locale }: { locale: Locale }) {
               {footer.description}
             </p>
             <address className="flex flex-col text-[14px] leading-[22.4px] text-ink-muted not-italic">
+              {/* Tên pháp nhân đầy đủ: Google đối chiếu tên công ty trên site với dữ liệu
+                  doanh nghiệp bên ngoài, và người dùng cũng cần biết ai đứng sau sản phẩm. */}
               <span className="flex items-center gap-1">
                 <FooterIcon name="building" size={18.4} />
-                {footer.taxCode}
+                {dict.companyName}
               </span>
+              <span className="flex items-center gap-1 pl-[22px]">{footer.taxCode}</span>
               <span className="flex items-center gap-[3px]">
                 <FooterIcon name="map-pin" size={16.4} />
                 {footer.address}
@@ -90,10 +93,13 @@ export function SiteFooter({ locale }: { locale: Locale }) {
                   key={group.title}
                   className={`flex flex-col gap-3 ${MOBILE_GROUP_PLACEMENT[columnIndex] ?? ""}`}
                 >
-                  <h2 className="text-[14px] leading-[22.4px] font-semibold text-ink">
+                  {/* Không dùng <h2>: đây là nhãn nhóm liên kết, không phải tiêu đề nội dung —
+                      để heading ở đây sẽ chen vào dàn ý H1/H2 của mọi trang. Tên nhóm chuyển
+                      thành tên gọi của danh sách để trình đọc màn hình vẫn đọc được. */}
+                  <p className="text-[14px] leading-[22.4px] font-semibold text-ink">
                     {group.title}
-                  </h2>
-                  <ul className="flex flex-col gap-1.5">
+                  </p>
+                  <ul aria-label={group.title} className="flex flex-col gap-1.5">
                     {group.links.map((link) => {
                       const href = resolveHref(locale, link.to);
                       return (

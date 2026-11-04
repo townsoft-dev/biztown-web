@@ -78,10 +78,11 @@ export function NhaloFooter({
 
           {content.columns.map((column) => (
             <div key={column.title} className="flex flex-col gap-1.5">
-              <h2 className="mb-[9px] text-[14px] leading-[22.4px] font-semibold text-ink">
+              {/* Nhãn nhóm liên kết, không phải tiêu đề nội dung — xem site-footer.tsx. */}
+              <p className="mb-[9px] text-[14px] leading-[22.4px] font-semibold text-ink">
                 {column.title}
-              </h2>
-              <ul className="flex flex-col gap-1.5">
+              </p>
+              <ul aria-label={column.title} className="flex flex-col gap-1.5">
                 {column.links.map((link) => {
                   const href = resolveNhaloHref(locale, link.to, base);
                   return (
