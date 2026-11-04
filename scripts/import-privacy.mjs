@@ -19,12 +19,11 @@ import { fileURLToPath } from "node:url";
 
 /** Mỗi đích: link nội bộ trong file gốc (/privacy, /delete-account…) trỏ về đâu trên site này. */
 const TARGETS = {
-  privacy: { base: "" },
   "nhalo-privacy": { base: "/nhalo" },
   "nhalo-delete-account": { base: "/nhalo" },
 };
 
-const [source, target = "privacy"] = process.argv.slice(2);
+const [source, target = "nhalo-privacy"] = process.argv.slice(2);
 if (!source || !(target in TARGETS)) {
   console.error(`Cách dùng: pnpm import:privacy <file.html> [${Object.keys(TARGETS).join("|")}]`);
   process.exit(1);

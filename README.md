@@ -5,15 +5,22 @@ Việt/Anh. Viết bằng **Next.js, chạy server Node** (`output: "standalone"
 sẵn lúc build (`○`), server chỉ để chạy route handler `/api/contact` (form liên hệ gửi mail —
 giống `townsoft-homepage`). Chạy bằng container Node trên server Lightsail.
 
-| Đường dẫn (VI)    | Bản tiếng Anh        | Khai vào đâu                                                        |
-| ----------------- | -------------------- | ------------------------------------------------------------------- |
-| `/`               | `/en`                | —                                                                   |
-| `/support`        | `/en/support`        | **Support URL** — App Store Connect, bắt buộc                       |
-| `/privacy`        | `/en/privacy`        | **Privacy Policy URL** — App Store Connect và Google Play, bắt buộc |
-| `/delete-account` | `/en/delete-account` | **Delete Account URL** — Google Play → Data safety, bắt buộc        |
-| `/lien-he`        | `/en/lien-he`        | — (form liên hệ, gửi mail qua `POST /api/contact/`)                 |
+| Đường dẫn (VI)          | Bản tiếng Anh              | Khai vào đâu                                                        |
+| ----------------------- | -------------------------- | ------------------------------------------------------------------- |
+| `/`                     | `/en`                      | —                                                                   |
+| `/support`              | `/en/support`              | **Support URL** — App Store Connect, bắt buộc                       |
+| `/privacy`              | `/en/privacy`              | **Privacy Policy URL** — App Store Connect và Google Play, bắt buộc |
+| `/delete-account`       | `/en/delete-account`       | **Delete Account URL** — Google Play → Data safety, bắt buộc        |
+| `/nhalo/privacy`        | `/en/nhalo/privacy`        | Bản canonical của chính sách NhàLo                                  |
+| `/nhalo/delete-account` | `/en/nhalo/delete-account` | Bản canonical của hướng dẫn xoá tài khoản NhàLo                     |
+| `/lien-he`              | `/en/lien-he`              | — (form liên hệ, gửi mail qua `POST /api/contact/`)                 |
 
 **Không đổi bốn đường dẫn tiếng Việt** — chúng đã khai với hai store.
+
+NhàLo là **tên mới của BizTown Rent Manager**, không phải ứng dụng thứ hai. Vì vậy `/privacy`
+và `/delete-account` phục vụ đúng tài liệu của `/nhalo/privacy` và `/nhalo/delete-account`
+(một nguồn duy nhất), và khai `rel=canonical` trỏ sang bản `/nhalo/...`; chúng không nằm
+trong sitemap. Xem `CANONICAL_ALIASES` trong `src/lib/seo.ts`.
 
 ## Vì sao repo này tách riêng
 
@@ -83,7 +90,7 @@ là lớp mỏng gọi `LocalePage`.
 
 ## Sửa nội dung
 
-- **Trang chủ, Hỗ trợ, Xoá tài khoản**: sửa `src/content/vi/*.tsx` và `src/content/en/*.tsx`
+- **Trang chủ, Hỗ trợ**: sửa `src/content/vi/*.tsx` và `src/content/en/*.tsx`
   (sửa cả hai bản). Link nội bộ của bản tiếng Anh trỏ về `/en/...`.
 - **Thanh điều hướng, title, description**: `src/i18n/dictionaries.ts`.
 - **Email liên hệ ở chân trang**: `src/config/site.ts`.
@@ -96,27 +103,24 @@ Nội dung chính sách tồn tại ở **ba nơi**, phải sửa cùng lúc:
 
 1. `docs/PRIVACY-POLICY.md` trong repo `biztown-rent` — **bản gốc**.
 2. `src/assets/legal/privacy-{vi,en,ko}.txt` trong repo `biztown-rent` — bản trong ứng dụng.
-3. `src/content/privacy/{vi,en}.html` trong repo này — **nhập tự động** từ bản gốc.
+3. `src/content/nhalo-privacy/{vi,en}.html` trong repo này — **nhập tự động** từ bản gốc.
 
-Cách cập nhật trang `/privacy`:
+Chỉ còn **một** bộ tài liệu cho NhàLo. Trước đây repo giữ song song `src/content/privacy/`
+(tên cũ "BizTown Rent Manager") và `src/content/nhalo-privacy/`; hai bản đã lệch nhau — bản cũ
+vẫn ghi lưu trữ trên Supabase và gửi SMS qua eSMS, trong khi bản mới là AWS và chỉ Zalo/email.
+Bản cũ đã bị xoá để không còn khả năng phục vụ nhầm tài liệu hết hiệu lực.
 
 ```sh
 # trong repo biztown-rent
-python3 tools/build_privacy.py                        # sinh lại web/privacy/index.html
+python3 tools/build_privacy.py   # sinh lại web/privacy/index.html
 # trong repo này
-pnpm import:privacy <biztown-rent>/web/privacy/index.html
-```
-
-Script cắt hai khối `data-lang="vi"` / `"en"` ra hai file HTML và đổi link nội bộ của bản
-tiếng Anh sang `/en/...`. Sửa tay hai file đó sẽ bị ghi đè ở lần nhập sau.
-
-Trang của NhàLo nhập cùng cách, thêm tham số đích (link `/privacy`, `/delete-account` trong file
-gốc được đổi thành `/nhalo/...`):
-
-```sh
 pnpm import:privacy <nhalo>/privacy/index.html nhalo-privacy               # /nhalo/privacy
 pnpm import:privacy <nhalo>/delete-account/index.html nhalo-delete-account # /nhalo/delete-account
 ```
+
+Script cắt hai khối `data-lang="vi"` / `"en"` ra hai file HTML, đổi link nội bộ của bản tiếng
+Anh sang `/en/...` và gắn tiền tố `/nhalo` cho link pháp lý. Sửa tay hai file đó sẽ bị ghi đè
+ở lần nhập sau.
 
 ## Triển khai
 

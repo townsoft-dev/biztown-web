@@ -5,14 +5,12 @@ import type { ReactNode } from "react";
 import type { BalhehContent } from "@/content/balheh-types";
 import { CONTACT as CONTACT_EN } from "@/content/en/contact";
 import { BALHEH as BALHEH_EN } from "@/content/en/balheh";
-import { DeleteAccountContent as DeleteAccountEn } from "@/content/en/delete-account";
 import { HOME as HOME_EN } from "@/content/en/home";
 import { NHALO as NHALO_EN } from "@/content/en/nhalo";
 import { SupportContent as SupportEn } from "@/content/en/support";
 import type { NhaloContent } from "@/content/nhalo-types";
 import { BALHEH as BALHEH_VI } from "@/content/vi/balheh";
 import { CONTACT as CONTACT_VI } from "@/content/vi/contact";
-import { DeleteAccountContent as DeleteAccountVi } from "@/content/vi/delete-account";
 import { HOME as HOME_VI } from "@/content/vi/home";
 import { NHALO as NHALO_VI } from "@/content/vi/nhalo";
 import { SupportContent as SupportVi } from "@/content/vi/support";
@@ -48,9 +46,13 @@ const CONTENT: Record<PageKey, Record<Locale, () => ReactNode>> = {
     en: () => <HomePage content={HOME_EN} locale="en" />,
   },
   support: { vi: () => <SupportVi />, en: () => <SupportEn /> },
+  // NhàLo là tên mới của BizTown Rent Manager — một ứng dụng duy nhất. Hai đường dẫn gốc
+  // /privacy/ và /delete-account/ đã khai với App Store và Google Play nên phải sống tiếp
+  // (CLAUDE.md), và phục vụ đúng tài liệu đang hiệu lực của NhàLo thay vì bản cũ. Canonical
+  // của chúng trỏ sang /nhalo/... — xem CANONICAL_ALIASES trong src/lib/seo.ts.
   privacy: {
-    vi: () => <HtmlContent dir="privacy" locale="vi" />,
-    en: () => <HtmlContent dir="privacy" locale="en" />,
+    vi: () => <HtmlContent dir="nhalo-privacy" locale="vi" />,
+    en: () => <HtmlContent dir="nhalo-privacy" locale="en" />,
   },
   nhaloPrivacy: {
     vi: () => <HtmlContent dir="nhalo-privacy" locale="vi" />,
@@ -60,7 +62,10 @@ const CONTENT: Record<PageKey, Record<Locale, () => ReactNode>> = {
     vi: () => <HtmlContent dir="nhalo-delete-account" locale="vi" />,
     en: () => <HtmlContent dir="nhalo-delete-account" locale="en" />,
   },
-  deleteAccount: { vi: () => <DeleteAccountVi />, en: () => <DeleteAccountEn /> },
+  deleteAccount: {
+    vi: () => <HtmlContent dir="nhalo-delete-account" locale="vi" />,
+    en: () => <HtmlContent dir="nhalo-delete-account" locale="en" />,
+  },
   nhalo: {
     vi: () => <NhaloPage content={NHALO_VI} locale="vi" />,
     en: () => <NhaloPage content={NHALO_EN} locale="en" />,

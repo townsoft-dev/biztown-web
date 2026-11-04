@@ -13,6 +13,26 @@ const OG_LOCALES: Record<Locale, string> = {
 const PRODUCT_PAGES = new Set<PageKey>(["home", "nhalo", "balheh"]);
 
 /**
+ * Trang pháp lý ở gốc site chỉ còn sống vì đã khai với App Store và Google Play (CLAUDE.md
+ * cấm đổi bốn đường dẫn đó). NhàLo là tên mới của BizTown Rent Manager — một ứng dụng duy
+ * nhất — nên chúng phục vụ đúng nội dung của trang /nhalo/... tương ứng.
+ *
+ * Vì trùng nội dung, canonical trỏ sang bản /nhalo/ và trang này KHÔNG khai hreflang: cụm
+ * hreflang chỉ có nghĩa giữa những trang tự canonical về chính mình, khai ở đây sẽ mâu thuẫn
+ * tín hiệu. Cũng KHÔNG đặt noindex — noindex đi kèm canonical có thể khiến Google áp luôn
+ * noindex cho trang đích.
+ */
+const CANONICAL_ALIASES: Partial<Record<PageKey, PageKey>> = {
+  privacy: "nhaloPrivacy",
+  deleteAccount: "nhaloDeleteAccount",
+};
+
+/** Trang chỉ là bản sao canonical của trang khác — bỏ khỏi sitemap. */
+export function canonicalTarget(page: PageKey): PageKey | undefined {
+  return CANONICAL_ALIASES[page];
+}
+
+/**
  * Ảnh xem trước khi chia sẻ link, theo từng trang (file ở public/og/). Trang không có tên
  * trong bảng này dùng ảnh mặc định. Ảnh không phụ thuộc ngôn ngữ để chỉ phải xuất một bộ từ
  * Figma; muốn tách theo ngôn ngữ thì đổi thành Record<Locale, …>.
@@ -45,7 +65,9 @@ export function languageAlternates(page: PageKey) {
 export function buildPageMetadata(locale: Locale, page: PageKey): Metadata {
   const dict = getDictionary(locale);
   const { title, description } = dict.meta[page];
-  const url = absoluteUrl(locale, page);
+  const alias = CANONICAL_ALIASES[page];
+  // og:url theo quy ước là URL chuẩn của nội dung, nên cũng trỏ về bản canonical.
+  const url = absoluteUrl(locale, alias ?? page);
   // metadataBase (root-document.tsx) biến đường dẫn tương đối thành URL tuyệt đối.
   const image = {
     url: OG_IMAGES[page] ?? OG_IMAGE_DEFAULT,
@@ -59,7 +81,7 @@ export function buildPageMetadata(locale: Locale, page: PageKey): Metadata {
     description,
     alternates: {
       canonical: url,
-      languages: languageAlternates(page),
+      ...(alias ? {} : { languages: languageAlternates(page) }),
     },
     openGraph: {
       type: "website",

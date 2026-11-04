@@ -109,17 +109,17 @@ const vi = {
     support: {
       title: "Hỗ trợ khách hàng và hướng dẫn sử dụng phần mềm",
       description:
-        "Hướng dẫn cài đặt và sử dụng, câu hỏi thường gặp, cách báo lỗi và liên hệ đội hỗ trợ cho ứng dụng BizTown Rent Manager cùng các sản phẩm BizTown khác.",
+        "Hướng dẫn cài đặt và sử dụng, câu hỏi thường gặp, cách báo lỗi sự cố và liên hệ đội hỗ trợ cho ứng dụng quản lý nhà trọ NhàLo cùng các sản phẩm BizTown khác.",
     },
     privacy: {
-      title: "Chính sách quyền riêng tư ứng dụng Rent Manager",
+      title: "Chính sách quyền riêng tư ứng dụng NhàLo",
       description:
-        "Ứng dụng BizTown Rent Manager thu thập dữ liệu gì, dùng và chia sẻ ra sao, lưu trong bao lâu, cùng quyền truy cập, chỉnh sửa và xoá dữ liệu của bạn.",
+        "Ứng dụng NhàLo thu thập dữ liệu gì của chủ nhà và người thuê, dùng và chia sẻ ra sao, lưu trong bao lâu, cùng quyền xem, chỉnh sửa và xoá dữ liệu đó.",
     },
     deleteAccount: {
-      title: "Xoá tài khoản Rent Manager và toàn bộ dữ liệu",
+      title: "Xoá tài khoản NhàLo và toàn bộ dữ liệu nhà trọ",
       description:
-        "Các bước xoá tài khoản BizTown Rent Manager ngay trong ứng dụng hoặc qua email: dữ liệu nào bị xoá, dữ liệu nào còn lưu lại và lưu trong bao lâu.",
+        "Các bước xoá tài khoản NhàLo ngay trong ứng dụng hoặc qua email: dữ liệu phòng, hợp đồng và hoá đơn nào bị xoá, cùng thời gian lưu trữ còn lại.",
     },
     nhaloPrivacy: {
       title: "Chính sách quyền riêng tư ứng dụng NhàLo",
@@ -278,17 +278,17 @@ const en: Dictionary = {
     support: {
       title: "Help centre, user guides and how to report a bug",
       description:
-        "Setup and how-to guides, frequently asked questions, how to report a bug and how to reach the support team for BizTown Rent Manager and other BizTown apps.",
+        "Setup and how-to guides, frequently asked questions, how to report a bug and how to reach the support team for NhàLo and the other BizTown apps.",
     },
     privacy: {
-      title: "Rent Manager privacy policy and your data rights",
+      title: "NhàLo app privacy policy for landlords and tenants",
       description:
-        "What the BizTown Rent Manager app collects, how it is used, shared and stored, how long it is kept, and your rights to access, correct and delete that data.",
+        "What the NhàLo app collects from landlords and tenants, how it is used, shared and stored, how long it is kept, and your rights over that data.",
     },
     deleteAccount: {
-      title: "Delete your Rent Manager account and all data",
+      title: "Delete your NhàLo account and all rental data",
       description:
-        "How to delete your BizTown Rent Manager account from inside the app or by email: what data is removed, what is retained afterwards and for how long.",
+        "How to delete your NhàLo account from inside the app or by email: which rooms, contracts and invoices are removed, and how long anything is retained.",
     },
     nhaloPrivacy: {
       title: "NhàLo app privacy policy for landlords and tenants",

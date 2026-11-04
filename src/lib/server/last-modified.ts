@@ -9,8 +9,9 @@ import type { PageKey } from "@/i18n/config";
 const SOURCES: Record<PageKey, string[]> = {
   home: ["src/content/vi/home.ts", "src/content/en/home.ts", "src/components/home"],
   support: ["src/content/vi/support.tsx", "src/content/en/support.tsx"],
-  privacy: ["src/content/privacy"],
-  deleteAccount: ["src/content/vi/delete-account.tsx", "src/content/en/delete-account.tsx"],
+  // /privacy/ và /delete-account/ phục vụ chính tài liệu của NhàLo (xem locale-page.tsx).
+  privacy: ["src/content/nhalo-privacy"],
+  deleteAccount: ["src/content/nhalo-delete-account"],
   nhalo: ["src/content/vi/nhalo.ts", "src/content/en/nhalo.ts", "src/components/nhalo"],
   nhaloPrivacy: ["src/content/nhalo-privacy"],
   nhaloDeleteAccount: ["src/content/nhalo-delete-account"],

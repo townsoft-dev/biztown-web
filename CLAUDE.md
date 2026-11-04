@@ -11,8 +11,9 @@ Xem README.md cho cấu trúc và cách sửa nội dung. Những điểm bắt 
   không import vào component client. Biến môi trường mới thêm vào `.env.example`.
 - **Không đổi** `/`, `/support`, `/privacy`, `/delete-account` — đã khai với App Store và
   Google Play. Tiếng Anh nằm dưới `/en`.
-- **Không sửa tay `src/content/privacy/*.html`** — nhập bằng `pnpm import:privacy` từ repo
-  biztown-rent.
+- **Không sửa tay `src/content/nhalo-*/{vi,en}.html`** — nhập bằng `pnpm import:privacy` từ
+  repo biztown-rent. NhàLo là tên mới của BizTown Rent Manager (một ứng dụng), nên `/privacy`
+  và `/delete-account` phục vụ đúng tài liệu đó và `rel=canonical` trỏ sang `/nhalo/...`.
 - Sửa nội dung thì sửa **cả** `src/content/vi` và `src/content/en`; chữ dùng chung ở
   `src/i18n/dictionaries.ts`.
 - Màu, chữ theo Figma "BizTown Brandsite" (biến BT v7 · Tokens, mode Day/Night): token ở
