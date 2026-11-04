@@ -141,6 +141,8 @@ function AudienceItem({
           // "Tìm hiểu thêm" → section sản phẩm.
           <a
             href={`#${HOME_SECTIONS.products}`}
+            // Chữ "Tìm hiểu thêm" không nói gì nếu tách khỏi thẻ; thêm tên nhóm đối tượng.
+            aria-label={`${more} — ${card.segment}`}
             className="flex items-center gap-3 text-[16px] leading-none font-semibold whitespace-nowrap"
           >
             <span

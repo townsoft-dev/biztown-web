@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import type { HomeContent, Stat } from "@/content/home-types";
 import { cn } from "@/lib/utils";
@@ -15,7 +15,18 @@ const STEP_MS = 120;
 /** Section "Hiệu quả bằng con số" (Figma: bt-section s-stats). */
 export function Stats({ content, locale }: { content: HomeContent["stats"]; locale: string }) {
   const [ref, inView] = useInView<HTMLDivElement>(0.3);
-  const [step, setStep] = useState(0);
+  // Bắt đầu ở bước cuối: HTML dựng sẵn lúc build có ngay con số thật thay vì toàn số 0 —
+  // không cần bản .sr-only lặp lại bên cạnh, và Google đọc ra đúng "10+" chứ không phải "10+0+".
+  const [step, setStep] = useState(COUNT_STEPS);
+  const armed = useRef(false);
+
+  // Chỉ chạy trên trình duyệt: hạ về 0 để hiệu ứng đếm bắt đầu từ đầu khi cuộn tới. Section này
+  // nằm dưới màn hình đầu nên người dùng không thấy lần đổi số này.
+  useEffect(() => {
+    if (armed.current) return;
+    armed.current = true;
+    setStep(0);
+  }, []);
 
   useEffect(() => {
     if (!inView || step >= COUNT_STEPS) return;
@@ -59,6 +70,9 @@ function StatCard({
   shown: number;
   locale: string;
 }) {
+  // Đang đếm thì số hiển thị chưa đúng, nên giấu khỏi trình đọc màn hình và đưa giá trị thật
+  // vào một bản .sr-only. Đếm xong (và trong HTML dựng sẵn) thì chỉ còn một con số duy nhất.
+  const counting = shown !== stat.value;
   return (
     <div
       className={cn(
@@ -92,11 +106,13 @@ function StatCard({
           highlight ? "text-on-accent" : "text-ink",
         )}
       >
-        <span className="sr-only">
-          {stat.value.toLocaleString(locale)}
-          {stat.suffix}
-        </span>
-        <span aria-hidden="true">
+        {counting && (
+          <span className="sr-only">
+            {stat.value.toLocaleString(locale)}
+            {stat.suffix}
+          </span>
+        )}
+        <span aria-hidden={counting ? "true" : undefined}>
           {shown.toLocaleString(locale)}
           <span className={highlight ? "" : "text-accent"}>{stat.suffix}</span>
         </span>

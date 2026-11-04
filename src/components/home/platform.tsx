@@ -17,8 +17,14 @@ import { Reveal } from "./reveal";
 
 /** Mockup bên phải mỗi slide: khung Figma 599×h, file export có thêm 60/30px bóng đổ. */
 const VISUALS: Record<ProductKey, { src: string; height: number; exportHeight: number }> = {
-  nhalo: { src: "/images/home/products/nhalo.svg", height: 588, exportHeight: 667 },
-  balheh: { src: "/images/home/products/balheh.png", height: 439.5, exportHeight: 501 },
+  // .webp thay .svg: bản SVG là 695 KB (236 KB sau nén) cho một ảnh toàn path, nằm ở slide
+  // hiện mặc định nên tải trong mọi lượt vào trang chủ. Raster còn 126 KB.
+  // Khổ 1416 px = 2× bề rộng hiển thị tối đa: ảnh rộng exportWidth/width = 708/599 ≈ 118%
+  // của khung 599 px, tức 708 CSS px — lấy 599×2 là thiếu nét trên màn hình retina.
+  nhalo: { src: "/images/home/products/nhalo.webp", height: 588, exportHeight: 667 },
+  // .webp thay .png: cùng khổ 1416×1002 nhưng 88 KB thay vì 189 KB (images.unoptimized
+  // nên Next phục vụ nguyên file, không tự đổi định dạng).
+  balheh: { src: "/images/home/products/balheh.webp", height: 439.5, exportHeight: 501 },
   hr: { src: "/images/home/products/hr.svg", height: 417, exportHeight: 470 },
   finance: { src: "/images/home/products/finance.svg", height: 498, exportHeight: 577 },
   sales: { src: "/images/home/products/sales.svg", height: 417, exportHeight: 488 },
@@ -54,7 +60,9 @@ export function Platform({
 
   return (
     <section id={HOME_SECTIONS.products} className="bt-wrap pt-12 pb-16">
-      <Reveal>
+      {/* immediate: khối ngay dưới hero, trên màn hẹp lọt vào màn hình đầu — không để nó
+          phụ thuộc vào lúc JS chạy xong. */}
+      <Reveal immediate>
         <div className="flex flex-wrap items-center justify-center gap-x-[22px] text-center">
           <h2 className="bt-h2 whitespace-nowrap max-sm:whitespace-normal">{content.title}</h2>
           <span
@@ -197,11 +205,21 @@ function ProductSlide({
 
         <div className="mt-8 flex flex-wrap gap-3">
           {product.detail ? (
-            <Link href={localizedPath(locale, product.detail)} className="bt-btn bt-btn-primary">
+            <Link
+              href={localizedPath(locale, product.detail)}
+              // "Xem chi tiết" lặp ở mọi slide. aria-label gắn thêm tên sản phẩm để trình đọc
+              // màn hình và công cụ tìm kiếm biết link dẫn đi đâu, mà chữ hiển thị giữ nguyên.
+              aria-label={`${product.primary} — ${productLabel(product.name)}`}
+              className="bt-btn bt-btn-primary"
+            >
               {product.primary}
             </Link>
           ) : product.primaryTarget ? (
-            <a href={`#${HOME_SECTIONS[product.primaryTarget]}`} className="bt-btn bt-btn-primary">
+            <a
+              href={`#${HOME_SECTIONS[product.primaryTarget]}`}
+              aria-label={`${product.primary} — ${productLabel(product.name)}`}
+              className="bt-btn bt-btn-primary"
+            >
               {product.primary}
             </a>
           ) : (
@@ -234,6 +252,11 @@ function ProductSlide({
       </div>
     </div>
   );
+}
+
+/** Tên sản phẩm dạng chữ thuần, cho aria-label (logo là ảnh nên không có chữ để đọc). */
+function productLabel(name: Product["name"]) {
+  return "text" in name ? name.text : name.logo === "nhalo" ? "NhàLo" : "Balheh";
 }
 
 /** Tên sản phẩm: logo ảnh (NhàLo, Balheh) hoặc chữ in hoa giãn cách màu cam. */
