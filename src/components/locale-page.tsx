@@ -17,7 +17,9 @@ import { HOME as HOME_VI } from "@/content/vi/home";
 import { NHALO as NHALO_VI } from "@/content/vi/nhalo";
 import { SupportContent as SupportVi } from "@/content/vi/support";
 import type { Locale, PageKey } from "@/i18n/config";
+import { buildStructuredData, type FaqItem } from "@/lib/structured-data";
 
+import { JsonLd } from "./site/json-ld";
 import { BalhehFooter } from "./balheh/balheh-footer";
 import { BalhehHeader } from "./balheh/balheh-header";
 import { BalhehPage } from "./balheh/balheh-page";
@@ -82,6 +84,10 @@ export function LocalePage({ locale, page }: { locale: Locale; page: PageKey }) 
   const nhalo = NHALO_PAGES.has(page) ? NHALO[locale] : null;
   const balheh = page === "balheh" ? BALHEH[locale] : null;
 
+  // Câu hỏi thường gặp chỉ có ở chính trang sản phẩm, không có ở các trang con của NhàLo.
+  const faq: FaqItem[] | undefined =
+    (page === "nhalo" ? nhalo?.faq.items : undefined) ?? balheh?.faq.items;
+
   return (
     <SiteShell
       locale={locale}
@@ -96,6 +102,7 @@ export function LocalePage({ locale, page }: { locale: Locale; page: PageKey }) 
       }
     >
       {CONTENT[page][locale]()}
+      <JsonLd data={buildStructuredData({ locale, page, faq })} />
     </SiteShell>
   );
 }
