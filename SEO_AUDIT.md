@@ -213,31 +213,30 @@ thêm `" — BizTown"` (độ dài dưới đây **đã tính** phần ghép).
 
 ### Tiếng Việt
 
-| Trang                    | Title hiển thị trên Google                                | Len | Meta description                                                                                                                                              | Len |
-| ------------------------ | --------------------------------------------------------- | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
-| `/`                      | BizTown — Phần mềm quản lý cho hộ kinh doanh và SME       | 51  | Hệ sinh thái phần mềm quản lý nhà trọ, dự án và vận hành cho hộ kinh doanh, doanh nghiệp nhỏ. Dùng thử miễn phí, hỗ trợ cài đặt bởi đội ngũ Việt – Hàn.       | 151 |
-| `/nhalo/`                | Phần mềm quản lý nhà trọ NhàLo — Miễn phí cho chủ nhà     | 53  | Ghi điện nước, tạo hoá đơn cho cả dãy trọ và gửi cho người thuê kèm mã QR chuyển khoản, ngay trên điện thoại. Miễn phí, người thuê không cần cài app.         | 149 |
-| `/balheh/`               | Balheh — Phần mềm quản lý dự án, chat nhóm và wiki        | 50  | Giao việc trên bảng Kanban, trao đổi theo kênh và lưu tài liệu wiki trong cùng một dự án. Dùng miễn phí, đăng nhập bằng Google hoặc Microsoft, không cần cài. | 157 |
-| `/lien-he/`              | Liên hệ tư vấn phần mềm và thiết kế web, app — BizTown    | 54  | Cần tư vấn phần mềm quản lý nhà trọ, quản lý dự án hay làm website, app theo yêu cầu? Để lại thông tin, chúng tôi liên hệ lại trong một ngày làm việc.        | 150 |
-| `/support/`              | Hỗ trợ khách hàng và hướng dẫn sử dụng phần mềm — BizTown | 57  | Hướng dẫn cài đặt và sử dụng, câu hỏi thường gặp, cách báo lỗi và liên hệ đội hỗ trợ cho ứng dụng BizTown Rent Manager cùng các sản phẩm BizTown khác.        | 150 |
-| `/privacy/`              | Chính sách quyền riêng tư ứng dụng Rent Manager — BizTown | 57  | Ứng dụng BizTown Rent Manager thu thập dữ liệu gì, dùng và chia sẻ ra sao, lưu trong bao lâu, cùng quyền truy cập, chỉnh sửa và xoá dữ liệu của bạn.          | 148 |
-| `/delete-account/`       | Xoá tài khoản Rent Manager và toàn bộ dữ liệu — BizTown   | 55  | Các bước xoá tài khoản BizTown Rent Manager ngay trong ứng dụng hoặc qua email: dữ liệu nào bị xoá, dữ liệu nào còn lưu lại và lưu trong bao lâu.             | 145 |
-| `/nhalo/privacy/`        | Chính sách quyền riêng tư ứng dụng NhàLo — BizTown        | 50  | Ứng dụng NhàLo thu thập dữ liệu gì của chủ nhà và người thuê, dùng và chia sẻ ra sao, lưu trong bao lâu, cùng quyền xem, chỉnh sửa và xoá dữ liệu đó.         | 149 |
-| `/nhalo/delete-account/` | Xoá tài khoản NhàLo và toàn bộ dữ liệu nhà trọ — BizTown  | 56  | Các bước xoá tài khoản NhàLo ngay trong ứng dụng hoặc qua email: dữ liệu phòng, hợp đồng và hoá đơn nào bị xoá, cùng thời gian lưu trữ còn lại.               | 143 |
+| Trang                                          | Title hiển thị trên Google                                | Len | Meta description                                                                                                                                              | Len |
+| ---------------------------------------------- | --------------------------------------------------------- | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
+| `/`                                            | BizTown — Hệ sinh thái phần mềm quản trị và tự động hoá   | 55  | Nền tảng hệ sinh thái phần mềm quản trị và tự động hoá cho cá nhân, hộ kinh doanh và doanh nghiệp SME tại Việt Nam. Dùng thử miễn phí, hỗ trợ cài đặt.        | 150 |
+| `/nhalo/`                                      | Phần mềm quản lý nhà trọ NhàLo — Miễn phí cho chủ nhà     | 53  | Ghi điện nước, tạo hoá đơn cho cả dãy trọ và gửi cho người thuê kèm mã QR chuyển khoản, ngay trên điện thoại. Miễn phí, người thuê không cần cài app.         | 149 |
+| `/balheh/`                                     | Balheh — Phần mềm quản lý dự án, chat nhóm và wiki        | 50  | Giao việc trên bảng Kanban, trao đổi theo kênh và lưu tài liệu wiki trong cùng một dự án. Dùng miễn phí, đăng nhập bằng Google hoặc Microsoft, không cần cài. | 157 |
+| `/lien-he/`                                    | Liên hệ tư vấn phần mềm và thiết kế web, app — BizTown    | 54  | Cần tư vấn phần mềm quản lý nhà trọ, quản lý dự án hay làm website, app theo yêu cầu? Để lại thông tin, chúng tôi liên hệ lại trong một ngày làm việc.        | 150 |
+| `/support/`                                    | Hỗ trợ khách hàng và hướng dẫn sử dụng phần mềm — BizTown | 57  | Hướng dẫn cài đặt và sử dụng, câu hỏi thường gặp, cách báo lỗi sự cố và liên hệ đội hỗ trợ cho ứng dụng quản lý nhà trọ NhàLo cùng các sản phẩm BizTown khác. | 157 |
+| `/nhalo/privacy/`<br>`/privacy/`               | Chính sách quyền riêng tư ứng dụng NhàLo — BizTown        | 50  | Ứng dụng NhàLo thu thập dữ liệu gì của chủ nhà và người thuê, dùng và chia sẻ ra sao, lưu trong bao lâu, cùng quyền xem, chỉnh sửa và xoá dữ liệu đó.         | 149 |
+| `/nhalo/delete-account/`<br>`/delete-account/` | Xoá tài khoản NhàLo và toàn bộ dữ liệu nhà trọ — BizTown  | 56  | Các bước xoá tài khoản NhàLo ngay trong ứng dụng hoặc qua email: dữ liệu phòng, hợp đồng và hoá đơn nào bị xoá, cùng thời gian lưu trữ còn lại.               | 143 |
 
 ### Tiếng Anh
 
-| Trang                      | Title hiển thị trên Google                                   | Len | Meta description                                                                                                                                              | Len |
-| -------------------------- | ------------------------------------------------------------ | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
-| `/en`                      | BizTown — Management software for small businesses           | 50  | A software ecosystem for household businesses and SMEs in Vietnam: rental management, project management and custom web and app development. Free to start.   | 155 |
-| `/ennhalo/`                | NhàLo — Rental property management, free for landlords       | 54  | Record utility readings, create invoices for a whole building and send them to tenants with a bank-transfer QR code, from your phone. Tenants need no app.    | 154 |
-| `/enbalheh/`               | Balheh — Project boards, team chat and a document wiki       | 54  | Assign work on Kanban boards, talk in channels and keep documents in a wiki, all in one project. Free to use, sign in with Google or Microsoft, no install.   | 155 |
-| `/enlien-he/`              | Contact us — software advice and custom builds — BizTown     | 56  | Need advice on rental or project management software, or a custom website or app? Leave your details and the BizTown team will reply within one business day. | 157 |
-| `/ensupport/`              | Help centre, user guides and how to report a bug — BizTown   | 58  | Setup and how-to guides, frequently asked questions, how to report a bug and how to reach the support team for BizTown Rent Manager and other BizTown apps.   | 155 |
-| `/enprivacy/`              | Rent Manager privacy policy and your data rights — BizTown   | 58  | What the BizTown Rent Manager app collects, how it is used, shared and stored, how long it is kept, and your rights to access, correct and delete that data.  | 156 |
-| `/endelete-account/`       | Delete your Rent Manager account and all data — BizTown      | 55  | How to delete your BizTown Rent Manager account from inside the app or by email: what data is removed, what is retained afterwards and for how long.          | 148 |
-| `/ennhalo/privacy/`        | NhàLo app privacy policy for landlords and tenants — BizTown | 60  | What the NhàLo app collects from landlords and tenants, how it is used, shared and stored, how long it is kept, and your rights over that data.               | 143 |
-| `/ennhalo/delete-account/` | Delete your NhàLo account and all rental data — BizTown      | 55  | How to delete your NhàLo account from inside the app or by email: which rooms, contracts and invoices are removed, and how long anything is retained.         | 149 |
+| Trang                                                | Title hiển thị trên Google                                   | Len | Meta description                                                                                                                                              | Len |
+| ---------------------------------------------------- | ------------------------------------------------------------ | --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
+| `/en`                                                | BizTown — A management and automation software ecosystem     | 56  | A management and automation software ecosystem for individuals, household businesses and SMEs in Vietnam. Free to start, with hands-on setup support.         | 149 |
+| `/en/nhalo/`                                         | NhàLo — Rental property management, free for landlords       | 54  | Record utility readings, create invoices for a whole building and send them to tenants with a bank-transfer QR code, from your phone. Tenants need no app.    | 154 |
+| `/en/balheh/`                                        | Balheh — Project boards, team chat and a document wiki       | 54  | Assign work on Kanban boards, talk in channels and keep documents in a wiki, all in one project. Free to use, sign in with Google or Microsoft, no install.   | 155 |
+| `/en/lien-he/`                                       | Contact us — software advice and custom builds — BizTown     | 56  | Need advice on rental or project management software, or a custom website or app? Leave your details and the BizTown team will reply within one business day. | 157 |
+| `/en/support/`                                       | Help centre, user guides and how to report a bug — BizTown   | 58  | Setup and how-to guides, frequently asked questions, how to report a bug and how to reach the support team for NhàLo and the other BizTown apps.              | 144 |
+| `/en/nhalo/privacy/`<br>`/en/privacy/`               | NhàLo app privacy policy for landlords and tenants — BizTown | 60  | What the NhàLo app collects from landlords and tenants, how it is used, shared and stored, how long it is kept, and your rights over that data.               | 143 |
+| `/en/nhalo/delete-account/`<br>`/en/delete-account/` | Delete your NhàLo account and all rental data — BizTown      | 55  | How to delete your NhàLo account from inside the app or by email: which rooms, contracts and invoices are removed, and how long anything is retained.         | 149 |
+
+Bốn URL pháp lý ở gốc site (`/privacy/`, `/delete-account/` và hai bản dưới `/en`) phục vụ
+đúng tài liệu của `/nhalo/*` nên dùng chung title/description — gộp chung dòng ở bảng trên.
 
 **Đã áp dụng vào `src/i18n/dictionaries.ts`.** Cột Len là độ dài _sau khi_ Next ghép template
 `"%s — BizTown"`; ba trang sản phẩm (`/`, `/nhalo/`, `/balheh/`) dùng title nguyên vẹn nên
@@ -412,6 +411,33 @@ Cấu trúc URL pháp lý sau khi gom, chừa chỗ cho các sản phẩm sắp 
 Sau này:  /balheh/privacy/   /hr/privacy/   …
           /privacy/  để dành cho chính sách của WEBSITE (mục F-4)
 ```
+
+---
+
+### Đợt 3 — định vị lại thương hiệu ở cấp site (05/11/2026)
+
+BizTown là **nền tảng hệ sinh thái phần mềm quản trị và tự động hoá dành cho cá nhân, hộ kinh
+doanh và doanh nghiệp SME tại Việt Nam** — không phải "một phần mềm quản lý". Câu lead ở hero
+trang chủ (`src/content/vi/home.ts:10`) vốn đã viết đúng như vậy, nhưng metadata cấp site thì
+vẫn mô tả BizTown như một sản phẩm đơn lẻ, tức **thứ Google và các nền tảng chia sẻ đọc được
+lại lệch với thứ người dùng thấy trên trang**.
+
+| Chỗ                             | Trước                                                                                  | Sau                                                                                  |
+| ------------------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| `meta.home.title` (VI)          | BizTown — Phần mềm quản lý cho hộ kinh doanh và SME                                    | BizTown — Hệ sinh thái phần mềm quản trị và tự động hoá                              |
+| `meta.home.description` (VI)    | "Hệ sinh thái phần mềm quản lý nhà trọ, dự án và vận hành…" — liệt kê sản phẩm         | Nêu nền tảng + ba nhóm đối tượng (cá nhân, hộ kinh doanh, SME) + thị trường Việt Nam |
+| `meta.home` (EN)                | BizTown — Management software for small businesses                                     | BizTown — A management and automation software ecosystem                             |
+| `footer.description` (VI · EN)  | "Hệ sinh thái phần mềm cho doanh nghiệp vừa và nhỏ." — bỏ sót cá nhân và hộ kinh doanh | Thêm đủ ba nhóm đối tượng và cụm "quản trị và tự động hoá"                           |
+| `manifest.name` · `description` | "BizTown — Phần mềm quản lý cho hộ kinh doanh và doanh nghiệp nhỏ"                     | Khớp title/description mới; đây là tên hiện khi người dùng cài site như PWA          |
+
+Vì `src/lib/structured-data.ts` đọc thẳng từ `dict.meta`, JSON-LD `WebSite` và `Organization`
+tự đổi theo — không phải sửa tay chỗ nào. Độ dài vẫn nằm trong 50–60 và 140–160 ký tự (kiểm
+bằng script).
+
+**Cố ý không đụng** title/description cấp sản phẩm (`/nhalo/`, `/balheh/`, `/lien-he/`,
+`/support/`): ở đó "phần mềm quản lý nhà trọ", "phần mềm quản lý dự án" là **từ khoá tìm kiếm
+có lượng truy vấn thật**, còn "nền tảng tự động hoá" thì không ai gõ. Định vị thương hiệu
+thuộc về trang chủ và chân trang; trang sản phẩm phải nói ngôn ngữ của người đang tìm mua.
 
 ---
 

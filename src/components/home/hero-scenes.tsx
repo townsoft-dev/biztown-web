@@ -201,7 +201,7 @@ function AppsGrid({
           {/* eslint-disable-next-line @next/next/no-img-element -- SVG tĩnh, chỉ cắt khung */}
           <img
             src="/images/home/biztown-logo.svg"
-            alt=""
+            alt="logo BizTown"
             className="absolute top-0 left-0 h-7 max-w-none"
           />
         </span>

@@ -87,9 +87,9 @@ const vi = {
   ] satisfies NavLink[] as NavLink[],
   meta: {
     home: {
-      title: "BizTown — Phần mềm quản lý cho hộ kinh doanh và SME",
+      title: "BizTown — Hệ sinh thái phần mềm quản trị và tự động hoá",
       description:
-        "Hệ sinh thái phần mềm quản lý nhà trọ, dự án và vận hành cho hộ kinh doanh, doanh nghiệp nhỏ. Dùng thử miễn phí, hỗ trợ cài đặt bởi đội ngũ Việt – Hàn.",
+        "Nền tảng hệ sinh thái phần mềm quản trị và tự động hoá cho cá nhân, hộ kinh doanh và doanh nghiệp SME tại Việt Nam. Dùng thử miễn phí, hỗ trợ cài đặt.",
     },
     nhalo: {
       title: "Phần mềm quản lý nhà trọ NhàLo — Miễn phí cho chủ nhà",
@@ -134,7 +134,7 @@ const vi = {
   } satisfies Record<PageKey, { title: string; description: string }>,
   footer: {
     description:
-      "Hệ sinh thái phần mềm cho doanh nghiệp vừa và nhỏ. Một sản phẩm của Townsoft Vina — đội ngũ Việt Nam & Hàn Quốc.",
+      "Hệ sinh thái phần mềm quản trị và tự động hoá cho cá nhân, hộ kinh doanh và doanh nghiệp SME. Một sản phẩm của Townsoft Vina — đội ngũ Việt Nam & Hàn Quốc.",
     taxCode: "MST: 0109151007",
     address: "6, Ngõ 7 Lê Đức Thọ, Từ Liêm, Hà Nội",
     socialLabel: "Mạng xã hội",
@@ -256,9 +256,9 @@ const en: Dictionary = {
   ],
   meta: {
     home: {
-      title: "BizTown — Management software for small businesses",
+      title: "BizTown — A management and automation software ecosystem",
       description:
-        "A software ecosystem for household businesses and SMEs in Vietnam: rental management, project management and custom web and app development. Free to start.",
+        "A management and automation software ecosystem for individuals, household businesses and SMEs in Vietnam. Free to start, with hands-on setup support.",
     },
     nhalo: {
       title: "NhàLo — Rental property management, free for landlords",
@@ -303,7 +303,7 @@ const en: Dictionary = {
   },
   footer: {
     description:
-      "A software ecosystem for small and medium businesses. A product of Townsoft Vina — a Vietnamese & Korean team.",
+      "A management and automation software ecosystem for individuals, household businesses and SMEs. A product of Townsoft Vina — a Vietnamese & Korean team.",
     taxCode: "Tax code: 0109151007",
     address: "6, Lane 7 Le Duc Tho, Tu Liem, Hanoi",
     socialLabel: "Social media",

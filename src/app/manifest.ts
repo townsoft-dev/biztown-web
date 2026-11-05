@@ -11,10 +11,10 @@ export const dynamic = "force-static";
  */
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "BizTown — Phần mềm quản lý cho hộ kinh doanh và doanh nghiệp nhỏ",
+    name: "BizTown — Hệ sinh thái phần mềm quản trị và tự động hoá",
     short_name: "BizTown",
     description:
-      "Hệ sinh thái phần mềm quản lý nhà trọ, dự án và vận hành cho hộ kinh doanh, doanh nghiệp nhỏ.",
+      "Nền tảng hệ sinh thái phần mềm quản trị và tự động hoá dành cho cá nhân, hộ kinh doanh và doanh nghiệp SME tại Việt Nam.",
     lang: "vi",
     dir: "ltr",
     start_url: "/",
