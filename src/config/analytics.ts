@@ -8,7 +8,7 @@
  *   (App Store Connect › Analytics › Campaigns). Có thì App Store đếm lượt tải theo mã `ct`.
  */
 export const analyticsConfig = {
-  ga4Id: "",
+  ga4Id: "G-08HP8FRMNH",
   metaPixelId: "",
   appStoreProviderToken: "",
 };
