@@ -10,5 +10,5 @@
 export const analyticsConfig = {
   ga4Id: "G-08HP8FRMNH",
   metaPixelId: "1009333991448721",
-  appStoreProviderToken: "",
+  appStoreProviderToken: "129459545",
 };
