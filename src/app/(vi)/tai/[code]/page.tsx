@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import { TaiRedirect } from "@/components/tai/tai-redirect";
-import { TAI_CODE_PATTERN, TAI_LINKS } from "@/config/tai-links";
+import { linkSource, TAI_CODE_PATTERN, TAI_PREBUILT_CODES } from "@/config/tai-links";
 
 export const metadata: Metadata = {
   title: "Tải NhàLo",
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 export function generateStaticParams() {
-  return Object.keys(TAI_LINKS).map((code) => ({ code }));
+  return TAI_PREBUILT_CODES.map((code) => ({ code }));
 }
 
 /** biztown.vn/tai/<mã>/ — link tải theo nơi đăng, xem src/config/tai-links.ts. */
@@ -18,6 +18,6 @@ export default async function Page({ params }: { params: Promise<{ code: string 
   const { code: raw } = await params;
   const code = decodeURIComponent(raw).toLowerCase();
   if (!TAI_CODE_PATTERN.test(code)) notFound();
-  const link = TAI_LINKS[code] ?? { source: "other", medium: "other" };
+  const link = linkSource(code);
   return <TaiRedirect code={code} source={link.source} medium={link.medium} />;
 }
