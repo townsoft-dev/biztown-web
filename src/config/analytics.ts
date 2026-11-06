@@ -9,6 +9,6 @@
  */
 export const analyticsConfig = {
   ga4Id: "G-08HP8FRMNH",
-  metaPixelId: "",
+  metaPixelId: "1009333991448721",
   appStoreProviderToken: "",
 };
