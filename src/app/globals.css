@@ -157,7 +157,7 @@
     --nl-glow: rgba(239, 159, 39, 0.08);
     --nl-footer-bg:
       radial-gradient(440px 260px at 100% 145px, rgba(120, 185, 255, 0.2), transparent),
-    radial-gradient(520px 320px at 0% 100%, rgba(120, 185, 255, 0.12), transparent), #141c38;
+      radial-gradient(520px 320px at 0% 100%, rgba(120, 185, 255, 0.12), transparent), #141c38;
     --nl-panel-ring: rgba(255, 255, 255, 0.12);
     --nl-split-old: #8f95e0;
     --nl-total-bg: #2c3a6e;
