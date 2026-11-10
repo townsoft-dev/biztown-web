@@ -4,6 +4,7 @@ import { QRCodeSVG } from "qrcode.react";
 
 import { siteConfig } from "@/config/site";
 import type { AppCopy, HeroIntro, NhaloContent } from "@/content/nhalo-types";
+import { localizedPath, type Locale } from "@/i18n/config";
 
 import { MsIcon, Phone } from "./app/app-ui";
 import { HomeScreen } from "./app/screens";
@@ -20,16 +21,30 @@ import { useNhaloLinks } from "./use-link-code";
  * ở nhalo-page.tsx chọn bản theo utm_campaign trước khi trang hiện nên chữ không nháy, không
  * nhảy bố cục.
  */
-export function NhaloHeroIntro({ content, app }: { content: NhaloContent["hero"]; app: AppCopy }) {
+export function NhaloHeroIntro({
+  content,
+  app,
+  locale,
+}: {
+  content: NhaloContent["hero"];
+  app: AppCopy;
+  locale: Locale;
+}) {
   const links = useNhaloLinks();
   const intros: { id: string; intro: HeroIntro }[] = [
     { id: DEFAULT_VARIANT, intro: content.intro },
     ...content.variants.map((variant) => ({ id: variant.id, intro: variant })),
   ];
+  // Chưa có link OA Zalo / fanpage Messenger thì nút tạm dẫn tới trang Liên hệ.
+  const contact = localizedPath(locale, "contact");
   const chat = [
-    { href: siteConfig.nhaloChat.zalo, label: content.chat.zalo, icon: "chat" },
-    { href: siteConfig.nhaloChat.messenger, label: content.chat.messenger, icon: "send" },
-  ].filter((item) => item.href);
+    { href: siteConfig.nhaloChat.zalo || contact, label: content.chat.zalo, icon: "chat" },
+    {
+      href: siteConfig.nhaloChat.messenger || contact,
+      label: content.chat.messenger,
+      icon: "send",
+    },
+  ];
 
   return (
     <div className="bt-wrap relative grid items-center gap-x-12 gap-y-10 lg:grid-cols-[minmax(0,1fr)_auto]">
@@ -81,22 +96,20 @@ export function NhaloHeroIntro({ content, app }: { content: NhaloContent["hero"]
           </div>
         </div>
 
-        {chat.length > 0 && (
-          <div className="flex flex-wrap gap-3">
-            {chat.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                target="_blank"
-                rel="noopener"
-                className="flex h-12 items-center gap-2 rounded-full border-[1.5px] border-[rgba(35,48,94,0.3)] px-5 text-[15px] font-semibold text-ink transition-colors hover:bg-card dark:border-line"
-              >
-                <MsIcon name={item.icon} size={20} />
-                {item.label}
-              </a>
-            ))}
-          </div>
-        )}
+        <div className="flex flex-wrap gap-3">
+          {chat.map((item) => (
+            <a
+              key={item.label}
+              href={item.href}
+              target={item.href.startsWith("http") ? "_blank" : undefined}
+              rel={item.href.startsWith("http") ? "noopener" : undefined}
+              className="flex h-12 items-center gap-2 rounded-full border-[1.5px] border-[rgba(35,48,94,0.3)] px-5 text-[15px] font-semibold text-ink transition-colors hover:bg-card dark:border-line"
+            >
+              <MsIcon name={item.icon} size={20} />
+              {item.label}
+            </a>
+          ))}
+        </div>
 
         <p className="text-[14px] leading-[22.4px] text-ink-muted">{content.note}</p>
       </div>

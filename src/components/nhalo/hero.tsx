@@ -11,7 +11,7 @@ import {
 
 import { AppMark } from "@/components/ui/app-mark";
 import type { AppCopy, NhaloContent } from "@/content/nhalo-types";
-import { NHALO_SECTIONS } from "@/i18n/config";
+import { NHALO_SECTIONS, type Locale } from "@/i18n/config";
 import { cn } from "@/lib/utils";
 
 import { Phone, dots } from "./app/app-ui";
@@ -155,7 +155,15 @@ function subscribeReducedMotion(onChange: () => void) {
  * Demo tự chạy như video: con trỏ di chuyển, chạm, nhập số, hiện thông báo; bấm tab để nhảy
  * chương, ❚❚ để dừng. Tự dừng khi cuộn khỏi màn hình hoặc khi bật "giảm chuyển động".
  */
-export function NhaloHero({ content, app }: { content: NhaloContent["hero"]; app: AppCopy }) {
+export function NhaloHero({
+  content,
+  app,
+  locale,
+}: {
+  content: NhaloContent["hero"];
+  app: AppCopy;
+  locale: Locale;
+}) {
   const [chapter, setChapter] = useState(0);
   const [paused, setPaused] = useState(false);
   const [inView, setInView] = useState(true);
@@ -199,7 +207,7 @@ export function NhaloHero({ content, app }: { content: NhaloContent["hero"]; app
         className="pointer-events-none absolute inset-x-0 top-0 h-[800px] bg-[linear-gradient(var(--nl-hero-grid)_1px,transparent_1px),linear-gradient(90deg,var(--nl-hero-grid)_1px,transparent_1px)] [mask-image:linear-gradient(180deg,#000_70%,transparent)] bg-size-[96px_96px]"
       />
 
-      <NhaloHeroIntro content={content} app={app} />
+      <NhaloHeroIntro content={content} app={app} locale={locale} />
 
       <div className="bt-wrap relative mt-20 flex flex-col items-center text-center max-md:mt-14">
         <h2 className="bt-h2 text-balance text-ink">{content.demoTitle}</h2>

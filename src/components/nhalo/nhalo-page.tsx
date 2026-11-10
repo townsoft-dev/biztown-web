@@ -32,7 +32,7 @@ export function NhaloPage({ content, locale }: { content: NhaloContent; locale: 
   return (
     <>
       <HeroVariantScript variants={content.hero.variants} />
-      <NhaloHero content={content.hero} app={content.app} />
+      <NhaloHero content={content.hero} app={content.app} locale={locale} />
       <NhaloStrip content={content.strip} />
       <NhaloFeatures content={content.features} app={content.app} />
       <NhaloUtilities content={content.utilities} locale={locale} />
