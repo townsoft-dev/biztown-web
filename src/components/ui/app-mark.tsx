@@ -3,11 +3,12 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 /**
- * Biểu tượng ứng dụng (Figma: App mark): logo ảnh (NhàLo, Balheh) hoặc chữ viết tắt trên nền
+ * Biểu tượng ứng dụng (Figma: App mark): logo ảnh (NhàLo, Balheh, Chinchu) hoặc chữ viết tắt trên nền
  * màu. Màu nền chữ viết tắt cố định theo design, không đổi theo theme.
  */
 export type AppMarkKind =
-  { logo: "nhalo" | "balheh" } | { code: string; tone: "orange" | "slate" | "white" | "navy" };
+  | { logo: "nhalo" | "balheh" | "chinchu" }
+  | { code: string; tone: "orange" | "slate" | "white" | "navy" };
 
 const TONES = {
   orange: "bg-accent text-on-accent",
@@ -20,11 +21,14 @@ const LOGOS = {
   nhalo: "/images/home/nhalo-mark.svg",
   // SVG nền trong suốt (bản PNG export từ Figma dính nền trắng).
   balheh: "/images/home/balheh-mark.svg",
+  chinchu: "/images/home/chinchu-mark.svg",
 } as const;
 
 /** Bản cho nền tối (mode Night): phần đen của logo Balheh (khối góc dưới trái, dấu check) đổi trắng. */
 const DARK_LOGOS: Partial<Record<keyof typeof LOGOS, string>> = {
   balheh: "/images/home/balheh-mark-dark.svg",
+  // Chinchu: bản Dark mode trong Figma "Logo-Stuff" (chữ C và nhà màu trắng).
+  chinchu: "/images/home/chinchu-mark-dark.svg",
 };
 
 type AppMarkProps = {

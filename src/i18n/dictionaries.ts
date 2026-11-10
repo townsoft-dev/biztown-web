@@ -41,6 +41,7 @@ const vi = {
     label: "Danh sách sản phẩm",
     statusLabels: { live: "Đang hoạt động", soon: "Sắp ra mắt" },
     all: "Xem tất cả sản phẩm",
+    more: "Và nhiều sản phẩm khác sắp ra mắt…",
     items: [
       {
         name: "NhàLo",
@@ -50,32 +51,18 @@ const vi = {
         to: { page: "nhalo" },
       },
       {
+        name: "Chinchu",
+        desc: "Tìm nhà cho thuê chính chủ, uy tín",
+        mark: { logo: "chinchu" },
+        status: "soon",
+        to: null,
+      },
+      {
         name: "Balheh",
         desc: "Quản lý dự án, tài liệu, chat nhóm",
         mark: { logo: "balheh" },
         status: "live",
         to: { page: "balheh" },
-      },
-      {
-        name: "BizTown Nhân sự",
-        desc: "Nhân sự, chấm công, bảng lương",
-        mark: { code: "HR", tone: "orange" },
-        status: "soon",
-        to: null,
-      },
-      {
-        name: "BizTown Hóa đơn",
-        desc: "Thu chi, công nợ, lãi lỗ",
-        mark: { code: "FN", tone: "slate" },
-        status: "soon",
-        to: null,
-      },
-      {
-        name: "BizTown Tồn kho",
-        desc: "Bán hàng, tồn kho, đơn hàng",
-        mark: { code: "SL", tone: "white" },
-        status: "soon",
-        to: null,
       },
     ] satisfies ProductMenuItem[] as ProductMenuItem[],
   },
@@ -92,14 +79,14 @@ const vi = {
         "Nền tảng hệ sinh thái phần mềm quản trị và tự động hoá cho cá nhân, hộ kinh doanh và doanh nghiệp SME tại Việt Nam. Dùng thử miễn phí, hỗ trợ cài đặt.",
     },
     nhalo: {
-      title: "Phần mềm quản lý nhà trọ NhàLo — Miễn phí cho chủ nhà",
+      title: "NhàLo - Ứng dụng quản lý nhà trọ — Miễn phí cho chủ nhà",
       description:
-        "Ghi điện nước, tạo hoá đơn cho cả dãy trọ và gửi cho người thuê kèm mã QR chuyển khoản, ngay trên điện thoại. Miễn phí, người thuê không cần cài app.",
+        "Ghi điện nước, tạo hoá đơn và gửi cho cả dãy trọ kèm mã QR chuyển khoản, ngay trên điện thoại. Miễn phí, người thuê không cần cài app.",
     },
     balheh: {
-      title: "Balheh — Phần mềm quản lý dự án, chat nhóm và wiki",
+      title: "Balheh — Công cụ quản lý dự án, chat nhóm và wiki",
       description:
-        "Giao việc trên bảng Kanban, trao đổi theo kênh và lưu tài liệu wiki trong cùng một dự án. Dùng miễn phí, đăng nhập bằng Google hoặc Microsoft, không cần cài.",
+        "Giao việc trên bảng Kanban, trao đổi theo kênh và lưu tài liệu wiki trong cùng một dự án. Đăng nhập bằng Google hoặc Microsoft, không cần cài.",
     },
     contact: {
       title: "Liên hệ tư vấn phần mềm và thiết kế web, app",
@@ -144,10 +131,9 @@ const vi = {
           title: "Sản phẩm",
           links: [
             { label: "NhàLo", to: { page: "nhalo" } },
+            { label: "Chinchu (sắp ra mắt)", to: null },
             { label: "Balheh", to: { page: "balheh" } },
-            { label: "BizTown Nhân sự (sắp ra mắt)", to: null },
-            { label: "BizTown Hóa đơn (sắp ra mắt)", to: null },
-            { label: "BizTown Tồn kho (sắp ra mắt)", to: null },
+            { label: "Và nhiều sản phẩm khác…", to: null },
           ],
         },
       ],
@@ -210,6 +196,7 @@ const en: Dictionary = {
     label: "Product list",
     statusLabels: { live: "Live", soon: "Coming soon" },
     all: "See all products",
+    more: "And more products coming soon…",
     items: [
       {
         name: "NhàLo",
@@ -219,32 +206,18 @@ const en: Dictionary = {
         to: { page: "nhalo" },
       },
       {
+        name: "Chinchu",
+        desc: "Trusted owner-listed rentals",
+        mark: { logo: "chinchu" },
+        status: "soon",
+        to: null,
+      },
+      {
         name: "Balheh",
         desc: "Projects, documents and team chat",
         mark: { logo: "balheh" },
         status: "live",
         to: { page: "balheh" },
-      },
-      {
-        name: "BizTown HR",
-        desc: "HR, attendance and payroll",
-        mark: { code: "HR", tone: "orange" },
-        status: "soon",
-        to: null,
-      },
-      {
-        name: "BizTown Invoices",
-        desc: "Income, expenses, debts, profit & loss",
-        mark: { code: "FN", tone: "slate" },
-        status: "soon",
-        to: null,
-      },
-      {
-        name: "BizTown Inventory",
-        desc: "Sales, inventory and orders",
-        mark: { code: "SL", tone: "white" },
-        status: "soon",
-        to: null,
       },
     ],
   },
@@ -313,10 +286,9 @@ const en: Dictionary = {
           title: "Products",
           links: [
             { label: "NhàLo", to: { page: "nhalo" } },
+            { label: "Chinchu (coming soon)", to: null },
             { label: "Balheh", to: { page: "balheh" } },
-            { label: "BizTown HR (coming soon)", to: null },
-            { label: "BizTown Invoices (coming soon)", to: null },
-            { label: "BizTown Inventory (coming soon)", to: null },
+            { label: "And more coming soon…", to: null },
           ],
         },
       ],
