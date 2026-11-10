@@ -70,7 +70,9 @@
   --nl-hero-grid: rgba(217, 138, 20, 0.09);
   --nl-glow: rgba(239, 159, 39, 0.16);
   --nl-footer-bg:
-    radial-gradient(360px 218px at 100% 145px, rgba(120, 185, 255, 0.42), transparent), #ffffff;
+    radial-gradient(440px 260px at 100% 145px, rgba(120, 185, 255, 0.55), transparent),
+    radial-gradient(520px 320px at 0% 100%, rgba(120, 185, 255, 0.32), transparent),
+    linear-gradient(180deg, #f7faff, #e9f2ff);
   --nl-panel-ring: rgba(239, 159, 39, 0.22);
   --nl-split-old: #23305e;
   --nl-total-bg: #23305e;
@@ -154,7 +156,8 @@
     --nl-hero-grid: rgba(255, 255, 255, 0.04);
     --nl-glow: rgba(239, 159, 39, 0.08);
     --nl-footer-bg:
-      radial-gradient(360px 218px at 100% 145px, rgba(120, 185, 255, 0.14), transparent), #141c38;
+      radial-gradient(440px 260px at 100% 145px, rgba(120, 185, 255, 0.2), transparent),
+    radial-gradient(520px 320px at 0% 100%, rgba(120, 185, 255, 0.12), transparent), #141c38;
     --nl-panel-ring: rgba(255, 255, 255, 0.12);
     --nl-split-old: #8f95e0;
     --nl-total-bg: #2c3a6e;
@@ -230,7 +233,8 @@
   --nl-hero-grid: rgba(255, 255, 255, 0.04);
   --nl-glow: rgba(239, 159, 39, 0.08);
   --nl-footer-bg:
-    radial-gradient(360px 218px at 100% 145px, rgba(120, 185, 255, 0.14), transparent), #141c38;
+    radial-gradient(440px 260px at 100% 145px, rgba(120, 185, 255, 0.2), transparent),
+    radial-gradient(520px 320px at 0% 100%, rgba(120, 185, 255, 0.12), transparent), #141c38;
   --nl-panel-ring: rgba(255, 255, 255, 0.12);
   --nl-split-old: #8f95e0;
   --nl-total-bg: #2c3a6e;

@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 
 import { analyticsConfig } from "@/config/analytics";
-import { siteConfig } from "@/config/site";
+import { storeUrl } from "@/config/tai-links";
 
 type Platform = "ios" | "android" | "desktop";
 
@@ -21,17 +21,7 @@ function detectPlatform(ua: string, touch: number): Platform {
 }
 
 function destination(platform: Platform, code: string, source: string, medium: string) {
-  const { ios, android } = siteConfig.nhaloStores;
-  if (platform === "ios") {
-    const pt = analyticsConfig.appStoreProviderToken;
-    const params = new URLSearchParams({ ct: code, mt: "8" });
-    if (pt) params.set("pt", pt);
-    return `https://apps.apple.com/app/apple-store/id${ios.appId}?${params.toString()}`;
-  }
-  if (platform === "android") {
-    const referrer = `utm_source=${source}&utm_medium=${medium}&utm_campaign=${code}`;
-    return `${android.url}&referrer=${encodeURIComponent(referrer)}`;
-  }
+  if (platform !== "desktop") return storeUrl(platform, code);
   const params = new URLSearchParams({
     utm_source: source,
     utm_medium: medium,
@@ -39,6 +29,9 @@ function destination(platform: Platform, code: string, source: string, medium: s
   });
   return `/nhalo/?${params.toString()}`;
 }
+
+/** Chờ tối đa bấy nhiêu ms cho GA4 ghi lượt bấm rồi chuyển trang dù chưa xong. */
+const MAX_WAIT_MS = 800;
 
 /** Ghi lượt bấm (GA4, Meta Pixel nếu có) rồi chuyển sang store đúng loại máy. */
 export function TaiRedirect({
@@ -73,31 +66,31 @@ export function TaiRedirect({
     };
 
     const w = window as unknown as Tracker;
-    let waited = false;
-    // Script đo lường tải bất đồng bộ: chờ tối đa ~1,2 giây cho GA4 gửi xong rồi mới chuyển.
-    const started = Date.now();
+    // Chậm nhất MAX_WAIT_MS kể từ lúc trang chạy thì chuyển, dù GA4 chưa xác nhận.
+    const deadline = window.setTimeout(go, MAX_WAIT_MS);
+    let sent = false;
+    // gtag (bản tạm xếp hàng sự kiện) do script GA4 khai báo ngay sau khi trang chạy; chờ nó
+    // xuất hiện rồi gửi sự kiện. GA4 gửi bằng sendBeacon nên vẫn tới nơi khi đã rời trang.
     const timer = window.setInterval(() => {
       const ready = !analyticsConfig.ga4Id || typeof w.gtag === "function";
-      if (!ready && Date.now() - started < 1200) return;
+      if (!ready || sent) return;
+      sent = true;
       window.clearInterval(timer);
-      if (waited) return;
-      waited = true;
       w.fbq?.("trackCustom", "TaiClick", { link_code: code, platform });
-      if (w.gtag) {
-        w.gtag("event", "tai_click", {
-          link_code: code,
-          platform,
-          link_source: source,
-          link_medium: medium,
-          event_callback: go,
-          event_timeout: 800,
-        });
-        window.setTimeout(go, 900);
-      } else {
-        go();
-      }
-    }, 50);
-    return () => window.clearInterval(timer);
+      if (!w.gtag) return go();
+      w.gtag("event", "tai_click", {
+        link_code: code,
+        platform,
+        link_source: source,
+        link_medium: medium,
+        transport_type: "beacon",
+        event_callback: go,
+      });
+    }, 30);
+    return () => {
+      window.clearInterval(timer);
+      window.clearTimeout(deadline);
+    };
   }, [code, source, medium]);
 
   return (

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import type { CSSProperties, ReactNode } from "react";
 
 import { cn } from "@/lib/utils";
@@ -54,11 +53,14 @@ export const PHONE_SCALE = "[--s:0.8] max-sm:[--s:0.72]";
 export function Phone({
   height = 812,
   scroll,
+  device,
   className,
   children,
 }: {
   /** Chiều cao màn hình ở khổ gốc 375px. */
   height?: number;
+  /** Vẽ giống máy thật hơn: viền kim loại, Dynamic Island, nút cạnh, ánh phản chiếu. */
+  device?: boolean;
   /** Cho người xem tự kéo lên xuống trong màn hình. */
   scroll?: keyof typeof SCROLL_CLASSES;
   className?: string;
@@ -80,13 +82,32 @@ export function Phone({
       }}
     >
       <div
-        className="absolute top-0 left-0 origin-top-left rounded-[54px] bg-navy-950 p-[10px]"
+        className={cn(
+          "absolute top-0 left-0 origin-top-left rounded-[54px] bg-navy-950 p-[10px]",
+          device &&
+            "shadow-[0_0_0_2.5px_#8c93ab,0_0_0_4px_#2b3150,inset_0_0_0_1.5px_rgba(255,255,255,0.12)]",
+        )}
         style={{ width: 395, height: height + 20, transform: "scale(var(--s, 1))" }}
       >
+        {device && (
+          <>
+            {/* Nút cạnh: Action + âm lượng (trái), nguồn (phải). */}
+            <span className="absolute top-[150px] -left-[6px] h-[34px] w-[4px] rounded-l-[3px] bg-[#6e7590]" />
+            <span className="absolute top-[205px] -left-[6px] h-[62px] w-[4px] rounded-l-[3px] bg-[#6e7590]" />
+            <span className="absolute top-[280px] -left-[6px] h-[62px] w-[4px] rounded-l-[3px] bg-[#6e7590]" />
+            <span className="absolute top-[235px] -right-[6px] h-[96px] w-[4px] rounded-r-[3px] bg-[#6e7590]" />
+            {/* Dynamic Island. */}
+            <span className="absolute top-[21px] left-1/2 z-20 flex h-[34px] w-[118px] -translate-x-1/2 items-center justify-end rounded-full bg-black pr-3">
+              <span className="size-[11px] rounded-full bg-[radial-gradient(circle_at_35%_35%,#3d4a7a,#0b0f1f_70%)]" />
+            </span>
+            {/* Ánh phản chiếu trên mặt kính. */}
+            <span className="pointer-events-none absolute inset-[10px] z-20 rounded-[44px] bg-[linear-gradient(115deg,rgba(255,255,255,0.16),rgba(255,255,255,0)_32%)]" />
+          </>
+        )}
         <div
           data-scroller={scroll === "screen" ? "" : undefined}
           className={cn(
-            "relative flex h-full flex-col rounded-[44px] bg-gray-50 text-left text-navy",
+            "relative flex h-full flex-col rounded-[44px] bg-[#fff7ea] text-left text-navy",
             scroll === "screen" ? "overflow-x-hidden" : "overflow-hidden",
             scroll && SCROLL_CLASSES[scroll],
           )}
@@ -98,56 +119,66 @@ export function Phone({
   );
 }
 
-/** Thanh trạng thái iOS (Figma: Device status). */
+/** Nền màn hình app NhàLo Lite (kem sáng). */
+export const APP_BG = "bg-[#fff7ea]";
+
+/** Thanh trạng thái iOS trên nền kem như NhàLo Lite: giờ, sóng, pin màu navy. */
 export function StatusBar() {
   return (
-    <div className="flex h-11 shrink-0 items-center justify-between bg-navy px-6">
-      <span className="text-[15px] leading-[20.25px] text-white">9:41</span>
-      <span className="flex items-center gap-[5px]">
-        <Image src="/images/nhalo/ios-signal.svg" alt="" width={18} height={18} />
-        <Image src="/images/nhalo/ios-wifi.svg" alt="" width={18} height={18} />
-        <Image src="/images/nhalo/ios-battery.svg" alt="" width={24} height={18} />
+    <div className={cn("flex h-11 shrink-0 items-center justify-between px-6 text-navy", APP_BG)}>
+      <span className="text-[15px] leading-[20.25px] font-semibold">9:41</span>
+      <span className="flex items-end gap-[2px]">
+        {[5, 7, 9, 11].map((height) => (
+          <span key={height} className="w-[3px] rounded-[1px] bg-navy" style={{ height }} />
+        ))}
+        <span className="ml-1.5 h-[11px] w-[22px] rounded-[3px] border-[1.5px] border-navy p-[1.5px]">
+          <span className="block h-full w-3/4 rounded-[1px] bg-navy" />
+        </span>
       </span>
     </div>
   );
 }
 
 /**
- * Thanh tiêu đề màu navy (Figma: Top bar · Title). "sm" là cỡ chữ nhỏ hơn ở các màn hình
- * Hợp đồng/Phân quyền trong design.
+ * Thanh tiêu đề NhàLo Lite: nút quay lại (hoặc đóng ✕ ở màn tạo mới) là ô vuông bo góc viền kem
+ * bên trái, tiêu đề + dòng phụ căn giữa, nền kem liền với thân màn hình.
  */
 export function TopBar({
   title,
   sub,
   size = "lg",
+  close,
 }: {
   title: string;
   sub?: string;
   size?: "lg" | "sm";
+  /** Màn tạo mới: nút ✕ bên phải thay cho ← bên trái (như "Thêm nhà"). */
+  close?: boolean;
 }) {
+  const button = (icon: string) => (
+    <span className="flex size-9 shrink-0 items-center justify-center rounded-[12px] border border-[#f0dfc2] bg-white text-navy">
+      <MsIcon name={icon} size={18} />
+    </span>
+  );
   return (
-    <div className="flex shrink-0 flex-col gap-0.5 bg-navy px-4 pt-3.5 pb-4">
-      <div className="flex items-center gap-2">
-        <span className="flex size-[26px] items-center justify-center rounded-full bg-white/14 text-white">
-          <MsIcon name="arrow_back" size={16} />
-        </span>
+    <div className={cn("flex shrink-0 items-center gap-2 px-4 pt-1 pb-3", APP_BG)}>
+      {close ? <span className="size-9 shrink-0" /> : button("arrow_back")}
+      <span className="flex min-w-0 flex-1 flex-col items-center text-center">
         <span
           className={cn(
-            "font-semibold whitespace-nowrap text-white",
-            size === "lg" ? "text-[16.8px] leading-[21.84px]" : "text-[13.4px] leading-[17.5px]",
+            "max-w-full truncate font-semibold text-navy",
+            size === "lg" ? "text-[16.5px] leading-[1.3]" : "text-[15px] leading-[1.3]",
           )}
         >
           {title}
         </span>
-      </div>
-      <span
-        className={cn(
-          "text-app-sub",
-          size === "lg" ? "text-[11.2px] leading-[17.92px]" : "text-[9px] leading-[14.3px]",
+        {sub && (
+          <span className="max-w-full truncate text-[11px] leading-[1.4] text-app-secondary">
+            {sub}
+          </span>
         )}
-      >
-        {sub ?? " "}
       </span>
+      {close ? button("close") : <span className="size-9 shrink-0" />}
     </div>
   );
 }
@@ -210,7 +241,7 @@ export function Field({
         data-demo={demo}
         className={cn(
           "flex h-11 items-center justify-between gap-2 rounded-[10px] border-[1.25px] px-3 transition-[border-color,box-shadow] duration-300",
-          muted ? "border-slate-200 bg-gray-50" : "border-slate-200 bg-white",
+          muted ? "border-[#f0dfc2] bg-[#fbf3e4]" : "border-[#f0dfc2] bg-white",
           active && "border-navy shadow-[inset_0_0_0_1px_#23305e]",
         )}
       >

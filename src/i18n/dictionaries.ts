@@ -118,6 +118,16 @@ const vi = {
       description:
         "Các bước xoá tài khoản NhàLo ngay trong ứng dụng hoặc qua email: dữ liệu phòng, hợp đồng và hoá đơn nào bị xoá, cùng thời gian lưu trữ còn lại.",
     },
+    nhaloGuide: {
+      title: "Hướng dẫn sử dụng NhàLo — app quản lý nhà trọ",
+      description:
+        "Từng bước dùng NhàLo: đăng ký, thêm nhà, cho thuê phòng, ghi chỉ số điện nước, tạo và gửi hoá đơn qua Zalo, thu tiền, gia hạn, trả phòng và giao nhà cho người quản lý.",
+    },
+    nhaloHelp: {
+      title: "Hỏi đáp và báo lỗi NhàLo",
+      description:
+        "Câu hỏi thường gặp về app quản lý nhà trọ NhàLo và form gửi câu hỏi, báo lỗi nhanh cho đội NhàLo.",
+    },
   } satisfies Record<PageKey, { title: string; description: string }>,
   footer: {
     description:
@@ -272,6 +282,16 @@ const en: Dictionary = {
       title: "Delete your NhàLo account and all rental data",
       description:
         "How to delete your NhàLo account from inside the app or by email: which rooms, contracts and invoices are removed, and how long anything is retained.",
+    },
+    nhaloGuide: {
+      title: "NhàLo user guide — rental management app",
+      description:
+        "Step-by-step NhàLo guide: sign up, add a house, rent out rooms, read meters, create and send invoices via Zalo, collect rent, renew, move out and hand houses to managers.",
+    },
+    nhaloHelp: {
+      title: "NhàLo FAQ and bug reports",
+      description:
+        "Frequently asked questions about the NhàLo rental management app, plus a quick form to ask a question or report a bug.",
     },
   },
   footer: {

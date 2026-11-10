@@ -10,7 +10,14 @@ import { SiteHeader } from "./site/site-header";
 const MAIN_ID = "main-content";
 
 /** Trang tự dựng toàn bộ section (không đặt trong thẻ trắng của trang tài liệu). */
-const FULL_PAGES = new Set<PageKey>(["home", "nhalo", "balheh", "contact"]);
+const FULL_PAGES = new Set<PageKey>([
+  "home",
+  "nhalo",
+  "nhaloGuide",
+  "nhaloHelp",
+  "balheh",
+  "contact",
+]);
 
 type SiteShellProps = {
   locale: Locale;

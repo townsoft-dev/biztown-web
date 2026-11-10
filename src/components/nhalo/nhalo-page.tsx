@@ -1,16 +1,13 @@
 import type { NhaloContent } from "@/content/nhalo-types";
 import type { Locale } from "@/i18n/config";
 
-import { NhaloContract } from "./contract";
+import { NhaloAudience } from "./audience";
 import { NhaloDownloadBand } from "./download-band";
-import { NhaloFaq } from "./faq";
 import { NhaloFeatures } from "./features";
 import { NhaloHero } from "./hero";
 import { DEFAULT_VARIANT } from "./hero-variant";
-import { NhaloRoles } from "./roles";
 import { NhaloStart } from "./start";
-import { NhaloStrip } from "./strip";
-import { NhaloUtilities } from "./utilities";
+import { NhaloWhy } from "./why";
 
 /**
  * Chọn tiêu đề hero theo utm_campaign trước khi trang hiện (không nháy chữ): chạy đồng bộ
@@ -33,14 +30,11 @@ export function NhaloPage({ content, locale }: { content: NhaloContent; locale: 
     <>
       <HeroVariantScript variants={content.hero.variants} />
       <NhaloHero content={content.hero} app={content.app} locale={locale} />
-      <NhaloStrip content={content.strip} />
+      <NhaloWhy content={content.why} />
       <NhaloFeatures content={content.features} app={content.app} />
-      <NhaloUtilities content={content.utilities} locale={locale} />
-      <NhaloContract content={content.contract} app={content.app} />
-      <NhaloRoles content={content.roles} app={content.app} />
-      <NhaloStart content={content.start} />
-      <NhaloFaq content={content.faq} />
-      <NhaloDownloadBand content={content.band} />
+      <NhaloAudience content={content.audience} roles={content.roles} app={content.app} />
+      <NhaloStart content={content.start} faq={content.faq} locale={locale} />
+      <NhaloDownloadBand content={content.band} locale={locale} />
     </>
   );
 }

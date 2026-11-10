@@ -46,10 +46,13 @@ export function ContactForm({
   content,
   locale,
   email,
+  topic,
 }: {
   content: FormContent;
   locale: Locale;
   email: string;
+  /** Gửi từ trang hỗ trợ của một sản phẩm (vd. "nhalo"): email về có tiêu đề riêng. */
+  topic?: "nhalo";
 }) {
   const baseId = useId();
   const formRef = useRef<HTMLFormElement>(null);
@@ -88,7 +91,7 @@ export function ContactForm({
       const response = await fetch(CONTACT_ENDPOINT, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...values, locale, website }),
+        body: JSON.stringify({ ...values, locale, website, topic }),
       });
 
       if (response.ok) {

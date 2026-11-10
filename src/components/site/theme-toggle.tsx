@@ -1,10 +1,12 @@
 "use client";
 
+import { cn } from "@/lib/utils";
+
 /**
  * Nút ☾/☀ đổi Day/Night. Trạng thái nằm ở data-theme của <html> (do script trong <head> đặt
  * trước khi hiện trang), nên biểu tượng chọn bằng CSS — không cần state, không lệch hydrate.
  */
-export function ThemeToggle({ label }: { label: string }) {
+export function ThemeToggle({ label, className }: { label: string; className?: string }) {
   function toggle() {
     const root = document.documentElement;
     const next = root.dataset.theme === "dark" ? "light" : "dark";
@@ -22,7 +24,10 @@ export function ThemeToggle({ label }: { label: string }) {
       onClick={toggle}
       aria-label={label}
       title={label}
-      className="flex size-11 shrink-0 items-center justify-center rounded-full bg-navy text-[18px] leading-[18px] text-white transition-colors dark:bg-accent dark:text-on-accent"
+      className={cn(
+        "flex size-11 shrink-0 items-center justify-center rounded-full bg-navy text-[18px] leading-[18px] text-white transition-colors dark:bg-accent dark:text-on-accent",
+        className,
+      )}
     >
       <span aria-hidden="true" className="theme-light-only">
         ☾

@@ -1,3 +1,4 @@
+import type { ContactContent } from "./contact-types";
 import type { NhaloSection, PageKey } from "@/i18n/config";
 
 /**
@@ -17,15 +18,6 @@ export type NhaloLink = { section: NhaloSection } | { page: PageKey } | { extern
 /** Một mục chú thích: tiêu đề đậm + mô tả. */
 export type Note = { title: string; desc: string };
 
-export type HeroChapter = {
-  tab: string;
-  title: string;
-  lead: string;
-  /** Ba bước thao tác, sáng dần theo demo. */
-  steps: [string, string, string];
-  toast: { title: string; sub: string };
-};
-
 /** Tiêu đề hai dòng (dòng 2 cam) + các ý có dấu tick hoặc các bước đánh số. */
 export type HeroIntro = {
   headline: [string, string];
@@ -40,7 +32,8 @@ export type HeroVariant = HeroIntro & {
 };
 
 /** `badge`: nhãn nhỏ góc trên nút tải (vd. "Sắp có"). Bỏ trống khi app đã lên store. */
-export type StoreBadge = { prefix: string; badge?: string };
+/** `prefix` dùng làm chữ thay thế cho ảnh nút; `lang` chọn bản nút chính hãng. */
+export type StoreBadge = { prefix: string; lang: "vi" | "en"; badge?: string };
 
 export type NhaloContent = {
   header: {
@@ -66,30 +59,66 @@ export type NhaloContent = {
     store: StoreBadge;
     /** Nút hỏi đáp; link nằm ở siteConfig.nhaloChat, link trống thì ẩn nút. */
     chat: { zalo: string; messenger: string };
-    note: string;
+    /** Mỗi phần tử một dòng. */
+    note: string[];
     /** Hai ô nổi bên màn Trang chủ (như banner tuần 1). */
     floats: { unpaid: string; vacant: string };
-    /** Tiêu đề nhỏ trên khối demo 4 chương phía dưới. */
-    demoTitle: string;
-    chaptersLabel: string;
-    pauseLabel: string;
-    playLabel: string;
-    chapters: [HeroChapter, HeroChapter, HeroChapter, HeroChapter];
-    /** Thẻ tóm tắt bên phải demo, theo từng chương. */
-    summary: {
-      reading: { title: string; previous: string; current: string; used: string; amount: string };
-      batch: { title: string; ready: string; missing: string; total: string };
-      tenantLabel: string;
-      collect: { title: string };
-    };
-    bubble: string;
+    /** Thông báo trượt lên lần lượt cạnh điện thoại ở hero (dữ liệu mẫu). */
+    toasts: { title: string; sub: string }[];
   };
   strip: { label: string; items: [string, string, string] };
+  /**
+   * "Vì sao NhàLo": các hàng "Trước đây → Với NhàLo" (xoay quanh chuyện thu đủ tiền) + khối
+   * Miễn phí trọn đời. `icon`: tên file ở ms/.
+   */
+  why: {
+    tag: string;
+    title: MarkTitle;
+    /** Hai dòng ngắt sẵn. */
+    lead: [string, string];
+    before: string;
+    after: string;
+    rows: (Note & { icon: string; before: string })[];
+    free: {
+      badge: string;
+      price: string;
+      priceNote: string;
+      points: string[];
+      store: StoreBadge;
+      /** Hoá đơn minh hoạ bên phải: mọi khoản phí đều 0đ, có con dấu. */
+      receipt: { title: string; rows: string[]; total: string; stamp: string };
+    };
+  };
+  /** "Dành cho ai": nhóm khách; `more` là link xuống phần Phân quyền (nếu có). */
+  audience: {
+    tag: string;
+    title: MarkTitle;
+    lead: string;
+    /** Ba nhóm khách; thẻ `family` nối xuống khối Phân quyền ngay bên dưới. */
+    cards: (Note & { icon: string; tag: string; family?: boolean })[];
+  };
+  /** Mục "Tính năng": 4 bước tự chạy, chú thích số hiện lần lượt trên màn hình app. */
   features: {
     tag: string;
     title: MarkTitle;
     lead: string;
-    steps: { tab: string; title: string; callouts: Note[] }[];
+    pauseLabel: string;
+    playLabel: string;
+    /** Hàng "Và còn nữa" dưới khung 6 bước (thay cho mục Điện nước và Hợp đồng riêng). */
+    more: {
+      title: string;
+      items: (Note & { icon: string; anchor?: NhaloSection })[];
+    };
+    /**
+     * Mỗi bước: chú thích là việc chủ nhà làm (`auto`: phần app tự làm, hiện dòng phụ ⚡);
+     * `toast`: thông báo khi demo làm xong bước.
+     */
+    steps: {
+      tab: string;
+      title: string;
+      callouts: (Note & { auto?: string })[];
+      toast?: { title: string; sub: string };
+    }[];
   };
   utilities: {
     tag: string;
@@ -117,6 +146,9 @@ export type NhaloContent = {
     benefits: Note[];
     listCaption: string;
     grantCaption: string;
+    /** Hai cột quyền gọn: việc người quản lý làm được / chỉ chủ nhà. */
+    canTitle: string;
+    ownerOnlyTitle: string;
     table: {
       caption: string;
       owner: string;
@@ -127,21 +159,48 @@ export type NhaloContent = {
       rows: { label: string; manager: boolean }[];
     };
   };
-  start: { tag: string; title: MarkTitle; lead: string; steps: Note[]; cta: string };
-  faq: { tag: string; title: MarkTitle; items: { q: string; a: string }[] };
+  /** Mục "Hỗ trợ" (menu): các bước bắt đầu + hỏi đáp (faq). */
+  start: {
+    tag: string;
+    title: MarkTitle;
+    /** Các dòng ngắt sẵn (màn rộng không xuống dòng giữa câu). */
+    lead: string[];
+    stepsTitle: string;
+    steps: Note[];
+    chat: string;
+  };
+  /** Hỏi đáp: trang NhàLo hiện vài câu đầu (NHALO_FAQ_ON_HOME), trang /nhalo/ho-tro/ hiện hết. */
+  faq: { title: string; seeAll: string; items: { q: string; a: string }[] };
+  /** Trang /nhalo/ho-tro/. */
+  help: NhaloHelpContent;
   band: {
     title: [string, string];
     store: StoreBadge;
     consult: string;
     inputLabel: string;
     cta: string;
+    /** Thông báo của form để lại liên hệ (gửi qua /api/nhalo-lead). */
+    form: {
+      sending: string;
+      sent: string;
+      required: string;
+      invalid: string;
+      rateLimited: string;
+      failed: string;
+    };
   };
   footer: {
     tagline: string;
+    /** Dòng riêng dưới mô tả: "Một sản phẩm của BizTown…". */
+    maker: string;
+    /** Nhãn nhóm icon mạng xã hội (cho trình đọc màn hình). */
+    social: string;
     taxCode: string;
     address: string;
     columns: { title: string; links: { label: string; to: NhaloLink }[] }[];
     copyright: string;
+    /** Ghi nhận nhãn hiệu cho nút store chính hãng (theo hướng dẫn của Apple / Google). */
+    trademarks: string;
   };
   app: AppCopy;
 };
@@ -154,6 +213,42 @@ export type AppCopy = {
   /** Dòng nhắc dưới điện thoại có chú thích: người xem tự cuộn trong màn hình. */
   scrollHint: string;
   nav: [string, string, string, string];
+  /** H-04 Thêm nhà, bước ① Thông tin nhà (chữ lấy từ app NhàLo Lite). */
+  addHouse: {
+    title: string;
+    steps: [string, string, string];
+    requiredNote: string;
+    name: string;
+    address: string;
+    roomCount: string;
+    floors: string;
+    roomsTitle: string;
+    roomsNote: string;
+    next: string;
+  };
+  /** H-10 Cho thuê phòng (tạo hợp đồng + người thuê trong một màn). */
+  rentOut: {
+    title: string;
+    thisRoom: string;
+    addRoom: string;
+    tenant: string;
+    phone: string;
+    found: string;
+    fullName: string;
+    idNumber: string;
+    period: string;
+    start: string;
+    end: string;
+    months: string;
+    money: string;
+    rent: string;
+    deposit: string;
+    suggested: string;
+    readings: string;
+    electricity: string;
+    water: string;
+    save: string;
+  };
   /** Màn Trang chủ của app (hero). */
   home: {
     greeting: string;
@@ -323,4 +418,49 @@ export type AppCopy = {
     cancel: string;
     save: string;
   };
+};
+
+/** Màn hình app minh hoạ cho một phần của trang Hướng dẫn. */
+export type GuideScreen =
+  | "addHouse"
+  | "rentOut"
+  | "reading"
+  | "batch"
+  | "tenantBill"
+  | "bills"
+  | "contract"
+  | "managerGrant";
+
+/** Trang /nhalo/huong-dan/: hướng dẫn sử dụng NhàLo theo từng việc. */
+export type NhaloGuideContent = {
+  tag: string;
+  title: MarkTitle;
+  lead: string;
+  tocTitle: string;
+  sections: {
+    /** id neo trên trang (không dấu). */
+    id: string;
+    icon: string;
+    title: string;
+    lead: string;
+    steps: string[];
+    tip?: string;
+    screen?: GuideScreen;
+  }[];
+  help: { title: string; desc: string; faq: string; chat: string };
+};
+
+/** Trang /nhalo/ho-tro/: hỏi đáp + gửi câu hỏi, báo lỗi (gửi email như trang Liên hệ). */
+export type NhaloHelpContent = {
+  tag: string;
+  title: MarkTitle;
+  /** Các dòng ngắt sẵn (màn rộng). */
+  lead: string[];
+  faqTitle: string;
+  formTitle: string;
+  formLead: string;
+  chat: string;
+  guide: string;
+  /** Form gửi câu hỏi / báo lỗi — cùng cơ chế với form trang Liên hệ (/api/contact/). */
+  form: ContactContent["form"];
 };

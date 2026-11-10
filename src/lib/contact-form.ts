@@ -31,9 +31,9 @@ export type ContactPayload = ContactValues & {
   website: string;
 };
 
-const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+export const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 /** Sau khi bỏ khoảng trắng, dấu chấm, gạch, ngoặc: 8–15 chữ số, có thể có "+" ở đầu. */
-const PHONE = /^\+?\d{8,15}$/;
+export const PHONE = /^\+?\d{8,15}$/;
 
 export function normalizePhone(value: string) {
   return value.replace(/[\s.\-()]/g, "");
