@@ -14,12 +14,10 @@ import {
   Field,
   GroupLabel,
   MsIcon,
-  PeriodChips,
   StatusBar,
   TopBar,
   dots,
   fill,
-  type ChipKind,
 } from "./app-ui";
 
 /*
@@ -31,6 +29,121 @@ import {
 
 // app-body: mốc để Phone scroll="body" cho phần thân cuộn được.
 const BODY = "app-body relative flex min-h-0 flex-1 flex-col overflow-hidden";
+
+/** Dữ liệu mẫu màn Trang chủ (khớp banner tuần 1): 4 nhà, 29 phòng, 4 trống. */
+const HOME_HOUSES = [
+  { name: "Nhà trọ Bình An", rooms: 8, vacant: 1, left: "9.600.000" },
+  { name: "Chung cư mini Phú Nhuận", rooms: 10, vacant: 2 },
+  { name: "Dãy trọ Ngọc Lan", rooms: 6, vacant: 0 },
+  { name: "Nhà trọ Mai Dịch", rooms: 5, vacant: 1 },
+] as const;
+
+/**
+ * Trang chủ app NhàLo Lite ở hero (dựng theo banner tuần 1, dữ liệu mẫu): tổng nhà / phòng /
+ * phòng trống, tiền tháng này, cảnh báo quá hạn và hợp đồng sắp hết hạn, danh sách nhà.
+ */
+export function HomeScreen({ t }: { t: AppCopy }) {
+  const h = t.home;
+  return (
+    <>
+      <div className="flex h-11 shrink-0 items-center justify-between bg-[#fff7ea] px-6 text-navy">
+        <span className="text-[15px] leading-[20.25px] font-semibold">9:41</span>
+        <span className="flex items-end gap-[2px]">
+          {[5, 7, 9, 11].map((height) => (
+            <span key={height} className="w-[3px] rounded-[1px] bg-navy" style={{ height }} />
+          ))}
+          <span className="ml-1.5 h-[11px] w-[22px] rounded-[3px] border-[1.5px] border-navy p-[1.5px]">
+            <span className="block h-full w-3/4 rounded-[1px] bg-navy" />
+          </span>
+        </span>
+      </div>
+      <div className={cn(BODY, "gap-3 bg-[#fff7ea] px-4 pt-2")}>
+        <div className="flex flex-col">
+          <span className="text-[13px] leading-[1.35] text-app-secondary">{h.greeting}</span>
+          <span className="text-[22px] leading-[1.3] font-bold">{h.owner}</span>
+        </div>
+        <div className="grid grid-cols-3 gap-2.5">
+          <HomeStat value="4" label={h.houses} />
+          <HomeStat value="29" label={h.rooms} />
+          <HomeStat value="4" label={h.vacant} green />
+        </div>
+        <div className="flex flex-col gap-2.5 rounded-[16px] border border-[#f3e3c6] bg-white p-3.5">
+          <span className="text-[14px] leading-[1.35] font-semibold">{h.month}</span>
+          <div className="grid grid-cols-2 gap-2">
+            <span className="flex flex-col gap-0.5">
+              <span className="text-[11px] leading-[1.35] text-app-secondary">{h.collected}</span>
+              <span className="text-[17px] leading-[1.3] font-bold text-app-green">
+                23.500.000 đ
+              </span>
+            </span>
+            <span className="flex flex-col gap-0.5 text-right">
+              <span className="text-[11px] leading-[1.35] text-app-secondary">{h.unpaid}</span>
+              <span className="text-[17px] leading-[1.3] font-bold text-orange-800">
+                18.100.000 đ
+              </span>
+            </span>
+          </div>
+          <span className="h-1.5 overflow-hidden rounded-full bg-gray-100">
+            <span className="block h-full w-[56%] rounded-full bg-chip-paid" />
+          </span>
+        </div>
+        <div className="mt-3 flex items-center gap-2 rounded-[12px] bg-orange-50 px-3.5 py-2.5 text-[12.5px] leading-[1.35] font-semibold text-orange-800">
+          <span>⚠</span>
+          {h.overdue}
+        </div>
+        <div className="flex items-center gap-2 rounded-[12px] bg-app-blue-bg px-3.5 py-2.5 text-[12.5px] leading-[1.35] font-semibold text-app-blue">
+          <MsIcon name="calendar_month" size={16} />
+          {h.expiring}
+        </div>
+        <span className="pt-1 text-[12px] leading-[1.35] font-semibold text-app-faint uppercase">
+          {h.myHouses}
+        </span>
+        {HOME_HOUSES.map((house) => {
+          const parts: string[] = [
+            fill(h.roomCount, house.rooms),
+            house.vacant ? fill(h.vacantCount, house.vacant) : h.full,
+          ];
+          if ("left" in house) parts.push(fill(h.left, house.left));
+          return (
+            <div
+              key={house.name}
+              className="flex shrink-0 flex-col gap-0.5 rounded-[14px] border border-[#f3e3c6] bg-white px-3.5 py-3"
+            >
+              <span className="text-[14.5px] leading-[1.35] font-semibold">{house.name}</span>
+              <span className="text-[11.5px] leading-[1.35] text-app-faint">
+                {parts.join(" · ")}
+              </span>
+            </div>
+          );
+        })}
+      </div>
+      <BottomNav labels={t.nav} active={0} />
+    </>
+  );
+}
+
+function HomeStat({ value, label, green }: { value: string; label: string; green?: boolean }) {
+  return (
+    <span
+      className={cn(
+        "flex flex-col gap-0.5 rounded-[14px] border bg-white px-3 py-2.5",
+        green ? "border-chip-paid" : "border-[#f3e3c6]",
+      )}
+    >
+      <span
+        className={cn(
+          "text-[24px] leading-[1.2] font-bold",
+          green ? "text-app-green" : "text-navy",
+        )}
+      >
+        {value}
+      </span>
+      <span className="text-[11px] leading-[1.35] whitespace-nowrap text-app-secondary">
+        {label}
+      </span>
+    </span>
+  );
+}
 
 /** H-06 — Ghi chỉ số hàng tháng. */
 export function ReadingScreen({
@@ -98,7 +211,7 @@ export function ReadingScreen({
           </AppButton>
         </div>
       </div>
-      <BottomNav labels={t.nav} active={0} />
+      <BottomNav labels={t.nav} active={1} />
     </>
   );
 }
@@ -282,7 +395,7 @@ export function InvoiceScreen({
   t: AppCopy;
   status?: InvoiceStatus;
   sheet?: boolean;
-  /** Kênh đã chọn trong bảng gửi: 0 = SMS, 1 = Email. */
+  /** Kênh đã chọn trong bảng gửi: 0 = Zalo, 1 = Email. */
   channel?: number;
   pressSend?: boolean;
   pressPaid?: boolean;
@@ -331,7 +444,7 @@ export function InvoiceScreen({
           </div>
         )}
       </div>
-      <BottomNav labels={t.nav} active={2} />
+      <BottomNav labels={t.nav} active={1} />
 
       <span
         className={cn(
@@ -352,10 +465,10 @@ export function InvoiceScreen({
         </span>
         <SendOption
           icon="chat"
-          title="SMS"
-          desc={i.sheet.smsDesc}
+          title={i.sheet.zalo}
+          desc={i.sheet.zaloDesc}
           selected={channel === 0}
-          demo="sms"
+          demo="zalo"
         />
         <SendOption icon="mail" title={i.sheet.email} desc={i.sheet.emailDesc} selected={false} />
         <div className="mt-1.5 flex gap-2.5">
@@ -420,12 +533,6 @@ export function BillsScreen({
   highlight?: boolean;
 }) {
   const b = t.bills;
-  const m = (month: number) => t.months[month - 1] ?? String(month);
-  const chips = (list: [ChipKind, number | string][]) =>
-    list.map(([kind, month]) => ({
-      kind,
-      label: typeof month === "number" ? m(month) : month,
-    }));
 
   return (
     <>
@@ -436,9 +543,20 @@ export function BillsScreen({
           <StatCard value="72.400.000" label={b.totalPeriod} />
           <StatCard value={paid ? "14.916.800" : "18.100.000"} label={b.unpaid} />
         </div>
-        <div data-anno={2} className="flex gap-2">
-          <FilterChip active>{b.period}</FilterChip>
-          <FilterChip active>{b.allHouses}</FilterChip>
+        <div className="flex items-center gap-2">
+          <span
+            data-anno={5}
+            className="flex items-center gap-1 rounded-full border border-navy bg-navy py-1 pr-1.5 pl-3 text-[8.8px] leading-[11.2px] font-bold whitespace-nowrap text-white"
+          >
+            {b.period}
+            <MsIcon name="expand_more" size={14} />
+          </span>
+          <span data-anno={2} className="flex">
+            <FilterChip>{b.allHouses}</FilterChip>
+          </span>
+          <span className="ml-auto text-[8.8px] leading-[11.2px] font-semibold whitespace-nowrap text-app-blue">
+            {b.nextMonth}
+          </span>
         </div>
         <div data-anno={3} className="flex gap-2">
           <FilterChip active>{b.all}</FilterChip>
@@ -452,30 +570,13 @@ export function BillsScreen({
           title="P.101 · Nguyễn Thị Anh"
           sub={`3.200.000${b.perMonth} · ${b.noReadingYet}`}
           status={<Badge tone="gray">{b.notCreated}</Badge>}
-          chips={chips([
-            ["missed", 7],
-            ["sent", 8],
-            ["current", 9],
-            ["scheduled", 10],
-            ["scheduled", 11],
-            ["more", "+4"],
-          ])}
         />
         <BillCard
           title="P.103 · Trần Thị Cẩm"
           sub={`2.800.000${b.perMonth} · ${paid ? fill(b.paidOn, "06/10") : b.sentVia}`}
           status={<Badge tone={paid ? "green" : "blue"}>{paid ? b.paid : b.sent}</Badge>}
-          chips={chips([
-            ["paid", 7],
-            ["paid", 8],
-            [paid ? "paid" : "sent", 9],
-            ["scheduled", 10],
-            ["scheduled", 11],
-            ["more", "+5"],
-          ])}
           highlight={highlight}
           demo="c103"
-          chipsAnno={5}
         />
         <BillCard
           title="P.106 · Hoàng Gia Huy"
@@ -485,14 +586,6 @@ export function BillsScreen({
               {b.overdue}
             </Badge>
           }
-          chips={chips([
-            ["paid", 6],
-            ["paid", 7],
-            ["overdue", 8],
-            ["current", 9],
-            ["scheduled", 10],
-            ["more", "+4"],
-          ])}
         />
         <span className="text-[15px] leading-[20.25px]">
           {"Chung cư mini Phú Nhuận · " + fill(b.contracts, 1)}
@@ -501,16 +594,10 @@ export function BillsScreen({
           title="P.204 · Phạm Văn Đức"
           sub={`2.960.000${b.perMonth} · ${fill(b.paidOn, "03/10")}`}
           status={<Badge tone="green">{b.paid}</Badge>}
-          chips={chips([
-            ["paid", 7],
-            ["paid", 8],
-            ["paid", 9],
-            ["scheduled", 10],
-          ])}
         />
         <Fab className="right-7 bottom-7" anno={6} />
       </div>
-      <BottomNav labels={t.nav} active={2} />
+      <BottomNav labels={t.nav} active={1} />
     </>
   );
 }
@@ -541,19 +628,14 @@ function BillCard({
   title,
   sub,
   status,
-  chips,
   highlight,
   demo,
-  chipsAnno,
 }: {
   title: string;
   sub: string;
   status: ReactNode;
-  chips: { kind: ChipKind; label: string }[];
   highlight?: boolean;
   demo?: string;
-  /** Số chú thích trỏ vào dải lịch các kỳ. */
-  chipsAnno?: number;
 }) {
   return (
     <div
@@ -568,13 +650,12 @@ function BillCard({
         {status}
       </div>
       <span className="text-[12px] leading-[1.35] text-app-faint">{sub}</span>
-      <PeriodChips chips={chips} anno={chipsAnno} />
     </div>
   );
 }
 
 /**
- * Trang hoá đơn người thuê mở từ link SMS/Email (Figma: Tenant invoice). compact: bản rút gọn
+ * Trang hoá đơn người thuê mở từ link Zalo/Email (Figma: Tenant invoice). compact: bản rút gọn
  * vừa khung 812 ở hero (Figma: Hero / Stage · Chapter=3 · "Người thuê nhận được") — bỏ dòng
  * người thuê/mã hợp đồng/mã hoá đơn, gộp phí dịch vụ và wifi.
  */
@@ -653,12 +734,9 @@ function BankRow({ label, value }: { label: string; value: string }) {
   );
 }
 
-const LEGEND_COLORS = ["bg-chip-paid", "bg-chip-sent", "bg-chip-overdue", "bg-accent"];
-
 /** T-05 — Chi tiết hợp đồng. */
 export function ContractScreen({ t }: { t: AppCopy }) {
   const c = t.contract;
-  const m = (month: number) => t.months[month - 1] ?? String(month);
 
   return (
     <>
@@ -680,8 +758,8 @@ export function ContractScreen({ t }: { t: AppCopy }) {
           <DetailRow label={c.end} value="15/03/2027" strong />
           <DetailRow label={c.deposit} value="3.200.000" strong />
           <DetailRow label={c.rent} value="3.200.000" strong />
-          <DetailRow label={c.electricity} value="3.800 / kWh" strong />
-          <DetailRow label={c.service} value="15.000 × 22 m² = 330.000" strong anno={3} />
+          <DetailRow label={c.electricity} value="3.800 / kWh" strong anno={3} />
+          <DetailRow label={c.service} value="330.000" strong />
           <DetailRow label={c.rentCycle} value={c.rentCycleValue} strong anno={2} />
           <DetailRow label={c.otherCycle} value={c.otherCycleValue} strong />
           <DetailRow label={c.due} value={c.dueValue} strong />
@@ -691,7 +769,7 @@ export function ContractScreen({ t }: { t: AppCopy }) {
           <DetailRow label={c.moveIn} value="15/03/2026 · 980 kWh · 40 m³" strong anno={4} />
           <DetailRow label={c.latest} value="01/09/2026 · 1.216 kWh · 59 m³" strong />
         </div>
-        <div data-anno={5} className="flex gap-2.5">
+        <div className="flex gap-2.5">
           <AppButton variant="dark" size="sm">
             {c.renew}
           </AppButton>
@@ -699,7 +777,7 @@ export function ContractScreen({ t }: { t: AppCopy }) {
             {c.amend}
           </AppButton>
         </div>
-        <div className="flex gap-2.5">
+        <div data-anno={5} className="flex gap-2.5">
           <AppButton variant="outline" size="sm">
             {c.history}
           </AppButton>
@@ -707,34 +785,18 @@ export function ContractScreen({ t }: { t: AppCopy }) {
             {c.endContract}
           </AppButton>
         </div>
-        <GroupLabel>{c.schedule}</GroupLabel>
-        <PeriodChips
-          size="sm"
-          anno={6}
-          chips={[
-            { kind: "paid", label: m(7) },
-            { kind: "paid", label: m(8) },
-            { kind: "sent", label: m(9) },
-            { kind: "scheduled", label: m(10) },
-            { kind: "scheduled", label: m(11) },
-            { kind: "more", label: "+5" },
-          ]}
-        />
-        <span className="flex flex-wrap gap-x-3 gap-y-1 text-[12px] leading-[1.35] text-ink-muted">
-          {c.legend.map((label, index) => (
-            <span key={label} className="flex items-center gap-1">
-              <span
-                className={cn(
-                  "size-2 rounded-full",
-                  LEGEND_COLORS[index] ?? "border border-slate-200 bg-white",
-                )}
-              />
-              {label}
-            </span>
-          ))}
-        </span>
+        <div
+          data-anno={6}
+          className="flex items-start gap-2.5 rounded-[14px] bg-orange-50 p-3.5 text-[13px] leading-[1.35]"
+        >
+          <MsIcon name="calendar_month" size={20} className="shrink-0 text-orange-800" />
+          <span className="flex flex-col gap-0.5">
+            <span className="font-semibold text-orange-800">{c.expiry.title}</span>
+            <span className="text-ink-muted">{c.expiry.desc}</span>
+          </span>
+        </div>
       </div>
-      <BottomNav labels={t.nav} active={1} />
+      <BottomNav labels={t.nav} active={0} />
     </>
   );
 }

@@ -1577,3 +1577,14 @@
     opacity: 1;
   }
 }
+
+/*
+ * Tiêu đề hero /nhalo/ theo nguồn quảng cáo (hero-intro.tsx): mỗi bản bọc trong data-nl-v,
+ * mặc định chỉ hiện bản "default"; script trong nhalo-page.tsx đổi sang bản khớp utm_campaign.
+ */
+[data-nl-v] {
+  display: contents;
+}
+[data-nl-v]:not([data-nl-v="default"]) {
+  display: none;
+}
