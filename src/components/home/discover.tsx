@@ -73,6 +73,11 @@ export function Discover({
           </Reveal>
         ))}
       </ul>
+      {tab === "apps" && (
+        <p className="mt-5 text-center text-[15px] leading-6 text-ink-muted italic">
+          {content.more}
+        </p>
+      )}
     </section>
   );
 }

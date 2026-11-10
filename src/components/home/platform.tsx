@@ -109,6 +109,9 @@ export function Platform({
             );
           })}
         </div>
+        <p className="mt-3 text-center text-[14px] leading-[22.4px] text-ink-muted italic max-md:mt-0">
+          {content.more}
+        </p>
       </Reveal>
 
       <Reveal>

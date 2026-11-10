@@ -88,7 +88,7 @@ export type Product = {
   mark: AppMarkKind;
   /** Logo ảnh (NhàLo, Balheh, Chinchu) hoặc tên chữ in hoa. */
   name: { logo: ProductLogo } | { text: string };
-  type?: "App" | "Website";
+  type?: "App" | "Website" | "Web + App";
   status?: ProductStatus;
   title: string;
   /** Đoạn mô tả ngắn dưới tiêu đề (tuỳ chọn). */
@@ -168,6 +168,8 @@ export type HomeContent = {
     prevLabel: string;
     nextLabel: string;
     statusLabels: Record<ProductStatus, string>;
+    /** Dòng nhỏ dưới các chip: còn sản phẩm khác sắp ra mắt. */
+    more: string;
     products: Product[];
   };
   offers: {
@@ -179,6 +181,8 @@ export type HomeContent = {
     support: string;
     tabs: { apps: string; services: string };
     statusLabels: Record<ProductStatus, string>;
+    /** Dòng nhỏ dưới danh sách ứng dụng: còn sản phẩm khác sắp ra mắt. */
+    more: string;
     apps: LinkCard[];
     services: LinkCard[];
   };

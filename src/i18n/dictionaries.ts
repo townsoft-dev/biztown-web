@@ -79,14 +79,14 @@ const vi = {
         "Nền tảng hệ sinh thái phần mềm quản trị và tự động hoá cho cá nhân, hộ kinh doanh và doanh nghiệp SME tại Việt Nam. Dùng thử miễn phí, hỗ trợ cài đặt.",
     },
     nhalo: {
-      title: "Phần mềm quản lý nhà trọ NhàLo — Miễn phí cho chủ nhà",
+      title: "NhàLo - Ứng dụng quản lý nhà trọ — Miễn phí cho chủ nhà",
       description:
-        "Ghi điện nước, tạo hoá đơn cho cả dãy trọ và gửi cho người thuê kèm mã QR chuyển khoản, ngay trên điện thoại. Miễn phí, người thuê không cần cài app.",
+        "Ghi điện nước, tạo hoá đơn và gửi cho cả dãy trọ kèm mã QR chuyển khoản, ngay trên điện thoại. Miễn phí, người thuê không cần cài app.",
     },
     balheh: {
-      title: "Balheh — Phần mềm quản lý dự án, chat nhóm và wiki",
+      title: "Balheh — Công cụ quản lý dự án, chat nhóm và wiki",
       description:
-        "Giao việc trên bảng Kanban, trao đổi theo kênh và lưu tài liệu wiki trong cùng một dự án. Dùng miễn phí, đăng nhập bằng Google hoặc Microsoft, không cần cài.",
+        "Giao việc trên bảng Kanban, trao đổi theo kênh và lưu tài liệu wiki trong cùng một dự án. Đăng nhập bằng Google hoặc Microsoft, không cần cài.",
     },
     contact: {
       title: "Liên hệ tư vấn phần mềm và thiết kế web, app",
@@ -133,9 +133,7 @@ const vi = {
             { label: "NhàLo", to: { page: "nhalo" } },
             { label: "Chinchu (sắp ra mắt)", to: null },
             { label: "Balheh", to: { page: "balheh" } },
-            { label: "BizTown Nhân sự (sắp ra mắt)", to: null },
-            { label: "BizTown Hóa đơn (sắp ra mắt)", to: null },
-            { label: "BizTown Tồn kho (sắp ra mắt)", to: null },
+            { label: "Và nhiều sản phẩm khác…", to: null },
           ],
         },
       ],
@@ -290,9 +288,7 @@ const en: Dictionary = {
             { label: "NhàLo", to: { page: "nhalo" } },
             { label: "Chinchu (coming soon)", to: null },
             { label: "Balheh", to: { page: "balheh" } },
-            { label: "BizTown HR (coming soon)", to: null },
-            { label: "BizTown Invoices (coming soon)", to: null },
-            { label: "BizTown Inventory (coming soon)", to: null },
+            { label: "And more coming soon…", to: null },
           ],
         },
       ],
