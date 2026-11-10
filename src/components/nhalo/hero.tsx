@@ -21,7 +21,7 @@ export function NhaloHero({
   return (
     <section
       id={NHALO_SECTIONS.top}
-      className="relative overflow-hidden bg-[image:var(--nl-hero-bg)] pt-[116px] pb-20 max-sm:pt-[100px]"
+      className="relative overflow-hidden bg-[image:var(--nl-hero-bg)] pt-[116px] pb-20 max-lg:pb-10 max-sm:pt-[100px]"
     >
       {/* Đáy nền cam nhạt dần vào nền trang (thay cho bo góc: vầng cam bên trái làm góc trái lộ
           đường cong rõ còn góc phải gần như trắng). */}

@@ -268,7 +268,7 @@ function HeroStage({ content, app }: { content: NhaloContent["hero"]; app: AppCo
       ))}
 
       {/* Mascot nằm ghế biển bấm điện thoại: việc nhà trọ đã có NhàLo lo. */}
-      <BeachMascot className="absolute top-[62%] -left-[36%] z-[4] w-[250px] max-sm:top-[68%] max-sm:-left-[6%] max-sm:w-[140px] lg:max-xl:hidden" />
+      <BeachMascot className="absolute top-[62%] -left-[36%] z-[4] w-[250px] max-xl:hidden" />
 
       {/* Điện thoại phụ: hoá đơn người thuê nhận qua Zalo, có VietQR. */}
       <div className="absolute top-[7%] left-[40%] rotate-[6deg] [--s:0.56] max-sm:hidden lg:[--s:0.62]">

@@ -58,10 +58,6 @@ export const NHALO: NhaloContent = {
       { title: "Đến ngày ghi chỉ số điện nước", sub: "Nhà trọ Bình An · 8 phòng" },
     ],
   },
-  strip: {
-    label: "NhàLo thay cho",
-    items: ["Sổ ghi điện nước", "Excel tính tiền", "Nhắn Zalo từng phòng"],
-  },
   why: {
     tag: "Vì sao NhàLo",
     title: { lead: "Tiền nhà trọ thu đủ,", mark: "không thất thoát đồng nào" },
@@ -310,62 +306,9 @@ export const NHALO: NhaloContent = {
       },
     ],
   },
-  utilities: {
-    tag: "Điện nước",
-    title: { lead: "Đổi khách giữa tháng,", mark: "tiền điện không tính trùng" },
-    lead: "Mỗi phòng có một chuỗi chỉ số liền mạch: số định kỳ, số lúc khách cũ trả phòng và lúc khách mới nhận phòng. Ai dùng bao nhiêu trả bấy nhiêu.",
-    oldTenant: { name: "Anh Tuấn", role: "Khách cũ, trả phòng" },
-    newTenant: { name: "Chị Mai", role: "Khách mới, nhận phòng" },
-    periodStart: "Định kỳ 01/09",
-    periodEnd: "Định kỳ 01/10",
-    changeover: "Trả phòng = Nhận phòng",
-    oldPays: "Anh Tuấn trả",
-    newPays: "Chị Mai trả",
-    whole: "Cả kỳ",
-    match: "Khớp công tơ, không trùng, không sót",
-    dayLabel: "Ngày đổi khách (Phòng 204)",
-    safeguards: [
-      {
-        title: "Không quên ghi số khi đổi khách",
-        desc: "Phòng tính điện nước theo số: app hỏi số nhận phòng khi cho thuê và số trả phòng khi kết thúc.",
-      },
-      {
-        title: "Hoá đơn cuối gọn gàng",
-        desc: "Khách cũ nhận hoá đơn thanh lý tính đến ngày trả phòng, trừ cọc và các khoản khấu trừ.",
-      },
-      {
-        title: "Lịch sử theo phòng",
-        desc: "Mọi lần ghi, kể cả thay đồng hồ, nằm trên một dòng thời gian để tra lại.",
-      },
-    ],
-  },
-  contract: {
-    tag: "Hợp đồng",
-    title: { lead: "Mọi điều khoản", mark: "nằm gọn trong một màn hình" },
-    lead: "Tiền nhà, cọc, điện nước, chu kỳ thu và hạn đóng của từng hợp đồng, mở ra là thấy. Một hợp đồng có thể gồm nhiều phòng.",
-    callouts: [
-      { title: "Phiên bản hiện tại", desc: "Mỗi lần gia hạn hay sửa đều thành một phiên bản mới." },
-      {
-        title: "Chu kỳ thu tiền nhà",
-        desc: "1, 2, 3, 6 hoặc 12 tháng một lần. Điện nước vẫn thu hàng tháng.",
-      },
-      {
-        title: "Điện nước theo số hoặc khoán",
-        desc: "Chọn cho từng hợp đồng; khoán thì không cần ghi số.",
-      },
-      { title: "Chỉ số nhận phòng", desc: "Ghi khi cho thuê, làm mốc tính điện nước tháng đầu." },
-      {
-        title: "Trả phòng và hoàn cọc",
-        desc: "App tính hoá đơn thanh lý, trừ cọc, báo số cần hoàn.",
-      },
-      { title: "Sắp hết hạn", desc: "Báo trước 30, 15 và 7 ngày." },
-    ],
-  },
   roles: {
     tag: "Phân quyền",
     title: { lead: "Giao nhà cho người khác,", mark: "không chia mật khẩu" },
-    lead: "Bố mẹ đứng tên, con cái quản lý hộ? Giao từng nhà cho người quản lý. Họ đăng nhập bằng chính số điện thoại của họ và chỉ thấy nhà được giao.",
-    heading: "Thêm quản lý mà vẫn giữ quyền chủ nhà",
     benefits: [
       {
         title: "Thêm bằng số điện thoại.",
@@ -377,7 +320,6 @@ export const NHALO: NhaloContent = {
         desc: "Tắt quyền quản lý mà không cần xoá tài khoản.",
       },
     ],
-    listCaption: "Danh sách người quản lý",
     grantCaption: "Giao nhà cho người quản lý",
     canTitle: "Người quản lý làm được",
     ownerOnlyTitle: "Chỉ chủ nhà",
@@ -484,7 +426,6 @@ export const NHALO: NhaloContent = {
     ],
     faqTitle: "Câu hỏi thường gặp",
     formTitle: "Gửi câu hỏi hoặc báo lỗi",
-    formLead: "Mô tả càng rõ càng tốt: đang ở màn hình nào, bấm gì thì gặp lỗi.",
     chat: "Hoặc nhắn nhanh qua Zalo",
     guide: "Xem hướng dẫn sử dụng",
     form: {
@@ -570,7 +511,6 @@ export const NHALO: NhaloContent = {
       "Apple, logo Apple và App Store là nhãn hiệu của Apple Inc. Google Play và logo Google Play là nhãn hiệu của Google LLC.",
   },
   app: {
-    scrollHint: "Vuốt hoặc lăn chuột ngay trên điện thoại để xem hết màn hình",
     nav: ["Trang chủ", "Thu tiền", "Tra cứu", "Tài khoản"],
     addHouse: {
       title: "Thêm nhà",
@@ -655,34 +595,6 @@ export const NHALO: NhaloContent = {
       selected: "{n} hoá đơn đã chọn",
       saveDrafts: "Tạo, chưa gửi",
       createSend: "Tạo & gửi tất cả",
-    },
-    invoice: {
-      title: "Tiền tháng 10 (điện nước tháng 9)",
-      draft: "Chưa gửi",
-      sent: "Đã gửi",
-      paid: "Đã thu",
-      due: "Hạn 05/10/2026 · ngày 5 hằng tháng",
-      breakdown: "Chi tiết",
-      rent: "Tiền nhà",
-      meterLine: "Điện 1.284 → 1.348",
-      electricity: "Tiền điện",
-      water: "Tiền nước (5 m³ × 18.000)",
-      service: "Phí dịch vụ",
-      wifi: "Wifi",
-      total: "Tổng",
-      markPaid: "Đánh dấu đã thu",
-      resend: "Gửi lại",
-      send: "Gửi hoá đơn",
-      sheet: {
-        title: "Gửi hoá đơn",
-        to: "Tới",
-        zalo: "Zalo",
-        zaloDesc: "Tin nhắn Zalo kèm link hoá đơn",
-        email: "Email",
-        emailDesc: "Ảnh hoá đơn kèm mã QR",
-        cancel: "Huỷ",
-        sendNow: "Gửi ngay",
-      },
     },
     bills: {
       title: "Hoá đơn",

@@ -43,12 +43,6 @@ const SCROLL_CLASSES = {
     "overflow-y-auto overscroll-contain [scrollbar-width:none] [&::-webkit-scrollbar]:hidden [&>*]:shrink-0",
 } as const;
 
-/**
- * Tỉ lệ điện thoại ở các section có chú thích: bằng điện thoại hero (Figma 316×666, --s 0.8);
- * màn rất hẹp thu còn 0.72 cho vừa chiều ngang.
- */
-export const PHONE_SCALE = "[--s:0.8] max-sm:[--s:0.72]";
-
 /** Khung điện thoại (Figma: Phone shell). Tỉ lệ thu nhỏ đặt bằng biến CSS --s ở className. */
 export function Phone({
   height = 812,

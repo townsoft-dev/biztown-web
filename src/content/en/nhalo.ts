@@ -56,10 +56,6 @@ export const NHALO: NhaloContent = {
       { title: "Time to record meter readings", sub: "Nhà trọ Bình An · 8 rooms" },
     ],
   },
-  strip: {
-    label: "NhàLo replaces",
-    items: ["Meter notebook", "Excel for the maths", "Zalo-ing each room"],
-  },
   why: {
     tag: "Why NhàLo",
     title: { lead: "Collect every rent payment,", mark: "lose nothing along the way" },
@@ -304,65 +300,9 @@ export const NHALO: NhaloContent = {
       },
     ],
   },
-  utilities: {
-    tag: "Utilities",
-    title: { lead: "Tenant changes mid-month,", mark: "nobody pays twice" },
-    lead: "Each room keeps one unbroken chain of readings: the monthly reading, the move-out reading and the new tenant’s move-in reading. Everyone pays for what they used.",
-    oldTenant: { name: "Tuấn", role: "Moving out" },
-    newTenant: { name: "Mai", role: "Moving in" },
-    periodStart: "Monthly 01/09",
-    periodEnd: "Monthly 01/10",
-    changeover: "Move-out = Move-in",
-    oldPays: "Tuấn pays for",
-    newPays: "Mai pays for",
-    whole: "Whole period",
-    match: "Matches the meter, nothing doubled or missed",
-    dayLabel: "Changeover day (Room 204)",
-    safeguards: [
-      {
-        title: "No forgotten readings at changeover",
-        desc: "For metered rooms the app asks for a move-in reading when you let the room and a move-out reading when the contract ends.",
-      },
-      {
-        title: "A clean final invoice",
-        desc: "The outgoing tenant gets a final invoice up to move-out day, net of deposit and deductions.",
-      },
-      {
-        title: "History per room",
-        desc: "Every reading, meter swaps included, sits on one timeline you can look back through.",
-      },
-    ],
-  },
-  contract: {
-    tag: "Contracts",
-    title: { lead: "Every term", mark: "on one screen" },
-    lead: "Rent, deposit, utilities, billing cycle and due date for each contract: open it and it’s all there. One contract can cover several rooms.",
-    callouts: [
-      { title: "Current version", desc: "Each renewal or amendment becomes a new version." },
-      {
-        title: "Rent cycle",
-        desc: "Every 1, 2, 3, 6 or 12 months. Utilities are still billed monthly.",
-      },
-      {
-        title: "Metered or flat-rate utilities",
-        desc: "Chosen per contract; flat rate needs no readings.",
-      },
-      {
-        title: "Move-in reading",
-        desc: "Taken when you let the room, the baseline for month one.",
-      },
-      {
-        title: "Move-out and deposit",
-        desc: "The app works out the final invoice, deducts the deposit, shows the refund.",
-      },
-      { title: "Expiring soon", desc: "Reminders 30, 15 and 7 days ahead." },
-    ],
-  },
   roles: {
     tag: "Permissions",
     title: { lead: "Hand over a house,", mark: "not your password" },
-    lead: "Parents own it, the kids run it? Hand over house by house. Managers sign in with their own phone number and only see the houses they’re given.",
-    heading: "Add managers and keep the ownership",
     benefits: [
       {
         title: "Add by phone number.",
@@ -374,7 +314,6 @@ export const NHALO: NhaloContent = {
       },
       { title: "Pause any time.", desc: "Switch management off without deleting the account." },
     ],
-    listCaption: "Manager list",
     grantCaption: "Granting houses to a manager",
     canTitle: "Managers can",
     ownerOnlyTitle: "Owner only",
@@ -484,7 +423,6 @@ export const NHALO: NhaloContent = {
     ],
     faqTitle: "Frequently asked questions",
     formTitle: "Ask a question or report a bug",
-    formLead: "The more detail the better: which screen you were on and what you tapped.",
     chat: "Or message us on Zalo",
     guide: "Read the user guide",
     form: {
@@ -569,7 +507,6 @@ export const NHALO: NhaloContent = {
       "Apple, the Apple logo and App Store are trademarks of Apple Inc. Google Play and the Google Play logo are trademarks of Google LLC.",
   },
   app: {
-    scrollHint: "Swipe or scroll on the phone to see the whole screen",
     nav: ["Home", "Collect", "Look up", "Account"],
     addHouse: {
       title: "Add house",
@@ -654,34 +591,6 @@ export const NHALO: NhaloContent = {
       selected: "{n} invoices selected",
       saveDrafts: "Create, don’t send",
       createSend: "Create & send all",
-    },
-    invoice: {
-      title: "October bill (September utilities)",
-      draft: "Not sent",
-      sent: "Sent",
-      paid: "Paid",
-      due: "Due 05/10/2026 · day 5 of each month",
-      breakdown: "Breakdown",
-      rent: "Monthly rent",
-      meterLine: "Electricity 1.284 → 1.348",
-      electricity: "Electricity amount",
-      water: "Water (5 m³ × 18.000)",
-      service: "Service fee",
-      wifi: "Wifi",
-      total: "Total",
-      markPaid: "Mark as paid",
-      resend: "Resend",
-      send: "Send invoice",
-      sheet: {
-        title: "Send invoice",
-        to: "To",
-        zalo: "Zalo",
-        zaloDesc: "Zalo message with invoice link",
-        email: "Email",
-        emailDesc: "Invoice image with QR code",
-        cancel: "Cancel",
-        sendNow: "Send now",
-      },
     },
     bills: {
       title: "Bills",

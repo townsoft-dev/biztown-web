@@ -1,5 +1,3 @@
-import Image from "next/image";
-
 import { Reveal } from "@/components/home/reveal";
 import { TagChip } from "@/components/ui/tag-chip";
 import { siteConfig } from "@/config/site";
@@ -42,35 +40,6 @@ export function NhaloSectionHead({
         </p>
       )}
     </Reveal>
-  );
-}
-
-/** Linh vật NhàLo (Figma: NhaLo logo · Logo3) — khung vuông, hình đặt lệch như file gốc. */
-export function Mascot({
-  size,
-  className,
-  priority,
-}: {
-  size: number;
-  className?: string;
-  priority?: boolean;
-}) {
-  return (
-    <span
-      aria-hidden="true"
-      className={cn("relative block shrink-0", className)}
-      style={{ width: size, height: size }}
-    >
-      <Image
-        src="/images/nhalo/mascot.svg"
-        alt=""
-        width={109}
-        height={118}
-        priority={priority}
-        className="absolute h-auto max-w-none"
-        style={{ left: "19.47%", top: "19.87%", width: "64.1%" }}
-      />
-    </span>
   );
 }
 
