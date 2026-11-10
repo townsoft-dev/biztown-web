@@ -5,8 +5,10 @@ import { cn } from "@/lib/utils";
 const ICONS = {
   "arrow-up-right": "/images/home/icon-arrow-up-right.svg",
   "arrow-up": "/images/home/icon-arrow-up.svg",
+  building: "/images/home/icon-building.svg",
   check: "/images/home/icon-check.svg",
   "chevron-down": "/images/home/icon-chevron-down.svg",
+  "map-pin": "/images/home/icon-map-pin.svg",
 } as const;
 
 export type IconName = keyof typeof ICONS;

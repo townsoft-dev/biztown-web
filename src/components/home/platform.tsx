@@ -7,7 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { AppMark } from "@/components/ui/app-mark";
 import { Icon } from "@/components/ui/icon";
 import { StatusBadge } from "@/components/ui/status-badge";
-import type { HomeContent, Product, ProductKey } from "@/content/home-types";
+import type { HomeContent, Product, ProductKey, ProductLogo } from "@/content/home-types";
 import { HOME_SECTIONS, localizedPath, type Locale } from "@/i18n/config";
 import { cn } from "@/lib/utils";
 
@@ -16,7 +16,10 @@ import { Illustration } from "./parts";
 import { Reveal } from "./reveal";
 
 /** Mockup bên phải mỗi slide: khung Figma 599×h, file export có thêm 60/30px bóng đổ. */
-const VISUALS: Record<ProductKey, { src: string; height: number; exportHeight: number }> = {
+const VISUALS: Record<
+  Exclude<ProductKey, "chinchu">,
+  { src: string; height: number; exportHeight: number }
+> = {
   // .webp thay .svg: bản SVG là 695 KB (236 KB sau nén) cho một ảnh toàn path, nằm ở slide
   // hiện mặc định nên tải trong mọi lượt vào trang chủ. Raster còn 126 KB.
   // Khổ 1416 px = 2× bề rộng hiển thị tối đa: ảnh rộng exportWidth/width = 708/599 ≈ 118%
@@ -149,7 +152,7 @@ function ProductSlide({
   statusLabels: HomeContent["platform"]["statusLabels"];
   locale: Locale;
 }) {
-  const visual = VISUALS[product.key];
+  const visual = product.key === "chinchu" ? null : VISUALS[product.key];
 
   return (
     <div className="bt-fade relative isolate grid grid-cols-1 gap-12 overflow-hidden rounded-[36px] border border-[rgba(239,159,39,0.22)] bg-[linear-gradient(153deg,rgba(255,255,255,0.96),rgba(255,255,255,0.74))] p-12 shadow-[0_40px_80px_rgba(166,95,0,0.14)] backdrop-blur-[8px] max-md:p-7 lg:grid-cols-2 dark:bg-[linear-gradient(153deg,rgba(28,38,80,0.96),rgba(28,38,80,0.8))] dark:shadow-[0_40px_80px_rgba(0,0,0,0.3)]">
@@ -177,6 +180,10 @@ function ProductSlide({
         <h3 className="mt-3.5 text-[38px] leading-[43.7px] font-semibold tracking-[-0.95px] text-ink max-sm:text-[30px] max-sm:leading-9">
           {product.title}
         </h3>
+
+        {product.desc && (
+          <p className="mt-3 text-[17px] leading-[27px] text-ink-muted">{product.desc}</p>
+        )}
 
         <ul className="mt-[22px] flex flex-col gap-3.5">
           {product.bullets.map((bullet) => (
@@ -240,26 +247,62 @@ function ProductSlide({
           product.key === "nhalo" ? "items-start" : "items-center",
         )}
       >
-        <Illustration
-          src={visual.src}
-          width={599}
-          height={visual.height}
-          exportWidth={708}
-          exportHeight={visual.exportHeight}
-          offsetX={60}
-          offsetY={30}
-        />
+        {visual ? (
+          <Illustration
+            src={visual.src}
+            width={599}
+            height={visual.height}
+            exportWidth={708}
+            exportHeight={visual.exportHeight}
+            offsetX={60}
+            offsetY={30}
+          />
+        ) : (
+          product.visual && <ChinchuVisual copy={product.visual} />
+        )}
       </div>
     </div>
   );
 }
 
+/**
+ * Logo chữ của sản phẩm (bản Day / Night). Kích thước hiển thị theo Figma; Chinchu lấy từ
+ * Figma "Logo-Stuff" › Summary (logo ngang 160×35, hiển thị cao ~38px cho cân với NhàLo).
+ */
+const WORDMARKS: Record<
+  ProductLogo,
+  { alt: string; light: string; dark: string; width: number; height: number }
+> = {
+  nhalo: {
+    alt: "NhàLo",
+    light: "/images/home/nhalo-logo.svg",
+    dark: "/images/home/nhalo-logo-alt.svg",
+    width: 172,
+    height: 57.3,
+  },
+  balheh: {
+    alt: "Balheh",
+    light: "/images/home/balheh-logo.svg",
+    // Mode Night: chữ "balheh", khối góc dưới trái và dấu check đổi trắng cho dễ đọc.
+    dark: "/images/home/balheh-logo-dark.svg",
+    width: 158,
+    height: 46.5,
+  },
+  chinchu: {
+    alt: "Chinchu",
+    light: "/images/home/chinchu-logo.svg",
+    dark: "/images/home/chinchu-logo-alt.svg",
+    width: 174,
+    height: 38,
+  },
+};
+
 /** Tên sản phẩm dạng chữ thuần, cho aria-label (logo là ảnh nên không có chữ để đọc). */
 function productLabel(name: Product["name"]) {
-  return "text" in name ? name.text : name.logo === "nhalo" ? "NhàLo" : "Balheh";
+  return "text" in name ? name.text : WORDMARKS[name.logo].alt;
 }
 
-/** Tên sản phẩm: logo ảnh (NhàLo, Balheh) hoặc chữ in hoa giãn cách màu cam. */
+/** Tên sản phẩm: logo ảnh (NhàLo, Balheh, Chinchu) hoặc chữ in hoa giãn cách màu cam. */
 function ProductName({ name }: { name: Product["name"] }) {
   if ("text" in name) {
     return (
@@ -268,41 +311,84 @@ function ProductName({ name }: { name: Product["name"] }) {
       </span>
     );
   }
-  return name.logo === "nhalo" ? (
+  const logo = WORDMARKS[name.logo];
+  const style = { width: logo.width, height: logo.height };
+  return (
     <>
       <Image
-        src="/images/home/nhalo-logo.svg"
-        alt="NhàLo"
-        width={172}
-        height={57.3}
-        className="theme-light-only h-[57.3px] w-[172px]"
+        src={logo.light}
+        alt={logo.alt}
+        width={logo.width}
+        height={logo.height}
+        className="theme-light-only"
+        style={style}
       />
       <Image
-        src="/images/home/nhalo-logo-alt.svg"
-        alt="NhàLo"
-        width={172}
-        height={57.3}
-        className="theme-dark-only h-[57.3px] w-[172px]"
+        src={logo.dark}
+        alt={logo.alt}
+        width={logo.width}
+        height={logo.height}
+        className="theme-dark-only"
+        style={style}
       />
     </>
-  ) : (
-    <>
-      <Image
-        src="/images/home/balheh-logo.svg"
-        alt="Balheh"
-        width={158}
-        height={46.5}
-        className="theme-light-only h-[46.5px] w-[158px]"
-      />
-      {/* Mode Night: chữ "balheh", khối góc dưới trái và dấu check đổi trắng cho dễ đọc. */}
-      <Image
-        src="/images/home/balheh-logo-dark.svg"
-        alt="Balheh"
-        width={158}
-        height={46.5}
-        className="theme-dark-only h-[46.5px] w-[158px]"
-      />
-    </>
+  );
+}
+
+/**
+ * Minh hoạ Chinchu (chưa có mockup Figma): khung trình duyệt với ô tìm kiếm và vài tin cho
+ * thuê mẫu gắn nhãn "đã xác minh qua NhàLo". Dữ liệu mẫu, màu theo logo Chinchu.
+ */
+const CHINCHU_LISTINGS = [
+  { title: "Phòng trọ 25 m², có gác", place: "Cầu Giấy, Hà Nội", price: "3.500.000" },
+  { title: "Căn hộ mini 1 phòng ngủ", place: "Phú Nhuận, TP.HCM", price: "5.800.000" },
+  { title: "Phòng khép kín gần trường", place: "Thủ Đức, TP.HCM", price: "2.900.000" },
+];
+
+function ChinchuVisual({ copy }: { copy: NonNullable<Product["visual"]> }) {
+  return (
+    <div
+      aria-hidden="true"
+      className="w-full max-w-[520px] overflow-hidden rounded-[22px] border border-[#d7e6e4] bg-white text-left shadow-[0_24px_48px_rgba(18,100,95,0.16)]"
+    >
+      <div className="flex items-center gap-1.5 border-b border-[#e6efee] bg-[#f4f8f7] px-4 py-3">
+        <span className="size-2.5 rounded-full bg-[#e5e7eb]" />
+        <span className="size-2.5 rounded-full bg-[#e5e7eb]" />
+        <span className="size-2.5 rounded-full bg-[#e5e7eb]" />
+      </div>
+      <div className="flex flex-col gap-3.5 p-5">
+        <div className="flex items-center gap-2.5 rounded-full border-[1.5px] border-[#12645f] px-4 py-2.5 text-[14px] text-[#5a6b8a]">
+          <Icon name="map-pin" size={16} className="text-[#12645f]" />
+          <span className="min-w-0 flex-1 truncate">{copy.search}</span>
+          <span className="rounded-full bg-[#12645f] px-3 py-1 text-[12px] font-semibold text-white">
+            {copy.button}
+          </span>
+        </div>
+        {CHINCHU_LISTINGS.map((item) => (
+          <div
+            key={item.title}
+            className="flex items-center gap-3.5 rounded-2xl border border-[#e6efee] p-3"
+          >
+            <span className="flex size-14 shrink-0 items-center justify-center rounded-xl bg-[#e7f1f0] text-[#12645f]">
+              <Icon name="building" size={24} />
+            </span>
+            <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+              <span className="truncate text-[15px] leading-[1.35] font-semibold text-[#18213f]">
+                {item.title}
+              </span>
+              <span className="text-[12.5px] leading-[1.35] text-[#5a6b8a]">{item.place}</span>
+              <span className="mt-0.5 w-fit rounded-full bg-[#e3f4ea] px-2 py-0.5 text-[11px] leading-[1.35] font-semibold text-[#1e6b3c]">
+                ✓ {copy.verified}
+              </span>
+            </span>
+            <span className="text-right text-[14px] leading-[1.3] font-bold whitespace-nowrap text-[#bb4e1a]">
+              {item.price}
+              <span className="block text-[11px] font-medium text-[#5a6b8a]">{copy.perMonth}</span>
+            </span>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 

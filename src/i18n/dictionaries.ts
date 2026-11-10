@@ -41,6 +41,7 @@ const vi = {
     label: "Danh sách sản phẩm",
     statusLabels: { live: "Đang hoạt động", soon: "Sắp ra mắt" },
     all: "Xem tất cả sản phẩm",
+    more: "Và nhiều sản phẩm khác sắp ra mắt…",
     items: [
       {
         name: "NhàLo",
@@ -50,32 +51,18 @@ const vi = {
         to: { page: "nhalo" },
       },
       {
+        name: "Chinchu",
+        desc: "Tìm nhà cho thuê chính chủ, uy tín",
+        mark: { logo: "chinchu" },
+        status: "soon",
+        to: null,
+      },
+      {
         name: "Balheh",
         desc: "Quản lý dự án, tài liệu, chat nhóm",
         mark: { logo: "balheh" },
         status: "live",
         to: { page: "balheh" },
-      },
-      {
-        name: "BizTown Nhân sự",
-        desc: "Nhân sự, chấm công, bảng lương",
-        mark: { code: "HR", tone: "orange" },
-        status: "soon",
-        to: null,
-      },
-      {
-        name: "BizTown Hóa đơn",
-        desc: "Thu chi, công nợ, lãi lỗ",
-        mark: { code: "FN", tone: "slate" },
-        status: "soon",
-        to: null,
-      },
-      {
-        name: "BizTown Tồn kho",
-        desc: "Bán hàng, tồn kho, đơn hàng",
-        mark: { code: "SL", tone: "white" },
-        status: "soon",
-        to: null,
       },
     ] satisfies ProductMenuItem[] as ProductMenuItem[],
   },
@@ -144,6 +131,7 @@ const vi = {
           title: "Sản phẩm",
           links: [
             { label: "NhàLo", to: { page: "nhalo" } },
+            { label: "Chinchu (sắp ra mắt)", to: null },
             { label: "Balheh", to: { page: "balheh" } },
             { label: "BizTown Nhân sự (sắp ra mắt)", to: null },
             { label: "BizTown Hóa đơn (sắp ra mắt)", to: null },
@@ -210,6 +198,7 @@ const en: Dictionary = {
     label: "Product list",
     statusLabels: { live: "Live", soon: "Coming soon" },
     all: "See all products",
+    more: "And more products coming soon…",
     items: [
       {
         name: "NhàLo",
@@ -219,32 +208,18 @@ const en: Dictionary = {
         to: { page: "nhalo" },
       },
       {
+        name: "Chinchu",
+        desc: "Trusted owner-listed rentals",
+        mark: { logo: "chinchu" },
+        status: "soon",
+        to: null,
+      },
+      {
         name: "Balheh",
         desc: "Projects, documents and team chat",
         mark: { logo: "balheh" },
         status: "live",
         to: { page: "balheh" },
-      },
-      {
-        name: "BizTown HR",
-        desc: "HR, attendance and payroll",
-        mark: { code: "HR", tone: "orange" },
-        status: "soon",
-        to: null,
-      },
-      {
-        name: "BizTown Invoices",
-        desc: "Income, expenses, debts, profit & loss",
-        mark: { code: "FN", tone: "slate" },
-        status: "soon",
-        to: null,
-      },
-      {
-        name: "BizTown Inventory",
-        desc: "Sales, inventory and orders",
-        mark: { code: "SL", tone: "white" },
-        status: "soon",
-        to: null,
       },
     ],
   },
@@ -313,6 +288,7 @@ const en: Dictionary = {
           title: "Products",
           links: [
             { label: "NhàLo", to: { page: "nhalo" } },
+            { label: "Chinchu (coming soon)", to: null },
             { label: "Balheh", to: { page: "balheh" } },
             { label: "BizTown HR (coming soon)", to: null },
             { label: "BizTown Invoices (coming soon)", to: null },

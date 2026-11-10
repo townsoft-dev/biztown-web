@@ -177,6 +177,29 @@ export const HOME: HomeContent = {
         secondary: "See all products",
       },
       {
+        key: "chinchu",
+        chip: "Chinchu",
+        mark: { logo: "chinchu" },
+        name: { logo: "chinchu" },
+        status: "soon",
+        title: "Trusted rentals, straight from the owner",
+        desc: "A platform where tenants find homes and rooms that fit their needs. Every listing comes from the owner, transparent and verified through the NhàLo app.",
+        bullets: [
+          "Find homes and rooms that fit your needs",
+          "Listings straight from owners, fully transparent",
+          "Verified through the NhàLo app",
+        ],
+        chips: ["Owner-listed", "Verified", "Homes for rent", "Rooms"],
+        visual: {
+          search: "Find a room near work…",
+          button: "Search",
+          verified: "Owner-listed · verified via NhàLo",
+          perMonth: "đ/month",
+        },
+        primary: "Get updates",
+        secondary: "See all products",
+      },
+      {
         key: "balheh",
         detail: "balheh",
         chip: "Balheh",
@@ -304,6 +327,12 @@ export const HOME: HomeContent = {
         mark: { logo: "nhalo" },
         status: "live",
         detail: "nhalo",
+      },
+      {
+        name: "Chinchu",
+        desc: "Trusted owner-listed rentals",
+        mark: { logo: "chinchu" },
+        status: "soon",
       },
       {
         name: "Balheh",

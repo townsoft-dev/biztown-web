@@ -165,6 +165,9 @@ export function MobileMenu({
                           );
                         })}
                       </ul>
+                      <p className="py-1.5 pr-3 pl-5 text-[13px] leading-5 text-ink-muted italic">
+                        {productMenu.more}
+                      </p>
                       <a
                         href={productsAllHref}
                         onClick={close}

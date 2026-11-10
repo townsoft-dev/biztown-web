@@ -172,6 +172,29 @@ export const HOME: HomeContent = {
         secondary: "Xem tất cả sản phẩm",
       },
       {
+        key: "chinchu",
+        chip: "Chinchu",
+        mark: { logo: "chinchu" },
+        name: { logo: "chinchu" },
+        status: "soon",
+        title: "Nền tảng tìm kiếm bất động sản cho thuê chính chủ, uy tín",
+        desc: "Nền tảng cho phép người thuê nhà tìm kiếm nhà, phòng phù hợp với nhu cầu. Nguồn nhà chính chủ, minh bạch, đã xác minh qua ứng dụng NhàLo.",
+        bullets: [
+          "Tìm nhà, phòng phù hợp với nhu cầu",
+          "Nguồn nhà chính chủ, minh bạch",
+          "Đã xác minh qua ứng dụng NhàLo",
+        ],
+        chips: ["Chính chủ", "Đã xác minh", "Nhà cho thuê", "Phòng trọ"],
+        visual: {
+          search: "Tìm phòng gần nơi làm việc…",
+          button: "Tìm",
+          verified: "Chính chủ · xác minh qua NhàLo",
+          perMonth: "đ/tháng",
+        },
+        primary: "Đăng ký nhận tin",
+        secondary: "Xem tất cả sản phẩm",
+      },
+      {
         key: "balheh",
         detail: "balheh",
         chip: "Balheh",
@@ -299,6 +322,12 @@ export const HOME: HomeContent = {
         mark: { logo: "nhalo" },
         status: "live",
         detail: "nhalo",
+      },
+      {
+        name: "Chinchu",
+        desc: "Tìm nhà cho thuê chính chủ, uy tín",
+        mark: { logo: "chinchu" },
+        status: "soon",
       },
       {
         name: "Balheh",

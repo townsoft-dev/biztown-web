@@ -78,17 +78,23 @@ export type HeroScenesCopy = {
   };
 };
 
-export type ProductKey = "nhalo" | "balheh" | "hr" | "finance" | "sales" | "custom";
+export type ProductLogo = "nhalo" | "balheh" | "chinchu";
+
+export type ProductKey = "nhalo" | "chinchu" | "balheh" | "hr" | "finance" | "sales" | "custom";
 
 export type Product = {
   key: ProductKey;
   chip: string;
   mark: AppMarkKind;
-  /** Logo ảnh (NhàLo, Balheh) hoặc tên chữ in hoa. */
-  name: { logo: "nhalo" | "balheh" } | { text: string };
+  /** Logo ảnh (NhàLo, Balheh, Chinchu) hoặc tên chữ in hoa. */
+  name: { logo: ProductLogo } | { text: string };
   type?: "App" | "Website";
   status?: ProductStatus;
   title: string;
+  /** Đoạn mô tả ngắn dưới tiêu đề (tuỳ chọn). */
+  desc?: string;
+  /** Chữ trong minh hoạ dựng bằng HTML (sản phẩm chưa có mockup, vd. Chinchu). */
+  visual?: { search: string; button: string; verified: string; perMonth: string };
   bullets: string[];
   chips: string[];
   primary: string;

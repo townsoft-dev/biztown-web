@@ -140,6 +140,9 @@ export function ProductsMenu({ label, menu, hrefs, allHref }: ProductsMenuProps)
               );
             })}
           </ul>
+          <p className="px-3 pt-1 pb-2.5 text-[13px] leading-5 text-ink-muted italic">
+            {menu.more}
+          </p>
           {allHref && (
             <a
               href={allHref}
