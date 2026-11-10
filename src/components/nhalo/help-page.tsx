@@ -43,13 +43,23 @@ export function NhaloHelpPage({
               </span>
             ))}
           </p>
-          <a
-            href={localizedPath(locale, "nhaloGuide")}
-            className="flex items-center gap-1.5 text-[15px] font-semibold text-accent-text hover:text-ink"
-          >
-            <MsIcon name="menu_book" size={18} />
-            {content.guide} →
-          </a>
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
+            <a
+              href={localizedPath(locale, "nhaloGuide")}
+              className="flex items-center gap-1.5 text-[15px] font-semibold text-accent-text hover:text-ink"
+            >
+              <MsIcon name="menu_book" size={18} />
+              {content.guide} →
+            </a>
+            {/* Điện thoại: form nằm dưới 14 câu hỏi, cho một lối tắt xuống thẳng. */}
+            <a
+              href="#gui-cau-hoi"
+              className="flex items-center gap-1.5 text-[15px] font-semibold text-accent-text hover:text-ink lg:hidden"
+            >
+              <MsIcon name="send" size={18} />
+              {content.formTitle} ↓
+            </a>
+          </div>
         </header>
 
         <div className="mx-auto mt-12 grid max-w-[1180px] items-start gap-8 lg:grid-cols-[minmax(0,1fr)_520px]">
@@ -61,8 +71,9 @@ export function NhaloHelpPage({
           </section>
 
           <section
+            id="gui-cau-hoi"
             aria-label={content.formTitle}
-            className="flex flex-col gap-5 rounded-[28px] border border-line bg-card p-8 shadow-[0_24px_48px_var(--shadow-navy)] max-md:p-6 lg:sticky lg:top-24"
+            className="flex scroll-mt-24 flex-col gap-5 rounded-[28px] border border-line bg-card p-8 shadow-[0_24px_48px_var(--shadow-navy)] max-md:p-6 lg:sticky lg:top-24"
           >
             <ContactForm
               content={content.form}

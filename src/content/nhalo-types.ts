@@ -66,7 +66,6 @@ export type NhaloContent = {
     /** Thông báo trượt lên lần lượt cạnh điện thoại ở hero (dữ liệu mẫu). */
     toasts: { title: string; sub: string }[];
   };
-  strip: { label: string; items: [string, string, string] };
   /**
    * "Vì sao NhàLo": các hàng "Trước đây → Với NhàLo" (xoay quanh chuyện thu đủ tiền) + khối
    * Miễn phí trọn đời. `icon`: tên file ở ms/.
@@ -97,7 +96,7 @@ export type NhaloContent = {
     /** Ba nhóm khách; thẻ `family` nối xuống khối Phân quyền ngay bên dưới. */
     cards: (Note & { icon: string; tag: string; family?: boolean })[];
   };
-  /** Mục "Tính năng": 4 bước tự chạy, chú thích số hiện lần lượt trên màn hình app. */
+  /** Mục "Tính năng": 6 bước tự chạy, chú thích số hiện lần lượt trên màn hình app. */
   features: {
     tag: string;
     title: MarkTitle;
@@ -120,31 +119,10 @@ export type NhaloContent = {
       toast?: { title: string; sub: string };
     }[];
   };
-  utilities: {
-    tag: string;
-    title: MarkTitle;
-    lead: string;
-    oldTenant: { name: string; role: string };
-    newTenant: { name: string; role: string };
-    periodStart: string;
-    periodEnd: string;
-    changeover: string;
-    oldPays: string;
-    newPays: string;
-    whole: string;
-    match: string;
-    /** Nhãn cho trình đọc màn hình của nút kéo ngày đổi khách (không hiện trên trang). */
-    dayLabel: string;
-    safeguards: [Note, Note, Note];
-  };
-  contract: { tag: string; title: MarkTitle; lead: string; callouts: Note[] };
   roles: {
     tag: string;
     title: MarkTitle;
-    lead: string;
-    heading: string;
     benefits: Note[];
-    listCaption: string;
     grantCaption: string;
     /** Hai cột quyền gọn: việc người quản lý làm được / chỉ chủ nhà. */
     canTitle: string;
@@ -210,8 +188,6 @@ export type NhaloContent = {
  * như dữ liệu mẫu trong Figma; chỗ có số thay đổi theo demo dùng {n}.
  */
 export type AppCopy = {
-  /** Dòng nhắc dưới điện thoại có chú thích: người xem tự cuộn trong màn hình. */
-  scrollHint: string;
   nav: [string, string, string, string];
   /** H-04 Thêm nhà, bước ① Thông tin nhà (chữ lấy từ app NhàLo Lite). */
   addHouse: {
@@ -300,34 +276,6 @@ export type AppCopy = {
     selected: string;
     saveDrafts: string;
     createSend: string;
-  };
-  invoice: {
-    title: string;
-    draft: string;
-    sent: string;
-    paid: string;
-    due: string;
-    breakdown: string;
-    rent: string;
-    meterLine: string;
-    electricity: string;
-    water: string;
-    service: string;
-    wifi: string;
-    total: string;
-    markPaid: string;
-    resend: string;
-    send: string;
-    sheet: {
-      title: string;
-      to: string;
-      zalo: string;
-      zaloDesc: string;
-      email: string;
-      emailDesc: string;
-      cancel: string;
-      sendNow: string;
-    };
   };
   bills: {
     title: string;
@@ -458,7 +406,6 @@ export type NhaloHelpContent = {
   lead: string[];
   faqTitle: string;
   formTitle: string;
-  formLead: string;
   chat: string;
   guide: string;
   /** Form gửi câu hỏi / báo lỗi — cùng cơ chế với form trang Liên hệ (/api/contact/). */

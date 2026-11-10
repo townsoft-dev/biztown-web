@@ -48,8 +48,8 @@ export const siteConfig = {
   nhaloSocial: {
     facebook: "https://www.facebook.com/1381148068417930",
     zalo: "https://zalo.me/3480068870203980748",
-    youtube: "",
-    tiktok: "",
+    youtube: "https://www.youtube.com/@nhaloapp",
+    tiktok: "https://www.tiktok.com/@biztownofficial",
   },
   /**
    * Thông tin pháp nhân, dùng cho JSON-LD Organization (src/lib/structured-data.ts). Tách
