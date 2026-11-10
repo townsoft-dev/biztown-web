@@ -56,7 +56,13 @@ export function TaiRedirect({
   };
 
   useEffect(() => {
-    const platform = detectPlatform(navigator.userAgent, navigator.maxTouchPoints ?? 0);
+    // ?p=ios|android: người bấm đúng nút App Store / Google Play trên trang /nhalo/ (kể cả
+    // từ máy tính) — mở thẳng store đó. Không có ?p thì đoán theo loại máy như cũ.
+    const forced = new URLSearchParams(window.location.search).get("p");
+    const platform: Platform =
+      forced === "ios" || forced === "android"
+        ? forced
+        : detectPlatform(navigator.userAgent, navigator.maxTouchPoints ?? 0);
     const target = destination(platform, code, source, medium);
 
     let done = false;

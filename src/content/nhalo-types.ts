@@ -26,6 +26,19 @@ export type HeroChapter = {
   toast: { title: string; sub: string };
 };
 
+/** Tiêu đề hai dòng (dòng 2 cam) + các ý có dấu tick hoặc các bước đánh số. */
+export type HeroIntro = {
+  headline: [string, string];
+  points?: string[];
+  steps?: Note[];
+};
+
+export type HeroVariant = HeroIntro & {
+  /** Chữ thường và số, dùng làm mốc CSS (data-nl-v). */
+  id: string;
+  match: string;
+};
+
 /** `badge`: nhãn nhỏ góc trên nút tải (vd. "Sắp có"). Bỏ trống khi app đã lên store. */
 export type StoreBadge = { prefix: string; badge?: string };
 
@@ -39,10 +52,25 @@ export type NhaloContent = {
     biztownLabel: string;
   };
   hero: {
-    title: [string, string];
-    lead: string;
+    /** Nhãn cam trên tiêu đề (như banner). */
+    badge: string;
+    /** Mở đầu mặc định (người tự vào, banner w01…). */
+    intro: HeroIntro;
+    /**
+     * Mở đầu riêng theo nguồn: so `match` (biểu thức chính quy) với utm_campaign, cái khớp đầu
+     * tiên thắng. Muốn thêm cho bài fanpage / nhóm FB thì thêm dòng, vd. match "^f\\d".
+     */
+    variants: HeroVariant[];
+    /** Ô QR tải app (chỉ hiện trên máy tính). */
+    qr: { label: string; alt: string };
     store: StoreBadge;
+    /** Nút hỏi đáp; link nằm ở siteConfig.nhaloChat, link trống thì ẩn nút. */
+    chat: { zalo: string; messenger: string };
     note: string;
+    /** Hai ô nổi bên màn Trang chủ (như banner tuần 1). */
+    floats: { unpaid: string; vacant: string };
+    /** Tiêu đề nhỏ trên khối demo 4 chương phía dưới. */
+    demoTitle: string;
     chaptersLabel: string;
     pauseLabel: string;
     playLabel: string;
@@ -126,8 +154,25 @@ export type AppCopy = {
   /** Dòng nhắc dưới điện thoại có chú thích: người xem tự cuộn trong màn hình. */
   scrollHint: string;
   nav: [string, string, string, string];
-  /** Tên tháng ngắn trên ô lịch hoá đơn, index 0 = tháng 1. */
-  months: string[];
+  /** Màn Trang chủ của app (hero). */
+  home: {
+    greeting: string;
+    owner: string;
+    houses: string;
+    rooms: string;
+    vacant: string;
+    month: string;
+    collected: string;
+    unpaid: string;
+    overdue: string;
+    expiring: string;
+    myHouses: string;
+    /** Dòng phụ dưới tên nhà: {n} = số phòng. */
+    roomCount: string;
+    vacantCount: string;
+    full: string;
+    left: string;
+  };
   reading: {
     title: string;
     sub: string;
@@ -181,7 +226,8 @@ export type AppCopy = {
     sheet: {
       title: string;
       to: string;
-      smsDesc: string;
+      zalo: string;
+      zaloDesc: string;
       email: string;
       emailDesc: string;
       cancel: string;
@@ -195,6 +241,8 @@ export type AppCopy = {
     unpaid: string;
     period: string;
     allHouses: string;
+    /** Chọn tháng tới để xem số tiền dự kiến. */
+    nextMonth: string;
     all: string;
     notCreatedCount: string;
     draftCount: string;
@@ -254,9 +302,8 @@ export type AppCopy = {
     amend: string;
     history: string;
     endContract: string;
-    schedule: string;
-    /** Chú giải màu ô lịch: đã thu, đã gửi, quá hạn, kỳ hiện tại, dự kiến. */
-    legend: [string, string, string, string, string];
+    /** Nhắc hợp đồng sắp hết hạn. */
+    expiry: { title: string; desc: string };
   };
   managers: {
     title: string;

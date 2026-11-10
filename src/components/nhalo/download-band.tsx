@@ -6,6 +6,7 @@ import type { NhaloContent } from "@/content/nhalo-types";
 import { NHALO_SECTIONS } from "@/i18n/config";
 
 import { Mascot, StoreBadges } from "./parts";
+import { useNhaloLinks } from "./use-link-code";
 
 /**
  * Banner cuối trang: tải app + để lại số điện thoại (Figma: Download and consultation).
@@ -13,6 +14,7 @@ import { Mascot, StoreBadges } from "./parts";
  */
 export function NhaloDownloadBand({ content }: { content: NhaloContent["band"] }) {
   const inputId = useId();
+  const links = useNhaloLinks();
 
   return (
     <section id={NHALO_SECTIONS.download} className="bt-wrap py-[88px] max-md:py-16">
@@ -32,7 +34,7 @@ export function NhaloDownloadBand({ content }: { content: NhaloContent["band"] }
               {content.title[1]}
             </span>
           </h2>
-          <StoreBadges store={content.store} tone="band" />
+          <StoreBadges store={content.store} tone="band" links={links} />
           <div className="flex w-full flex-col gap-3">
             <p className="text-[14px] leading-[22.4px] text-slate-200">{content.consult}</p>
             <form

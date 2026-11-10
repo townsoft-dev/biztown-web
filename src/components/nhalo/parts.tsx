@@ -69,12 +69,14 @@ const STORES = {
     {
       name: "App Store",
       icon: "/images/nhalo/icon-apple.svg",
+      platform: "ios",
       width: 160,
       href: siteConfig.nhaloStores.ios.url,
     },
     {
       name: "Google Play",
       icon: "/images/nhalo/icon-google-play.svg",
+      platform: "android",
       width: 179,
       href: siteConfig.nhaloStores.android.url,
     },
@@ -83,12 +85,14 @@ const STORES = {
     {
       name: "App Store",
       icon: "/images/nhalo/icon-apple-dark.svg",
+      platform: "ios",
       width: 145,
       href: siteConfig.nhaloStores.ios.url,
     },
     {
       name: "Google Play",
       icon: "/images/nhalo/icon-google-play-dark.svg",
+      platform: "android",
       width: 163,
       href: siteConfig.nhaloStores.android.url,
     },
@@ -96,7 +100,8 @@ const STORES = {
 } as const;
 
 /**
- * Hai nút tải app (Figma: pill / store). NhàLo đã lên cả hai store nên đây là link thật;
+ * Hai nút tải app (Figma: pill / store). Mặc định là link store thật; trang /nhalo/ truyền
+ * `links` là /tai/<mã>/?p=… để đếm lượt bấm theo nguồn (tai_click trên GA4).
  * `store.badge` chỉ còn dùng nếu cần gắn lại nhãn kiểu "Sắp có" cho một sản phẩm khác.
  *
  * Không đặt rel="nofollow": đây là link biên tập chính đáng tới trang chính thức của ứng
@@ -105,10 +110,13 @@ const STORES = {
 export function StoreBadges({
   store,
   tone,
+  links,
   className,
 }: {
   store: StoreBadge;
   tone: "hero" | "band";
+  /** Link thay cho link store gốc, vd. /tai/<mã>/?p=ios để đo nguồn (use-link-code.ts). */
+  links?: { ios: string; android: string };
   className?: string;
 }) {
   const dark = tone === "hero";
@@ -119,7 +127,7 @@ export function StoreBadges({
       {STORES[tone].map((item) => (
         <li key={item.name} className="relative shrink-0">
           <a
-            href={item.href}
+            href={links ? links[item.platform] : item.href}
             target="_blank"
             rel="noopener"
             className={cn(

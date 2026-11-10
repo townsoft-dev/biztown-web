@@ -33,6 +33,15 @@ export const siteConfig = {
     },
   },
   /**
+   * Nút "Hỏi qua Zalo" / "Nhắn Messenger" ở đầu trang /nhalo/. Để trống thì nút tạm dẫn tới
+   * trang Liên hệ.
+   * zalo: link OA dạng https://zalo.me/<id OA>; messenger: https://m.me/<tên fanpage NhàLo>.
+   */
+  nhaloChat: {
+    zalo: "",
+    messenger: "",
+  },
+  /**
    * Thông tin pháp nhân, dùng cho JSON-LD Organization (src/lib/structured-data.ts). Tách
    * từng phần thay vì một chuỗi địa chỉ để khai đúng schema.org/PostalAddress.
    *

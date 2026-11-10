@@ -11,7 +11,7 @@ import {
 
 import { AppMark } from "@/components/ui/app-mark";
 import type { AppCopy, NhaloContent } from "@/content/nhalo-types";
-import { NHALO_SECTIONS } from "@/i18n/config";
+import { NHALO_SECTIONS, type Locale } from "@/i18n/config";
 import { cn } from "@/lib/utils";
 
 import { Phone, dots } from "./app/app-ui";
@@ -24,7 +24,8 @@ import {
   batchTotal,
   type InvoiceStatus,
 } from "./app/screens";
-import { Mascot, StoreBadges } from "./parts";
+import { NhaloHeroIntro } from "./hero-intro";
+import { Mascot } from "./parts";
 
 /** Mỗi chương chạy 6,5 giây rồi tự chuyển (Figma: NhàLo / Hero stage). */
 const CHAPTER_MS = 6500;
@@ -106,7 +107,7 @@ const SCRIPT: Beat[][] = [
   ],
   [
     { at: 500, set: { sheet: true } },
-    { at: 1300, move: "sms" },
+    { at: 1300, move: "zalo" },
     { at: 2000, tap: true },
     { at: 2050, set: { channel: 0 }, step: 0 },
     { at: 2800, move: "send" },
@@ -149,11 +150,20 @@ function subscribeReducedMotion(onChange: () => void) {
 }
 
 /**
- * Hero trang NhàLo: tiêu đề, nút tải app, rồi demo 4 chương (Figma: Hero + NhàLo / Hero stage).
+ * Hero trang NhàLo: màn hình mở đầu cho người đến từ quảng cáo (hero-intro.tsx), rồi demo 4
+ * chương (Figma: NhàLo / Hero stage).
  * Demo tự chạy như video: con trỏ di chuyển, chạm, nhập số, hiện thông báo; bấm tab để nhảy
  * chương, ❚❚ để dừng. Tự dừng khi cuộn khỏi màn hình hoặc khi bật "giảm chuyển động".
  */
-export function NhaloHero({ content, app }: { content: NhaloContent["hero"]; app: AppCopy }) {
+export function NhaloHero({
+  content,
+  app,
+  locale,
+}: {
+  content: NhaloContent["hero"];
+  app: AppCopy;
+  locale: Locale;
+}) {
   const [chapter, setChapter] = useState(0);
   const [paused, setPaused] = useState(false);
   const [inView, setInView] = useState(true);
@@ -190,23 +200,18 @@ export function NhaloHero({ content, app }: { content: NhaloContent["hero"]; app
   return (
     <section
       id={NHALO_SECTIONS.top}
-      className="relative overflow-hidden rounded-b-[40px] bg-[image:var(--nl-hero-bg)] pt-14 pb-14"
+      className="relative overflow-hidden rounded-b-[40px] bg-[image:var(--nl-hero-bg)] pt-10 pb-14 max-sm:pt-8"
     >
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-x-0 top-0 h-[800px] bg-[linear-gradient(var(--nl-hero-grid)_1px,transparent_1px),linear-gradient(90deg,var(--nl-hero-grid)_1px,transparent_1px)] [mask-image:linear-gradient(180deg,#000_70%,transparent)] bg-size-[96px_96px]"
       />
 
-      <div className="bt-wrap relative flex flex-col items-center text-center">
-        <h1 className="bt-hero-title max-w-[1080px] pt-[22px] text-balance">
-          <span className="block text-ink">{content.title[0]}</span>
-          <span className="bt-kw -my-[0.2em] block py-[0.2em]">{content.title[1]}</span>
-        </h1>
-        <p className="bt-lead mt-[18px] mb-7 max-w-[680px] text-pretty">{content.lead}</p>
-        <StoreBadges store={content.store} tone="hero" className="justify-center" />
-        <p className="mt-3.5 text-[14px] leading-[22.4px] text-ink-muted">{content.note}</p>
+      <NhaloHeroIntro content={content} app={app} locale={locale} />
 
-        <div className="mt-11 flex w-full max-w-[1120px] flex-col gap-[18px]">
+      <div className="bt-wrap relative mt-20 flex flex-col items-center text-center max-md:mt-14">
+        <h2 className="bt-h2 text-balance text-ink">{content.demoTitle}</h2>
+        <div className="mt-9 flex w-full max-w-[1120px] flex-col gap-[18px]">
           <div
             role="tablist"
             aria-label={content.chaptersLabel}

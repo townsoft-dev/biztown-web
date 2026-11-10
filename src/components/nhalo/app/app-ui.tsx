@@ -152,9 +152,9 @@ export function TopBar({
   );
 }
 
-const NAV_ICONS = ["home", "group", "receipt_long", "person"] as const;
+const NAV_ICONS = ["home", "account_balance_wallet", "menu_book", "person"] as const;
 
-/** Thanh điều hướng dưới, 4 tab (Figma: Bottom navigation). */
+/** Thanh điều hướng dưới, 4 tab như NhàLo Lite: Trang chủ · Thu tiền · Tra cứu · Tài khoản. */
 export function BottomNav({ labels, active }: { labels: readonly string[]; active: number }) {
   return (
     <div className="grid h-16 shrink-0 grid-cols-4 border-t border-app-nav-line bg-white px-1 pt-2 pb-3.5">
@@ -336,50 +336,6 @@ export function DetailRow({
         {value}
       </span>
     </div>
-  );
-}
-
-export type ChipKind = "paid" | "sent" | "overdue" | "current" | "scheduled" | "missed" | "more";
-
-const CHIP_KINDS: Record<ChipKind, string> = {
-  paid: "bg-chip-paid text-white",
-  sent: "bg-chip-sent text-white",
-  overdue: "bg-chip-overdue text-white",
-  current: "border-[1.5px] border-accent bg-white text-accent",
-  scheduled: "border-[1.5px] border-dashed border-slate-200 bg-white text-slate-200",
-  missed: "border-[1.5px] border-dashed border-chip-overdue bg-white text-chip-overdue",
-  more: "border-[1.5px] border-app-hairline bg-white text-app-secondary",
-};
-
-/** Ô lịch hoá đơn theo kỳ (Figma: Invoice schedule chip). */
-export function PeriodChips({
-  chips,
-  size = "md",
-  demo,
-  anno,
-}: {
-  chips: { kind: ChipKind; label: string }[];
-  size?: "md" | "sm";
-  demo?: string;
-  anno?: number;
-}) {
-  return (
-    <span data-demo={demo} data-anno={anno} className="flex gap-1.5">
-      {chips.map((chip, index) => (
-        <span
-          key={index}
-          className={cn(
-            "flex shrink-0 items-center justify-center rounded-[9px] px-1.5 font-bold whitespace-nowrap transition-colors duration-300",
-            size === "md"
-              ? "h-[30px] min-w-[34px] text-[8.8px]"
-              : "h-[30px] min-w-[34px] text-[7px]",
-            CHIP_KINDS[chip.kind],
-          )}
-        >
-          {chip.label}
-        </span>
-      ))}
-    </span>
   );
 }
 
