@@ -38,8 +38,8 @@ export const siteConfig = {
    * zalo: link OA dạng https://zalo.me/<id OA>; messenger: https://m.me/<tên fanpage NhàLo>.
    */
   nhaloChat: {
-    zalo: "",
-    messenger: "",
+    zalo: "https://zalo.me/3480068870203980748",
+    messenger: "https://m.me/1381148068417930",
   },
   /**
    * Thông tin pháp nhân, dùng cho JSON-LD Organization (src/lib/structured-data.ts). Tách
