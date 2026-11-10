@@ -7,12 +7,14 @@ import { CONTACT as CONTACT_EN } from "@/content/en/contact";
 import { BALHEH as BALHEH_EN } from "@/content/en/balheh";
 import { HOME as HOME_EN } from "@/content/en/home";
 import { NHALO as NHALO_EN } from "@/content/en/nhalo";
+import { NHALO_GUIDE as GUIDE_EN } from "@/content/en/nhalo-guide";
 import { SupportContent as SupportEn } from "@/content/en/support";
 import type { NhaloContent } from "@/content/nhalo-types";
 import { BALHEH as BALHEH_VI } from "@/content/vi/balheh";
 import { CONTACT as CONTACT_VI } from "@/content/vi/contact";
 import { HOME as HOME_VI } from "@/content/vi/home";
 import { NHALO as NHALO_VI } from "@/content/vi/nhalo";
+import { NHALO_GUIDE as GUIDE_VI } from "@/content/vi/nhalo-guide";
 import { SupportContent as SupportVi } from "@/content/vi/support";
 import type { Locale, PageKey } from "@/i18n/config";
 import { buildStructuredData, type FaqItem } from "@/lib/structured-data";
@@ -23,7 +25,10 @@ import { BalhehHeader } from "./balheh/balheh-header";
 import { BalhehPage } from "./balheh/balheh-page";
 import { ContactPage } from "./contact/contact-page";
 import { HomePage } from "./home/home-page";
+import { NHALO_FAQ_ON_HOME } from "./nhalo/faq";
 import { NhaloFooter } from "./nhalo/nhalo-footer";
+import { NhaloGuidePage } from "./nhalo/guide-page";
+import { NhaloHelpPage } from "./nhalo/help-page";
 import { NhaloHeader } from "./nhalo/nhalo-header";
 import { NhaloPage } from "./nhalo/nhalo-page";
 import { SiteShell } from "./site-shell";
@@ -66,6 +71,14 @@ const CONTENT: Record<PageKey, Record<Locale, () => ReactNode>> = {
     vi: () => <HtmlContent dir="nhalo-delete-account" locale="vi" />,
     en: () => <HtmlContent dir="nhalo-delete-account" locale="en" />,
   },
+  nhaloGuide: {
+    vi: () => <NhaloGuidePage content={GUIDE_VI} app={NHALO_VI.app} locale="vi" />,
+    en: () => <NhaloGuidePage content={GUIDE_EN} app={NHALO_EN.app} locale="en" />,
+  },
+  nhaloHelp: {
+    vi: () => <NhaloHelpPage content={NHALO_VI.help} faq={NHALO_VI.faq} locale="vi" />,
+    en: () => <NhaloHelpPage content={NHALO_EN.help} faq={NHALO_EN.faq} locale="en" />,
+  },
   nhalo: {
     vi: () => <NhaloPage content={NHALO_VI} locale="vi" />,
     en: () => <NhaloPage content={NHALO_EN} locale="en" />,
@@ -80,7 +93,13 @@ const CONTENT: Record<PageKey, Record<Locale, () => ReactNode>> = {
   },
 };
 
-const NHALO_PAGES = new Set<PageKey>(["nhalo", "nhaloPrivacy", "nhaloDeleteAccount"]);
+const NHALO_PAGES = new Set<PageKey>([
+  "nhalo",
+  "nhaloPrivacy",
+  "nhaloDeleteAccount",
+  "nhaloGuide",
+  "nhaloHelp",
+]);
 
 /** Một trang hoàn chỉnh (khung + nội dung) theo ngôn ngữ. File page.tsx chỉ gọi component này. */
 export function LocalePage({ locale, page }: { locale: Locale; page: PageKey }) {
@@ -91,7 +110,11 @@ export function LocalePage({ locale, page }: { locale: Locale; page: PageKey }) 
 
   // Câu hỏi thường gặp chỉ có ở chính trang sản phẩm, không có ở các trang con của NhàLo.
   const faq: FaqItem[] | undefined =
-    (page === "nhalo" ? nhalo?.faq.items : undefined) ?? balheh?.faq.items;
+    (page === "nhalo"
+      ? nhalo?.faq.items.slice(0, NHALO_FAQ_ON_HOME)
+      : page === "nhaloHelp"
+        ? nhalo?.faq.items
+        : undefined) ?? balheh?.faq.items;
 
   return (
     <SiteShell

@@ -43,7 +43,11 @@ export async function POST(request: Request) {
     return Response.json({ ok: true });
   }
 
+  // Gửi từ trang "Hỏi đáp, báo lỗi" của NhàLo: tiêu đề email riêng để lọc hộp thư.
+  const nhalo = (body as { topic?: unknown } | null)?.topic === "nhalo";
+
   const rows: [string, string][] = [
+    ...(nhalo ? ([["Sản phẩm", "NhàLo (hỏi đáp, báo lỗi)"]] as [string, string][]) : []),
     ["Họ tên", values.name],
     ["Công ty", values.company || "—"],
     ["Email", values.email],
@@ -54,7 +58,9 @@ export async function POST(request: Request) {
   try {
     await sendMail({
       replyTo: { name: values.name, address: values.email },
-      subject: `[biztown.vn] Liên hệ mới từ ${values.name}`,
+      subject: nhalo
+        ? `[NhàLo] Hỏi đáp / báo lỗi từ ${values.name}`
+        : `[biztown.vn] Liên hệ mới từ ${values.name}`,
       text: [
         ...rows.map(([label, value]) => `${label}: ${value}`),
         "",

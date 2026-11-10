@@ -8,6 +8,7 @@ import { useInView } from "./use-in-view";
 
 type RevealProps = {
   as?: "div" | "li" | "article";
+  id?: string;
   className?: string;
   style?: CSSProperties;
   /**
@@ -26,6 +27,7 @@ type RevealProps = {
  */
 export function Reveal({
   as: Tag = "div",
+  id,
   className,
   style,
   immediate = false,
@@ -37,6 +39,7 @@ export function Reveal({
   return (
     <Tag
       ref={ref as never}
+      id={id}
       className={cn("bt-scroll-reveal", (immediate || inView) && "is-in", className)}
       style={style}
     >

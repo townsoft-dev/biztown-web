@@ -15,7 +15,8 @@ export type MailMessage = {
   subject: string;
   text: string;
   html: string;
-  replyTo: { name: string; address: string };
+  /** Bỏ trống khi người gửi không để lại email (vd. chỉ để số điện thoại). */
+  replyTo?: { name: string; address: string };
 };
 
 const SENDER_NAME = "Website biztown.vn";
@@ -103,7 +104,7 @@ async function sendWithGraph(message: MailMessage, sender: string, credentials: 
           body: { contentType: "HTML", content: message.html },
           from: { emailAddress: { name: SENDER_NAME, address: sender } },
           toRecipients: recipients(sender).map((address) => ({ emailAddress: { address } })),
-          replyTo: [{ emailAddress: message.replyTo }],
+          ...(message.replyTo ? { replyTo: [{ emailAddress: message.replyTo }] } : {}),
         },
         // Không lưu bản sao vào Sent Items của hộp thư gửi.
         saveToSentItems: false,

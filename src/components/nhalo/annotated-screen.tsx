@@ -1,9 +1,11 @@
 "use client";
 
-import { useLayoutEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 
 import type { Note } from "@/content/nhalo-types";
 import { cn } from "@/lib/utils";
+
+import { MsIcon } from "./app/app-ui";
 
 export type AnnoSide = "left" | "right";
 
@@ -15,7 +17,7 @@ type Placement = {
   /** top của ô chú thích trong cột của nó. */
   tops: (number | null)[];
   /** Đường nối ô chú thích → chấm và chấm tròn ở đầu ô, toạ độ trong khung ngoài. */
-  lines: { d: string; x: number; y: number }[];
+  lines: { index: number; d: string; x: number; y: number }[];
 };
 
 const EMPTY: Placement = { pins: [], tops: [], lines: [] };
@@ -38,11 +40,25 @@ export function AnnotatedScreen({
   callouts,
   hint,
   phone,
+  shown = callouts.length,
+  start,
+  targets,
 }: {
   sides: AnnoSide[];
-  callouts: Note[];
-  /** Dòng nhắc dưới điện thoại: kéo trong màn hình để xem thêm. */
-  hint: string;
+  callouts: (Note & { auto?: string })[];
+  /**
+   * Bộ chọn CSS của chỗ chú thích số n trỏ tới (theo thứ tự). Bỏ trống: `[data-anno="n"]`.
+   */
+  targets?: string[];
+  /**
+   * Số chú thích đang hiện (chạy tự động: hiện lần lượt 1, 2, 3…). Chú thích vừa hiện mà nằm
+   * khuất trong vùng cuộn thì màn hình tự cuộn tới. Mặc định hiện hết.
+   */
+  shown?: number;
+  /** Nội dung đặt ở cột trái khi mọi chú thích nằm bên phải (tiêu đề, các bước…). */
+  start?: ReactNode;
+  /** Dòng nhắc dưới điện thoại: kéo trong màn hình để xem thêm (bỏ trống thì không hiện). */
+  hint?: string;
   phone: ReactNode;
 }) {
   const boxRef = useRef<HTMLDivElement>(null);
@@ -65,7 +81,7 @@ export function AnnotatedScreen({
       const V = scroller?.getBoundingClientRect() ?? S;
 
       const pins = callouts.map((_, index): Pin | null => {
-        const target = shot.querySelector(`[data-anno="${index + 1}"]`);
+        const target = shot.querySelector(targets?.[index] ?? `[data-anno="${index + 1}"]`);
         if (!target) return null;
         const r = target.getBoundingClientRect();
         const cy = r.top + Math.min(r.height / 2, 14);
@@ -110,6 +126,7 @@ export function AnnotatedScreen({
           const py = S.top - B.top + pin.y;
           const d = (px - lx) / 2;
           lines.push({
+            index,
             d: `M${lx} ${ly}C${lx + d} ${ly} ${px - d} ${py} ${px} ${py}`,
             x: lx,
             y: ly,
@@ -140,7 +157,26 @@ export function AnnotatedScreen({
       scroller?.removeEventListener("scroll", onScroll);
       cancelAnimationFrame(frame);
     };
-  }, [callouts, sides]);
+  }, [callouts, sides, targets]);
+
+  // Chú thích mới hiện mà mốc của nó khuất trong vùng cuộn: cuộn êm tới đó (về đầu khi bắt đầu lại).
+  useEffect(() => {
+    const shot = shotRef.current;
+    const scroller = shot?.querySelector<HTMLElement>("[data-scroller], .app-body");
+    if (!shot || !scroller) return;
+    if (shown === 0) {
+      scroller.scrollTo({ top: 0 });
+      return;
+    }
+    if (shown >= callouts.length + 1) return;
+    const target = shot.querySelector(targets?.[shown - 1] ?? `[data-anno="${shown}"]`);
+    if (!target) return;
+    const V = scroller.getBoundingClientRect();
+    const r = target.getBoundingClientRect();
+    if (r.top < V.top + 24 || r.bottom > V.bottom - 24) {
+      scroller.scrollBy({ top: r.top - V.top - V.height / 2 + r.height / 2, behavior: "smooth" });
+    }
+  }, [shown, callouts.length, targets]);
 
   const column = (side: AnnoSide) => (
     <div
@@ -158,9 +194,11 @@ export function AnnotatedScreen({
             }}
             // Figma: ô chú thích rộng 279px, cách đầu đường nối 12px.
             className={cn(
-              "absolute w-[279px] max-w-[calc(100%-12px)] transition-opacity duration-300 motion-reduce:transition-none",
+              "absolute w-[279px] max-w-[calc(100%-12px)] transition-[opacity,translate] duration-300 motion-reduce:transition-none",
               side === "left" ? "right-3" : "left-3",
-              placement.tops[index] == null ? "pointer-events-none opacity-0" : "opacity-100",
+              placement.tops[index] == null || index >= shown
+                ? "pointer-events-none translate-y-1 opacity-0"
+                : "opacity-100",
             )}
             style={{ top: placement.tops[index] ?? 0 }}
           >
@@ -176,7 +214,7 @@ export function AnnotatedScreen({
       ref={boxRef}
       className="relative mx-auto grid w-full max-w-[1100px] justify-items-center gap-8 min-[75rem]:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] min-[75rem]:items-start min-[75rem]:gap-14"
     >
-      {column("left")}
+      {start ?? column("left")}
 
       <div className="flex flex-col items-center">
         <div ref={shotRef} className="relative">
@@ -187,8 +225,8 @@ export function AnnotatedScreen({
                 key={index}
                 aria-hidden="true"
                 className={cn(
-                  "absolute z-[2] flex size-[22px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-accent text-[11.5px] leading-none font-bold text-on-accent shadow-[0_0_0_3px_rgba(255,255,255,0.95),0_4px_10px_rgba(0,0,0,0.18)] transition-opacity duration-300 motion-reduce:transition-none",
-                  pin.visible ? "opacity-100" : "opacity-0",
+                  "absolute z-[2] flex size-[22px] -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-accent text-[11.5px] leading-none font-bold text-on-accent shadow-[0_0_0_3px_rgba(255,255,255,0.95),0_4px_10px_rgba(0,0,0,0.18)] transition-[opacity,scale] duration-300 motion-reduce:transition-none",
+                  pin.visible && index < shown ? "scale-100 opacity-100" : "scale-50 opacity-0",
                 )}
                 style={{ left: pin.x, top: pin.y }}
               >
@@ -197,10 +235,12 @@ export function AnnotatedScreen({
             ) : null,
           )}
         </div>
-        <p className="mt-3 text-center text-[13px] text-ink-muted">
-          <span aria-hidden="true">↕ </span>
-          {hint}
-        </p>
+        {hint && (
+          <p className="mt-3 text-center text-[13px] text-ink-muted">
+            <span aria-hidden="true">↕ </span>
+            {hint}
+          </p>
+        )}
       </div>
 
       {column("right")}
@@ -210,7 +250,13 @@ export function AnnotatedScreen({
         className="pointer-events-none absolute inset-0 z-[1] hidden size-full overflow-visible min-[75rem]:block"
       >
         {placement.lines.map((line) => (
-          <g key={line.d}>
+          <g
+            key={line.d}
+            className={cn(
+              "transition-opacity duration-300",
+              line.index < shown ? "opacity-100" : "opacity-0",
+            )}
+          >
             <path d={line.d} fill="none" stroke="var(--accent)" strokeWidth={1.6} />
             <circle cx={line.x} cy={line.y} r={3} fill="var(--accent)" />
           </g>
@@ -228,7 +274,7 @@ export function AnnotatedScreen({
   );
 }
 
-function Callout({ number, note }: { number: number; note: Note }) {
+function Callout({ number, note }: { number: number; note: Note & { auto?: string } }) {
   return (
     <div className="flex items-start gap-2.5 rounded-xl border border-line bg-card p-3 text-[14px] shadow-[0_12px_32px_var(--shadow-navy)]">
       <span className="flex size-[22px] shrink-0 items-center justify-center rounded-full bg-accent text-[12px] leading-none font-semibold text-on-accent">
@@ -237,6 +283,12 @@ function Callout({ number, note }: { number: number; note: Note }) {
       <span className="flex min-w-0 flex-1 flex-col gap-[3px]">
         <span className="font-semibold text-ink">{note.title}</span>
         <span className="leading-[22.4px] text-ink-muted">{note.desc}</span>
+        {note.auto && (
+          <span className="mt-1.5 flex items-start gap-1.5 rounded-lg bg-accent-tint px-2.5 py-1.5 text-[13px] leading-[1.45] text-ink">
+            <MsIcon name="bolt" size={15} className="mt-[2px] shrink-0 text-accent-text" />
+            {note.auto}
+          </span>
+        )}
       </span>
     </div>
   );

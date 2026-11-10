@@ -42,6 +42,16 @@ export const siteConfig = {
     messenger: "https://m.me/1381148068417930",
   },
   /**
+   * Mạng xã hội NhàLo (icon ở chân trang). Để trống thì icon vẫn hiện nhưng không bấm được —
+   * điền link kênh thật khi có.
+   */
+  nhaloSocial: {
+    facebook: "https://www.facebook.com/1381148068417930",
+    zalo: "https://zalo.me/3480068870203980748",
+    youtube: "",
+    tiktok: "",
+  },
+  /**
    * Thông tin pháp nhân, dùng cho JSON-LD Organization (src/lib/structured-data.ts). Tách
    * từng phần thay vì một chuỗi địa chỉ để khai đúng schema.org/PostalAddress.
    *

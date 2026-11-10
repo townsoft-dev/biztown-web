@@ -61,7 +61,7 @@ export function NhaloMobileMenu({
       <div
         id={panelId}
         hidden={!open}
-        className="absolute inset-x-0 top-full border-b border-line bg-page px-5 pt-2 pb-5 shadow-[0_12px_24px_var(--shadow-soft)]"
+        className="absolute inset-x-0 top-full mt-2 rounded-3xl border border-line bg-page px-5 pt-2 pb-5 shadow-[0_12px_24px_var(--shadow-soft)]"
       >
         <nav aria-label={menuLabel}>
           <ul className="grid gap-0.5">

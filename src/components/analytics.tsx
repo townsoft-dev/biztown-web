@@ -2,8 +2,12 @@ import Script from "next/script";
 
 import { analyticsConfig } from "@/config/analytics";
 
-/** Google Analytics 4 + Meta Pixel. Không có mã trong src/config/analytics.ts thì không tải gì. */
+/**
+ * Google Analytics 4 + Meta Pixel. Không có mã trong src/config/analytics.ts thì không tải gì.
+ * `pnpm dev` (máy cá nhân) không tải để bấm thử không lẫn vào số liệu thật.
+ */
 export function Analytics() {
+  if (process.env.NODE_ENV === "development") return null;
   const { ga4Id, metaPixelId } = analyticsConfig;
   return (
     <>

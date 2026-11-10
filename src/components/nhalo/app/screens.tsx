@@ -46,17 +46,7 @@ export function HomeScreen({ t }: { t: AppCopy }) {
   const h = t.home;
   return (
     <>
-      <div className="flex h-11 shrink-0 items-center justify-between bg-[#fff7ea] px-6 text-navy">
-        <span className="text-[15px] leading-[20.25px] font-semibold">9:41</span>
-        <span className="flex items-end gap-[2px]">
-          {[5, 7, 9, 11].map((height) => (
-            <span key={height} className="w-[3px] rounded-[1px] bg-navy" style={{ height }} />
-          ))}
-          <span className="ml-1.5 h-[11px] w-[22px] rounded-[3px] border-[1.5px] border-navy p-[1.5px]">
-            <span className="block h-full w-3/4 rounded-[1px] bg-navy" />
-          </span>
-        </span>
-      </div>
+      <StatusBar />
       <div className={cn(BODY, "gap-3 bg-[#fff7ea] px-4 pt-2")}>
         <div className="flex flex-col">
           <span className="text-[13px] leading-[1.35] text-app-secondary">{h.greeting}</span>
@@ -882,10 +872,10 @@ export function ManagerGrantScreen({ t }: { t: AppCopy }) {
         <Field label={g.name} value="Nguyễn Thị Lan" className="flex-none" />
         <div className="flex gap-2.5">
           <Field label={g.role} value={g.roleValue} muted />
-          <div className="flex min-w-0 flex-1 flex-col gap-[5px]">
+          <div className="flex min-w-0 flex-[1.35] flex-col gap-[5px]">
             <span className="text-[12px] leading-[1.35]">&nbsp;</span>
-            <span className="flex h-11 items-center gap-2.5 rounded-[10px] bg-white px-2.5">
-              <span className="min-w-0 flex-1 text-[14px] leading-[1.35] font-semibold">
+            <span className="flex h-11 items-center gap-2 rounded-[10px] border-[1.25px] border-[#f0dfc2] bg-white px-2.5">
+              <span className="min-w-0 flex-1 text-[13.5px] leading-[1.35] font-semibold whitespace-nowrap">
                 {g.managing}
               </span>
               <Image src="/images/nhalo/app-switch-on.svg" alt="" width={44} height={26} />
@@ -919,6 +909,224 @@ export function ManagerGrantScreen({ t }: { t: AppCopy }) {
         </div>
       </div>
       <BottomNav labels={t.nav} active={3} />
+    </>
+  );
+}
+
+/**
+ * Tên phòng app tự đặt (room_names.dart): N tầng → mỗi tầng ⌈phòng ÷ N⌉ phòng, tầng trên cùng
+ * nhận phần còn lại. 8 phòng 2 tầng → P101–P104, P201–P204.
+ */
+function roomNames(rooms: number, floors: number) {
+  const per = Math.ceil(rooms / floors);
+  const names: string[] = [];
+  for (let floor = 1; floor <= floors; floor++) {
+    const count = floor < floors ? per : rooms - per * (floors - 1);
+    for (let i = 1; i <= count; i++) names.push(`P${floor}${String(i).padStart(2, "0")}`);
+  }
+  return names;
+}
+
+/**
+ * H-04 — Thêm nhà, bước ① Thông tin nhà (NhàLo Lite, house_form_screen): thanh 3 bước, tên,
+ * địa chỉ, số phòng (− / +) cùng hàng số tầng, danh sách tên phòng app tự đặt, nút Tiếp tục.
+ * `rooms` / `press` đổi theo demo ở mục Tính năng.
+ */
+export function AddHouseScreen({
+  t,
+  rooms = 8,
+  press,
+}: {
+  t: AppCopy;
+  rooms?: number;
+  /** Nút đang được chạm ("plus" | "next"). */
+  press?: string | null;
+}) {
+  const h = t.addHouse;
+  const names = roomNames(rooms, 2);
+
+  return (
+    <>
+      <StatusBar />
+      <TopBar title={h.title} sub={h.steps.join(" → ")} close />
+      <div className={cn(BODY, "gap-3.5 p-4")}>
+        <div data-anno={1} className="flex flex-col gap-2">
+          <div className="flex gap-1.5">
+            {h.steps.map((step, index) => (
+              <span
+                key={step}
+                className={cn("h-1 flex-1 rounded-full", index === 0 ? "bg-accent" : "bg-gray-200")}
+              />
+            ))}
+          </div>
+          <span className="text-[14px] leading-[1.35] font-semibold">{h.steps[0]}</span>
+          <span className="text-[12px] leading-[1.35] text-orange-800">{h.requiredNote}</span>
+        </div>
+        <Field label={h.name} value="Nhà trọ Bình An" anno={2} className="flex-none" />
+        <Field label={h.address} value="12 Lê Văn Sỹ, Phường 13" className="flex-none" />
+        <div data-anno={3} className="flex gap-3">
+          <div className="flex min-w-0 flex-1 flex-col gap-[5px]">
+            <span className="text-[12px] leading-[1.35] text-ink-muted">{h.roomCount}</span>
+            <span className="flex gap-1.5">
+              <span className="flex size-11 items-center justify-center rounded-[10px] border-[1.25px] border-slate-200 bg-white">
+                <MsIcon name="remove" size={18} />
+              </span>
+              <span className="flex h-11 flex-1 items-center justify-center rounded-[10px] border-[1.25px] border-navy bg-white text-[15px] font-semibold tabular-nums shadow-[inset_0_0_0_1px_#23305e]">
+                {rooms}
+              </span>
+              <span
+                data-demo="plus"
+                className={cn(
+                  "flex size-11 items-center justify-center rounded-[10px] border-[1.25px] border-slate-200 bg-white transition-transform duration-150",
+                  press === "plus" && "scale-90 bg-orange-50",
+                )}
+              >
+                <MsIcon name="add" size={18} />
+              </span>
+            </span>
+          </div>
+          <Field label={h.floors} value="2" className="max-w-[92px] flex-none" />
+        </div>
+        <div data-anno={4} className="flex flex-col gap-2">
+          <span className="text-[14px] leading-[1.35] font-semibold">
+            {h.roomsTitle.replace(/\d+/, String(rooms))}
+          </span>
+          <div className="grid grid-cols-2 gap-2">
+            {names.map((room) => (
+              <span
+                key={room}
+                className="flex h-10 items-center justify-between rounded-[10px] border-[1.25px] border-orange-200 bg-white pr-2 pl-3 text-[14px] motion-safe:animate-[bh-pop-in_0.3s_ease-out]"
+              >
+                {room}
+                <span className="flex size-5 items-center justify-center rounded-full bg-gray-100 text-ink-muted">
+                  <MsIcon name="close" size={12} />
+                </span>
+              </span>
+            ))}
+          </div>
+          <span className="text-[12px] leading-[1.4] text-ink-muted">{h.roomsNote}</span>
+        </div>
+        <div data-anno={5} className="mt-1 flex">
+          <AppButton variant="primary" demo="next" pressed={press === "next"}>
+            {h.next}
+          </AppButton>
+        </div>
+      </div>
+    </>
+  );
+}
+
+/** Ngày kết thúc theo thời hạn chọn (bắt đầu 01/11/2026). */
+const RENT_END: Record<number, string> = { 6: "01/05/2027", 12: "01/11/2027", 24: "01/11/2028" };
+
+/**
+ * H-10 — Cho thuê phòng (NhàLo Lite, rent_out_screen): một màn tạo cả người thuê lẫn hợp đồng —
+ * phòng, SĐT (nhận ra hồ sơ cũ), thời hạn +6 / +12 / +24 tháng, tiền phòng / cọc, chỉ số lúc vào
+ * ở, nút Cho thuê. Dữ liệu mẫu; `phone` / `found` / `months` / `press` đổi theo demo.
+ */
+export function RentOutScreen({
+  t,
+  phone = "0912 345 678",
+  found = true,
+  months = 12,
+  typing,
+  press,
+}: {
+  t: AppCopy;
+  phone?: string;
+  /** Đã nhận ra hồ sơ người thuê cũ. */
+  found?: boolean;
+  /** Thời hạn đã chọn (0 = chưa chọn). */
+  months?: number;
+  typing?: boolean;
+  press?: string | null;
+}) {
+  const r = t.rentOut;
+
+  return (
+    <>
+      <StatusBar />
+      <TopBar title={r.title} sub="Nhà trọ Bình An · P.103" size="sm" />
+      <div className={cn(BODY, "gap-3 p-4")}>
+        <div data-anno={1} className="flex items-center gap-2">
+          <span className="flex h-9 items-center gap-1.5 rounded-full bg-navy px-3.5 text-[13px] font-semibold text-white">
+            P.103 · {r.thisRoom}
+          </span>
+          <span className="text-[13px] font-semibold text-orange-800">{r.addRoom}</span>
+        </div>
+
+        <GroupLabel>{r.tenant}</GroupLabel>
+        <div data-anno={2} className="flex flex-col gap-2">
+          <Field
+            label={r.phone}
+            value={phone || "09xx xxx xxx"}
+            placeholder={!phone}
+            active={typing}
+            demo="phone"
+            className="flex-none"
+          />
+          {found && (
+            <span className="flex items-start gap-2 rounded-[10px] bg-app-green-bg px-3 py-2 text-[12px] leading-[1.4] text-app-green motion-safe:animate-[bh-pop-in_0.35s_ease-out]">
+              <MsIcon name="check_circle" size={16} className="shrink-0" />
+              {r.found}
+            </span>
+          )}
+        </div>
+        <div className="flex gap-3">
+          <Field label={r.fullName} value={found ? "Trần Thị Cẩm" : "—"} placeholder={!found} />
+          <Field label={r.idNumber} value={found ? "0012 xxxx xxxx" : "—"} placeholder={!found} />
+        </div>
+
+        <GroupLabel>{r.period}</GroupLabel>
+        <div data-anno={3} className="flex flex-col gap-2">
+          <div className="flex gap-3">
+            <Field label={r.start} value="01/11/2026" icon="calendar_month" />
+            <Field
+              label={r.end}
+              value={RENT_END[months] ?? "dd/mm/yyyy"}
+              placeholder={!RENT_END[months]}
+              icon="calendar_month"
+            />
+          </div>
+          <div className="flex gap-2">
+            {[6, 12, 24].map((value) => (
+              <span
+                key={value}
+                data-demo={`m${value}`}
+                className={cn(
+                  "flex h-8 flex-1 items-center justify-center rounded-full border-[1.25px] text-[12px] font-semibold transition-colors duration-200",
+                  value === months
+                    ? "border-navy bg-navy text-white"
+                    : "border-slate-200 bg-white text-navy",
+                )}
+              >
+                +{value} {r.months}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        <GroupLabel>{r.money}</GroupLabel>
+        <div data-anno={4} className="flex flex-col gap-1.5">
+          <div className="flex gap-3">
+            <Field label={r.rent} value="2.800.000" />
+            <Field label={r.deposit} value="2.800.000" />
+          </div>
+          <span className="text-[11.5px] leading-[1.4] text-ink-muted">{r.suggested}</span>
+        </div>
+
+        <GroupLabel>{r.readings}</GroupLabel>
+        <div data-anno={5} className="flex gap-3">
+          <Field label={r.electricity} value="1.284" />
+          <Field label={r.water} value="52" />
+        </div>
+
+        <div data-anno={6} className="mt-1 flex">
+          <AppButton variant="primary" demo="save" pressed={press === "save"}>
+            {r.save}
+          </AppButton>
+        </div>
+      </div>
     </>
   );
 }

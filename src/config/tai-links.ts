@@ -1,3 +1,6 @@
+import { analyticsConfig } from "@/config/analytics";
+import { siteConfig } from "@/config/site";
+
 /**
  * Link tải NhàLo theo nơi đăng: biztown.vn/tai/<mã>/.
  * iPhone → App Store, Android → Google Play, máy tính → trang /nhalo/, đều kèm mã để đo nguồn.
@@ -71,4 +74,21 @@ export function pageLinkCode(campaign: string | null | undefined): string | null
 /** Đường dẫn /tai/<mã>/ (kèm ?p= nếu bắt buộc store). */
 export function taiPath(code: string, platform?: TaiPlatform) {
   return `/tai/${code}/${platform ? `?p=${platform}` : ""}`;
+}
+
+/**
+ * Link store kèm mã nguồn: App Store dùng `ct` (+ `pt` nếu có) để App Store Connect đếm theo
+ * mã, Google Play dùng `referrer` (utm_*) để Play Console đếm theo nguồn.
+ */
+export function storeUrl(platform: TaiPlatform, code: string) {
+  const { ios, android } = siteConfig.nhaloStores;
+  if (platform === "ios") {
+    const params = new URLSearchParams({ ct: code, mt: "8" });
+    if (analyticsConfig.appStoreProviderToken)
+      params.set("pt", analyticsConfig.appStoreProviderToken);
+    return `https://apps.apple.com/app/apple-store/id${ios.appId}?${params.toString()}`;
+  }
+  const { source, medium } = linkSource(code);
+  const referrer = `utm_source=${source}&utm_medium=${medium}&utm_campaign=${code}`;
+  return `${android.url}&referrer=${encodeURIComponent(referrer)}`;
 }

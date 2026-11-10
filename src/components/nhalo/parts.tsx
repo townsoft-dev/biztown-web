@@ -24,13 +24,23 @@ export function NhaloSectionHead({
 }: {
   tag: string;
   title: MarkTitle;
-  lead?: string;
+  /** Một đoạn, hoặc mảng các dòng ngắt sẵn (màn rộng không xuống dòng giữa cụm từ). */
+  lead?: string | string[];
 }) {
   return (
-    <Reveal className="mx-auto flex max-w-[920px] flex-col items-center gap-[18px] text-center">
+    <Reveal className="mx-auto flex max-w-[1100px] flex-col items-center gap-[18px] text-center">
       <TagChip label={tag} />
       <MarkedTitle title={title} />
-      {lead && <p className="bt-lead max-w-[720px] text-pretty">{lead}</p>}
+      {typeof lead === "string" && <p className="bt-lead max-w-[720px] text-pretty">{lead}</p>}
+      {Array.isArray(lead) && (
+        <p className="bt-lead text-balance">
+          {lead.map((line) => (
+            <span key={line} className="lg:block lg:whitespace-nowrap">
+              {line}{" "}
+            </span>
+          ))}
+        </p>
+      )}
     </Reveal>
   );
 }
@@ -64,44 +74,34 @@ export function Mascot({
   );
 }
 
-const STORES = {
-  hero: [
-    {
-      name: "App Store",
-      icon: "/images/nhalo/icon-apple.svg",
-      platform: "ios",
-      width: 160,
-      href: siteConfig.nhaloStores.ios.url,
+/**
+ * Nút store chính hãng (file gốc của Apple / Google, bản tiếng Việt và tiếng Anh) — giữ
+ * nguyên màu, tỉ lệ, chữ theo hướng dẫn thương hiệu. `ratio` = rộng / cao của file (đã cắt sát
+ * viền), để hai nút cao bằng nhau mà vẫn lấp đầy hàng.
+ */
+const STORES = [
+  {
+    name: "App Store",
+    platform: "ios",
+    ratio: 119.66 / 40,
+    src: { vi: "/images/nhalo/badge-app-store-vi.svg", en: "/images/nhalo/badge-app-store-en.svg" },
+    href: siteConfig.nhaloStores.ios.url,
+  },
+  {
+    name: "Google Play",
+    platform: "android",
+    ratio: 646 / 192,
+    src: {
+      vi: "/images/nhalo/badge-google-play-vi.png",
+      en: "/images/nhalo/badge-google-play-en.png",
     },
-    {
-      name: "Google Play",
-      icon: "/images/nhalo/icon-google-play.svg",
-      platform: "android",
-      width: 179,
-      href: siteConfig.nhaloStores.android.url,
-    },
-  ],
-  band: [
-    {
-      name: "App Store",
-      icon: "/images/nhalo/icon-apple-dark.svg",
-      platform: "ios",
-      width: 145,
-      href: siteConfig.nhaloStores.ios.url,
-    },
-    {
-      name: "Google Play",
-      icon: "/images/nhalo/icon-google-play-dark.svg",
-      platform: "android",
-      width: 163,
-      href: siteConfig.nhaloStores.android.url,
-    },
-  ],
-} as const;
+    href: siteConfig.nhaloStores.android.url,
+  },
+] as const;
 
 /**
  * Hai nút tải app (Figma: pill / store). Mặc định là link store thật; trang /nhalo/ truyền
- * `links` là /tai/<mã>/?p=… để đếm lượt bấm theo nguồn (tai_click trên GA4).
+ * `links` là link store kèm mã nguồn và hàm ghi lượt bấm (tai_click trên GA4).
  * `store.badge` chỉ còn dùng nếu cần gắn lại nhãn kiểu "Sắp có" cho một sản phẩm khác.
  *
  * Không đặt rel="nofollow": đây là link biên tập chính đáng tới trang chính thức của ứng
@@ -109,68 +109,85 @@ const STORES = {
  */
 export function StoreBadges({
   store,
-  tone,
   links,
+  equal,
+  height = 52,
   className,
 }: {
   store: StoreBadge;
-  tone: "hero" | "band";
-  /** Link thay cho link store gốc, vd. /tai/<mã>/?p=ios để đo nguồn (use-link-code.ts). */
-  links?: { ios: string; android: string };
+  /**
+   * Link store kèm mã nguồn + hàm ghi lượt bấm (use-link-code.ts). Chỉ truyền từ component
+   * client, vì có hàm onClick.
+   */
+  links?: { ios: string; android: string; onClick?: (platform: "ios" | "android") => void };
+  /** Hai nút giãn lấp đầy hàng (vẫn cao bằng nhau), thay cho chiều cao cố định. */
+  equal?: boolean;
+  /** Chiều cao nút (px) khi không `equal`. */
+  height?: number;
   className?: string;
 }) {
-  const dark = tone === "hero";
   return (
-    <ul
-      className={cn("flex flex-wrap items-center", dark ? "gap-[23px]" : "gap-[33px]", className)}
-    >
-      {STORES[tone].map((item) => (
-        <li key={item.name} className="relative shrink-0">
+    <ul className={cn("flex flex-wrap items-center gap-3", className)}>
+      {STORES.map((item) => (
+        <li
+          key={item.name}
+          className={cn("relative", equal ? "min-w-0" : "shrink-0")}
+          style={equal ? { flex: `${item.ratio} 1 0` } : undefined}
+        >
           <a
             href={links ? links[item.platform] : item.href}
+            onClick={links?.onClick ? () => links.onClick?.(item.platform) : undefined}
             target="_blank"
             rel="noopener"
-            className={cn(
-              "flex items-center gap-3 text-left transition-opacity hover:opacity-90",
-              dark
-                ? "h-[58px] rounded-[14px] bg-app-store pl-[18px] text-[#fff6e2]"
-                : "h-[52px] rounded-[14px] bg-white pl-3.5 text-on-accent",
-            )}
-            style={{ width: item.width }}
+            className="block rounded-[10px] transition-transform hover:-translate-y-0.5"
           >
-            <Image src={item.icon} alt="" width={dark ? 20 : 22} height={dark ? 20 : 22} />
-            <span className="flex flex-col whitespace-nowrap">
-              <span
-                className={cn(
-                  dark
-                    ? "text-[11.5px] leading-[12.65px] font-medium"
-                    : "text-[10px] leading-[11px] opacity-70",
-                )}
-              >
-                {store.prefix}
-              </span>
-              <span
-                className={cn(
-                  "font-semibold",
-                  dark ? "text-[17px] leading-[18.7px]" : "text-[16px] leading-[17.6px]",
-                )}
-              >
-                {item.name}
-              </span>
-            </span>
+            {/* eslint-disable-next-line @next/next/no-img-element -- SVG/PNG gốc của store */}
+            <img
+              src={item.src[store.lang]}
+              alt={`${store.prefix} ${item.name}`}
+              width={Math.round(height * item.ratio)}
+              height={height}
+              className={cn("block", equal && "h-auto w-full")}
+            />
           </a>
           {store.badge && (
-            <span
-              className={cn(
-                "absolute right-[-11px] rounded-[11px] bg-accent px-2 py-[3px] text-[10px] leading-4 font-bold whitespace-nowrap text-on-accent",
-                dark ? "top-[-11px]" : "top-[-9px]",
-              )}
-            >
+            <span className="absolute top-[-11px] right-[-11px] rounded-[11px] bg-accent px-2 py-[3px] text-[10px] leading-4 font-bold whitespace-nowrap text-on-accent">
               {store.badge}
             </span>
           )}
         </li>
       ))}
     </ul>
+  );
+}
+
+/** Kích thước gốc (Figma "NhàLo · Homepage mascots") của từng dáng mascot ở public/images/nhalo/mascot/. */
+const MASCOT_ART = {
+  "tui-tien": [385, 352],
+  "bang-mien-phi": [396, 478],
+  "lo-dau-chi-tay": [300, 400],
+  "giao-chia-khoa": [509, 373],
+  "tai-nghe": [373, 386],
+  "band-chi-noi-dung": [640, 480],
+  "band-mua-tien": [640, 480],
+  "band-thanh-thoi": [640, 480],
+} as const;
+
+export type MascotArtName = keyof typeof MASCOT_ART;
+
+/** Một dáng mascot (SVG trang trí, không mang nội dung — alt rỗng). Cỡ hiển thị đặt bằng className. */
+export function MascotArt({ name, className }: { name: MascotArtName; className?: string }) {
+  const [width, height] = MASCOT_ART[name];
+  return (
+    // eslint-disable-next-line @next/next/no-img-element -- SVG minh hoạ, không cần tối ưu ảnh
+    <img
+      src={`/images/nhalo/mascot/${name}.svg`}
+      alt=""
+      aria-hidden="true"
+      width={width}
+      height={height}
+      loading="lazy"
+      className={cn("pointer-events-none h-auto select-none", className)}
+    />
   );
 }

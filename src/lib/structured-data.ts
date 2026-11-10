@@ -141,6 +141,8 @@ function contactPage(locale: Locale): JsonLdObject {
 const BREADCRUMB_PARENTS: Partial<Record<PageKey, PageKey>> = {
   nhaloPrivacy: "nhalo",
   nhaloDeleteAccount: "nhalo",
+  nhaloGuide: "nhalo",
+  nhaloHelp: "nhalo",
 };
 
 /**
