@@ -52,23 +52,23 @@ export function SupportPage({
           <h1 className="bt-h2 mt-4 text-balance">{content.title}</h1>
           <p className="bt-lead mt-3 max-w-[640px] text-balance">{content.lead}</p>
 
-          <ul className="mt-9 grid w-full max-w-[980px] grid-cols-1 gap-4 text-left md:grid-cols-[1.35fr_1fr_1fr]">
+          <ul className="mt-9 grid w-full max-w-[980px] grid-cols-1 gap-4 text-left md:grid-cols-3">
             {channels.map((channel) => (
               <li key={channel.icon}>
                 <a
                   href={channel.href}
                   target={channel.external ? "_blank" : undefined}
                   rel={channel.external ? "noopener" : undefined}
-                  className="group flex h-full items-center gap-4 rounded-[24px] border border-line bg-card p-5 shadow-[0_12px_32px_var(--shadow-navy)] transition-[translate,border-color] duration-200 hover:-translate-y-0.5 hover:border-[rgba(239,159,39,0.5)]"
+                  className="group flex h-full items-center gap-3 rounded-[24px] border border-line bg-card px-[18px] py-5 shadow-[0_12px_32px_var(--shadow-navy)] transition-[translate,border-color] duration-200 hover:-translate-y-0.5 hover:border-[rgba(239,159,39,0.5)]"
                 >
-                  <span className="flex size-12 shrink-0 items-center justify-center rounded-2xl bg-accent-tint text-accent-text transition-colors group-hover:bg-accent group-hover:text-on-accent">
+                  <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-accent-tint text-accent-text transition-colors group-hover:bg-accent group-hover:text-on-accent">
                     <MsIcon name={channel.icon} size={24} />
                   </span>
                   <span className="min-w-0">
                     <b className="block text-[17px] leading-snug font-semibold text-ink">
                       {channel.label}
                     </b>
-                    <span className="block text-[14px] leading-snug break-words text-ink-muted">
+                    <span className="block text-[13px] leading-snug break-words text-ink-muted">
                       {channel.desc}
                     </span>
                   </span>
@@ -83,7 +83,7 @@ export function SupportPage({
               {content.tips.map((tip, index) => (
                 <li
                   key={tip}
-                  className="flex items-start gap-2.5 text-[14.5px] leading-snug text-ink-muted"
+                  className="flex items-center gap-2.5 text-[14.5px] leading-snug text-ink-muted"
                 >
                   <span className="flex size-6 shrink-0 items-center justify-center rounded-full bg-accent text-[12px] font-bold text-on-accent">
                     {index + 1}

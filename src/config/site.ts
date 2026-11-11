@@ -57,13 +57,13 @@ export const siteConfig = {
     tiktok: "https://www.tiktok.com/@biztownofficial",
   },
   /**
-   * Mạng xã hội ở chân trang BizTown: Facebook là trang riêng của BizTown; Zalo OA, YouTube
-   * (@nhaloapp) và TikTok (@biztownofficial) dùng chung với NhàLo.
+   * Mạng xã hội ở chân trang BizTown: Facebook và YouTube là kênh riêng của BizTown; Zalo OA và
+   * TikTok (@biztownofficial) dùng chung với NhàLo.
    */
   biztownSocial: {
     facebook: "https://www.facebook.com/profile.php?id=61596238779846",
     zalo: "https://zalo.me/3480068870203980748",
-    youtube: "https://www.youtube.com/@nhaloapp",
+    youtube: "https://www.youtube.com/channel/UCZRbr54Uejxr2jRfwd8t9Xw",
     tiktok: "https://www.tiktok.com/@biztownofficial",
   },
   /**
