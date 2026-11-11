@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 import { LOCALES, PAGES, type PageKey } from "@/i18n/config";
 import { lastModified } from "@/lib/server/last-modified";
-import { absoluteUrl, canonicalTarget, languageAlternates } from "@/lib/seo";
+import { absoluteUrl, isCanonicalElsewhere, languageAlternates } from "@/lib/seo";
 
 export const dynamic = "force-static";
 
@@ -28,9 +28,10 @@ const PRIORITIES: Record<PageKey, number> = {
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return (Object.keys(PAGES) as PageKey[]).flatMap((page) => {
-    // Trang canonical trỏ sang trang khác thì không đưa vào sitemap — sitemap chỉ nên liệt kê
-    // URL canonical, liệt kê cả bản sao là tự gửi tín hiệu mâu thuẫn.
-    if (canonicalTarget(page)) return [];
+    // Trang canonical trỏ sang trang khác (kể cả bản chính ở site khác, vd. điều khoản NhàLo
+    // ở townsoftvina.com) thì không đưa vào sitemap — sitemap chỉ nên liệt kê URL canonical,
+    // liệt kê cả bản sao là tự gửi tín hiệu mâu thuẫn.
+    if (isCanonicalElsewhere(page)) return [];
     const modified = lastModified(page);
     return LOCALES.map((locale) => ({
       url: absoluteUrl(locale, page),

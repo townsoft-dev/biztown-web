@@ -708,6 +708,16 @@
       }
     }
 
+    /* Dòng "bản chính thức ở townsoftvina.com" ngay dưới .meta (điều khoản NhàLo). */
+    .official {
+      margin: 14px 0 0;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: var(--accent-tint);
+      color: var(--ink-muted);
+      font-size: 14px;
+    }
+
     /* Danh sách bước có số tròn. */
     .steps {
       counter-reset: step;
