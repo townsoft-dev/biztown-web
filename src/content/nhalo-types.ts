@@ -157,6 +157,9 @@ export type NhaloContent = {
     consult: string;
     inputLabel: string;
     cta: string;
+    /** Chữ giữa form và nút "Liên hệ" (mở trang Liên hệ của BizTown). */
+    or: string;
+    contact: string;
     /** Thông báo của form để lại liên hệ (gửi qua /api/nhalo-lead). */
     form: {
       sending: string;

@@ -463,6 +463,8 @@ export const NHALO: NhaloContent = {
       "Want help entering your houses and rooms? Leave your phone or email and NhàLo will call you back.",
     inputLabel: "Phone number or email",
     cta: "Get advice",
+    or: "or",
+    contact: "Contact us",
     form: {
       sending: "Sending…",
       sent: "Got it! We’ll be in touch soon.",

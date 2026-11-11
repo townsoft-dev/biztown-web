@@ -3,7 +3,7 @@
 import { useEffect, useId, useState, type FormEvent } from "react";
 
 import type { NhaloContent } from "@/content/nhalo-types";
-import { NHALO_SECTIONS, type Locale } from "@/i18n/config";
+import { NHALO_SECTIONS, localizedPath, type Locale } from "@/i18n/config";
 import { LEAD_MAX_LENGTH, validateLead } from "@/lib/nhalo-lead";
 import { cn } from "@/lib/utils";
 
@@ -93,48 +93,58 @@ export function NhaloDownloadBand({
           <StoreBadges store={content.store} links={links} />
           <div className="flex w-full flex-col gap-3">
             <p className="text-[14px] leading-[22.4px] text-slate-200">{content.consult}</p>
-            <form
-              noValidate
-              onSubmit={onSubmit}
-              className="flex w-full max-w-[540px] items-center gap-2 rounded-full bg-white py-[5px] pr-[5px] pl-[22px] focus-within:shadow-[0_0_0_3px_#ef9f27] max-sm:flex-wrap max-sm:rounded-3xl max-sm:p-2"
-            >
-              <label htmlFor={inputId} className="sr-only">
-                {content.inputLabel}
-              </label>
-              {/* Bẫy bot: người thật không thấy ô này. */}
-              <input
-                type="text"
-                name="website"
-                tabIndex={-1}
-                autoComplete="off"
-                aria-hidden="true"
-                value={website}
-                onChange={(event) => setWebsite(event.target.value)}
-                className="absolute -left-[9999px] size-px opacity-0"
-              />
-              <input
-                id={inputId}
-                type="text"
-                autoComplete="tel"
-                maxLength={LEAD_MAX_LENGTH}
-                value={value}
-                onChange={(event) => {
-                  setValue(event.target.value);
-                  if (isError) setStatus("idle");
-                }}
-                aria-invalid={isError || undefined}
-                aria-describedby={message ? messageId : undefined}
-                placeholder={content.inputLabel}
-                className="min-w-0 flex-1 bg-transparent text-[16px] text-navy outline-none placeholder:text-app-faint max-sm:px-3 max-sm:py-2.5"
-              />
-              <button
-                type="submit"
-                disabled={status === "sending"}
-                className="flex h-[46px] items-center justify-center rounded-full bg-navy-950 px-7 text-[14px] font-semibold whitespace-nowrap text-white transition-colors hover:bg-navy max-sm:w-full"
+            {/* Form + "hoặc" + nút Liên hệ (trang Liên hệ của BizTown) trên cùng một hàng. */}
+            <div className="flex w-full flex-wrap items-center gap-x-4 gap-y-3">
+              <form
+                noValidate
+                onSubmit={onSubmit}
+                className="flex max-w-[540px] min-w-0 flex-1 basis-[360px] items-center gap-2 rounded-full bg-white py-[5px] pr-[5px] pl-[22px] focus-within:shadow-[0_0_0_3px_#ef9f27] max-sm:flex-wrap max-sm:rounded-3xl max-sm:p-2"
               >
-                {content.cta}
-              </button>
-            </form>
+                <label htmlFor={inputId} className="sr-only">
+                  {content.inputLabel}
+                </label>
+                {/* Bẫy bot: người thật không thấy ô này. */}
+                <input
+                  type="text"
+                  name="website"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  value={website}
+                  onChange={(event) => setWebsite(event.target.value)}
+                  className="absolute -left-[9999px] size-px opacity-0"
+                />
+                <input
+                  id={inputId}
+                  type="text"
+                  autoComplete="tel"
+                  maxLength={LEAD_MAX_LENGTH}
+                  value={value}
+                  onChange={(event) => {
+                    setValue(event.target.value);
+                    if (isError) setStatus("idle");
+                  }}
+                  aria-invalid={isError || undefined}
+                  aria-describedby={message ? messageId : undefined}
+                  placeholder={content.inputLabel}
+                  className="min-w-0 flex-1 bg-transparent text-[16px] text-navy outline-none placeholder:text-app-faint max-sm:px-3 max-sm:py-2.5"
+                />
+                <button
+                  type="submit"
+                  disabled={status === "sending"}
+                  className="flex h-[46px] items-center justify-center rounded-full bg-navy-950 px-7 text-[14px] font-semibold whitespace-nowrap text-white transition-colors hover:bg-navy max-sm:w-full"
+                >
+                  {content.cta}
+                </button>
+              </form>
+              <span className="text-[14px] text-slate-300">{content.or}</span>
+              <a
+                href={localizedPath(locale, "contact")}
+                className="flex h-[52px] items-center justify-center rounded-full border border-white/40 px-7 text-[14px] font-semibold whitespace-nowrap text-white transition-colors hover:border-white hover:bg-white/10"
+              >
+                {content.contact}
+              </a>
+            </div>
             <p
               id={messageId}
               role="status"

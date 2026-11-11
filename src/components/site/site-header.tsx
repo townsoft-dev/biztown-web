@@ -24,8 +24,8 @@ type SiteHeaderProps = {
 export function SiteHeader({ locale, page }: SiteHeaderProps) {
   const dict = getDictionary(locale);
   const productHrefs = dict.productMenu.items.map((product) => resolveHref(locale, product.to));
-  // "Xem tất cả sản phẩm" trong danh sách sản phẩm → section Khám phá của trang chủ.
-  const productsAllHref = sectionPath(locale, "discover");
+  // "Xem tất cả sản phẩm" trong danh sách sản phẩm → section Sản phẩm của trang chủ.
+  const productsAllHref = sectionPath(locale, "products");
   // "Bắt đầu miễn phí" → section liên hệ của trang chủ.
   const startHref = sectionPath(locale, "contact");
 
@@ -47,7 +47,7 @@ export function SiteHeader({ locale, page }: SiteHeaderProps) {
           <ul className="ml-[99px] hidden flex-1 items-center gap-6 xl:flex">
             {dict.nav.map((item, index) => {
               const href = resolveHref(locale, item.to);
-              // Mục đầu ("Sản phẩm") mở danh sách sản phẩm thay vì nhảy thẳng tới section.
+              // Mục đầu ("Sản phẩm & Dịch vụ") mở bảng hai cột thay vì nhảy thẳng tới section.
               if (index === 0) {
                 return (
                   <li key={item.label}>
@@ -78,11 +78,15 @@ export function SiteHeader({ locale, page }: SiteHeaderProps) {
           </ul>
 
           <div className="ml-auto flex items-center gap-3">
-            <div className="hidden items-center gap-3 sm:flex">
-              <ThemeToggle label={dict.themeToggle} />
+            {/* Như thanh menu NhàLo: ngôn ngữ trước, nút sáng/tối nhỏ bên phải, nút chính gọn. */}
+            <div className="hidden items-center gap-2.5 sm:flex">
               <LocaleSwitcher locale={locale} page={page} label={dict.localeSwitcherLabel} />
+              <ThemeToggle label={dict.themeToggle} className="size-[34px] text-[14px]" />
             </div>
-            <a href={startHref} className="bt-btn bt-btn-primary hidden md:inline-flex">
+            <a
+              href={startHref}
+              className="hidden h-11 items-center rounded-full bg-accent px-5 text-[14px] font-semibold whitespace-nowrap text-on-accent shadow-[0_6px_16px_rgba(239,159,39,0.35)] transition-transform hover:-translate-y-0.5 md:inline-flex"
+            >
               {dict.startFree}
             </a>
             <MobileMenu
@@ -97,8 +101,8 @@ export function SiteHeader({ locale, page }: SiteHeaderProps) {
               productsAllHref={productsAllHref}
               settings={
                 <>
-                  <ThemeToggle label={dict.themeToggle} />
                   <LocaleSwitcher locale={locale} page={page} label={dict.localeSwitcherLabel} />
+                  <ThemeToggle label={dict.themeToggle} className="size-[34px] text-[14px]" />
                 </>
               }
               cta={{ label: dict.startFree, href: startHref }}

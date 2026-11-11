@@ -8,17 +8,24 @@ import { BALHEH as BALHEH_EN } from "@/content/en/balheh";
 import { HOME as HOME_EN } from "@/content/en/home";
 import { NHALO as NHALO_EN } from "@/content/en/nhalo";
 import { NHALO_GUIDE as GUIDE_EN } from "@/content/en/nhalo-guide";
-import { SupportContent as SupportEn } from "@/content/en/support";
+import {
+  SUPPORT as SUPPORT_EN,
+  SUPPORT_PRODUCTS as SUPPORT_PRODUCTS_EN,
+} from "@/content/en/support";
 import type { NhaloContent } from "@/content/nhalo-types";
 import { BALHEH as BALHEH_VI } from "@/content/vi/balheh";
 import { CONTACT as CONTACT_VI } from "@/content/vi/contact";
 import { HOME as HOME_VI } from "@/content/vi/home";
 import { NHALO as NHALO_VI } from "@/content/vi/nhalo";
 import { NHALO_GUIDE as GUIDE_VI } from "@/content/vi/nhalo-guide";
-import { SupportContent as SupportVi } from "@/content/vi/support";
+import {
+  SUPPORT as SUPPORT_VI,
+  SUPPORT_PRODUCTS as SUPPORT_PRODUCTS_VI,
+} from "@/content/vi/support";
 import type { Locale, PageKey } from "@/i18n/config";
 import { buildStructuredData, type FaqItem } from "@/lib/structured-data";
 
+import { SupportPage } from "@/components/support/support-page";
 import { JsonLd } from "./site/json-ld";
 import { BalhehFooter } from "./balheh/balheh-footer";
 import { BalhehHeader } from "./balheh/balheh-header";
@@ -50,7 +57,10 @@ const CONTENT: Record<PageKey, Record<Locale, () => ReactNode>> = {
     vi: () => <HomePage content={HOME_VI} locale="vi" />,
     en: () => <HomePage content={HOME_EN} locale="en" />,
   },
-  support: { vi: () => <SupportVi />, en: () => <SupportEn /> },
+  support: {
+    vi: () => <SupportPage content={SUPPORT_VI} products={SUPPORT_PRODUCTS_VI} locale="vi" />,
+    en: () => <SupportPage content={SUPPORT_EN} products={SUPPORT_PRODUCTS_EN} locale="en" />,
+  },
   // NhàLo là tên mới của BizTown Rent Manager — một ứng dụng duy nhất. Hai đường dẫn gốc
   // /privacy/ và /delete-account/ đã khai với App Store và Google Play nên phải sống tiếp
   // (CLAUDE.md), và phục vụ đúng tài liệu đang hiệu lực của NhàLo thay vì bản cũ. Canonical

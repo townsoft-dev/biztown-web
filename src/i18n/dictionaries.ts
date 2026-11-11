@@ -11,7 +11,7 @@ export type LinkTarget = { section: HomeSection } | { page: PageKey } | null;
 
 export type NavLink = { label: string; to: LinkTarget };
 
-export type FooterColumn = { title: string; links: NavLink[] }[];
+export type FooterColumn = { title: string; links: NavLink[] };
 
 /** Một sản phẩm trong menu thả xuống "Sản phẩm" ở thanh điều hướng. */
 export type ProductMenuItem = {
@@ -21,6 +21,14 @@ export type ProductMenuItem = {
   status: ProductStatus;
   /** Trang chi tiết; null nếu chưa có (hiện chữ thường, không bấm được). */
   to: LinkTarget;
+};
+
+/** Một dịch vụ trong cột "Dịch vụ" của menu thả xuống (chỉ để đọc, không bấm). */
+export type ServiceMenuItem = {
+  name: string;
+  desc: string;
+  /** Tên Material Symbol ở /images/nhalo/ms/. */
+  icon: string;
 };
 
 /**
@@ -38,7 +46,7 @@ const vi = {
   homeLabel: "BizTown — trang chủ",
   startFree: "Bắt đầu miễn phí",
   productMenu: {
-    label: "Danh sách sản phẩm",
+    label: "Sản phẩm",
     statusLabels: { live: "Đang hoạt động", soon: "Sắp ra mắt" },
     all: "Xem tất cả sản phẩm",
     more: "Và nhiều sản phẩm khác sắp ra mắt…",
@@ -65,10 +73,24 @@ const vi = {
         to: { page: "balheh" },
       },
     ] satisfies ProductMenuItem[] as ProductMenuItem[],
+    services: {
+      label: "Dịch vụ",
+      lead: "Web & app theo yêu cầu, kinh nghiệm outsourcing từ 2020",
+      items: [
+        { name: "Thiết kế website", desc: "Landing page, bán hàng, nghiệp vụ", icon: "language" },
+        { name: "Phát triển app", desc: "Ứng dụng iOS và Android", icon: "smartphone" },
+        {
+          name: "Số hoá quy trình",
+          desc: "Chuyển đổi số, cải tiến nghiệp vụ",
+          icon: "account_tree",
+        },
+        { name: "Tích hợp & bảo trì", desc: "Nền tảng thứ 3, nâng cấp", icon: "extension" },
+      ] satisfies ServiceMenuItem[] as ServiceMenuItem[],
+      cta: "Xem dịch vụ",
+    },
   },
   nav: [
-    { label: "Sản phẩm", to: { section: "products" } },
-    { label: "Dịch vụ", to: { section: "services" } },
+    { label: "Sản phẩm & Dịch vụ", to: { section: "products" } },
     { label: "Về BizTown", to: { section: "about" } },
     { label: "Liên hệ", to: { page: "contact" } },
   ] satisfies NavLink[] as NavLink[],
@@ -130,60 +152,35 @@ const vi = {
     },
   } satisfies Record<PageKey, { title: string; description: string }>,
   footer: {
-    description:
-      "Hệ sinh thái phần mềm quản trị và tự động hoá cho cá nhân, hộ kinh doanh và doanh nghiệp SME. Một sản phẩm của Townsoft Vina — đội ngũ Việt Nam & Hàn Quốc.",
+    tagline:
+      "Hệ sinh thái phần mềm quản trị và tự động hoá cho cá nhân, hộ kinh doanh và doanh nghiệp SME.",
+    maker: "Thương hiệu của Townsoft Vina",
     taxCode: "MST: 0109151007",
     address: "6, Ngõ 7 Lê Đức Thọ, Từ Liêm, Hà Nội",
-    socialLabel: "Mạng xã hội",
+    socialLabel: "BizTown trên mạng xã hội",
     columns: [
-      [
-        {
-          title: "Sản phẩm",
-          links: [
-            { label: "NhàLo", to: { page: "nhalo" } },
-            { label: "Chinchu (sắp ra mắt)", to: null },
-            { label: "Balheh", to: { page: "balheh" } },
-            { label: "Và nhiều sản phẩm khác…", to: null },
-          ],
-        },
-      ],
-      [
-        {
-          title: "Dịch vụ",
-          links: [
-            { label: "Thiết kế website", to: { section: "services" } },
-            { label: "Phát triển app", to: { section: "services" } },
-            { label: "Giải pháp theo yêu cầu", to: { section: "services" } },
-            { label: "Bảo trì & đồng hành", to: { section: "services" } },
-          ],
-        },
-      ],
-      [
-        {
-          title: "Về BizTown",
-          links: [
-            { label: "Sứ mệnh & tầm nhìn", to: { section: "about" } },
-            { label: "Triết lý sản phẩm", to: { section: "principles" } },
-            { label: "Townsoft Vina", to: null },
-            { label: "Tin tức", to: null },
-          ],
-        },
-      ],
-      [
-        {
-          title: "Hỗ trợ",
-          links: [
-            { label: "Trung tâm trợ giúp", to: { page: "support" } },
-            { label: "Hướng dẫn sử dụng", to: { page: "support" } },
-            { label: "Liên hệ", to: { page: "contact" } },
-            { label: "Báo lỗi", to: { page: "support" } },
-          ],
-        },
-        {
-          title: "Chính sách",
-          links: [{ label: "Điều khoản sử dụng", to: null }],
-        },
-      ],
+      {
+        title: "Sản phẩm",
+        links: [
+          { label: "NhàLo", to: { page: "nhalo" } },
+          { label: "Balheh", to: { page: "balheh" } },
+          { label: "Chinchu (sắp ra mắt)", to: { section: "products" } },
+        ],
+      },
+      {
+        title: "Dịch vụ",
+        links: [
+          { label: "Thiết kế website", to: { section: "services" } },
+          { label: "Phát triển app", to: { section: "services" } },
+        ],
+      },
+      {
+        title: "Hỗ trợ",
+        links: [
+          { label: "Liên hệ", to: { page: "contact" } },
+          { label: "Trung tâm hỗ trợ", to: { page: "support" } },
+        ],
+      },
     ] satisfies FooterColumn[] as FooterColumn[],
     copyright: "© 2026 BizTown · Townsoft Vina",
   },
@@ -203,7 +200,7 @@ const en: Dictionary = {
   homeLabel: "BizTown — home",
   startFree: "Start for free",
   productMenu: {
-    label: "Product list",
+    label: "Products",
     statusLabels: { live: "Live", soon: "Coming soon" },
     all: "See all products",
     more: "And more products coming soon…",
@@ -230,10 +227,28 @@ const en: Dictionary = {
         to: { page: "balheh" },
       },
     ],
+    services: {
+      label: "Services",
+      lead: "Custom web & apps, outsourcing since 2020",
+      items: [
+        { name: "Website design", desc: "Landing pages, stores, business tools", icon: "language" },
+        { name: "App development", desc: "iOS and Android apps", icon: "smartphone" },
+        {
+          name: "Process digitising",
+          desc: "Digital transformation, better operations",
+          icon: "account_tree",
+        },
+        {
+          name: "Integration & upkeep",
+          desc: "Third-party platforms, upgrades",
+          icon: "extension",
+        },
+      ],
+      cta: "See services",
+    },
   },
   nav: [
-    { label: "Products", to: { section: "products" } },
-    { label: "Services", to: { section: "services" } },
+    { label: "Products & Services", to: { section: "products" } },
     { label: "About", to: { section: "about" } },
     { label: "Contact", to: { page: "contact" } },
   ],
@@ -295,60 +310,35 @@ const en: Dictionary = {
     },
   },
   footer: {
-    description:
-      "A management and automation software ecosystem for individuals, household businesses and SMEs. A product of Townsoft Vina — a Vietnamese & Korean team.",
+    tagline:
+      "A management and automation software ecosystem for individuals, household businesses and SMEs.",
+    maker: "A Townsoft Vina brand",
     taxCode: "Tax code: 0109151007",
     address: "6, Lane 7 Le Duc Tho, Tu Liem, Hanoi",
-    socialLabel: "Social media",
+    socialLabel: "BizTown on social media",
     columns: [
-      [
-        {
-          title: "Products",
-          links: [
-            { label: "NhàLo", to: { page: "nhalo" } },
-            { label: "Chinchu (coming soon)", to: null },
-            { label: "Balheh", to: { page: "balheh" } },
-            { label: "And more coming soon…", to: null },
-          ],
-        },
-      ],
-      [
-        {
-          title: "Services",
-          links: [
-            { label: "Website design", to: { section: "services" } },
-            { label: "App development", to: { section: "services" } },
-            { label: "Custom solutions", to: { section: "services" } },
-            { label: "Maintenance & support", to: { section: "services" } },
-          ],
-        },
-      ],
-      [
-        {
-          title: "About BizTown",
-          links: [
-            { label: "Mission & vision", to: { section: "about" } },
-            { label: "Product philosophy", to: { section: "principles" } },
-            { label: "Townsoft Vina", to: null },
-            { label: "News", to: null },
-          ],
-        },
-      ],
-      [
-        {
-          title: "Support",
-          links: [
-            { label: "Help center", to: { page: "support" } },
-            { label: "User guides", to: { page: "support" } },
-            { label: "Contact", to: { page: "contact" } },
-            { label: "Report a bug", to: { page: "support" } },
-          ],
-        },
-        {
-          title: "Policies",
-          links: [{ label: "Terms of use", to: null }],
-        },
-      ],
+      {
+        title: "Products",
+        links: [
+          { label: "NhàLo", to: { page: "nhalo" } },
+          { label: "Balheh", to: { page: "balheh" } },
+          { label: "Chinchu (coming soon)", to: { section: "products" } },
+        ],
+      },
+      {
+        title: "Services",
+        links: [
+          { label: "Website design", to: { section: "services" } },
+          { label: "App development", to: { section: "services" } },
+        ],
+      },
+      {
+        title: "Support",
+        links: [
+          { label: "Contact", to: { page: "contact" } },
+          { label: "Help center", to: { page: "support" } },
+        ],
+      },
     ],
     copyright: "© 2026 BizTown · Townsoft Vina",
   },

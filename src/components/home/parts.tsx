@@ -1,21 +1,36 @@
 import Image from "next/image";
-import type { ReactNode } from "react";
+import { Fragment, type ReactNode } from "react";
 
 import type { RichText } from "@/content/home-types";
 import { cn } from "@/lib/utils";
 
 import { Reveal } from "./reveal";
 
-/** In đoạn chữ, phần { kw } tô gradient cam (Figma: v6-kw). */
+/** Đổi "\n" trong chuỗi thành <br /> — để tiêu đề ngắt dòng đúng chỗ đã chọn. */
+function Lines({ text }: { text: string }) {
+  const lines = text.split("\n");
+  return lines.map((line, index) => (
+    <Fragment key={index}>
+      {index > 0 && <br />}
+      {line}
+    </Fragment>
+  ));
+}
+
+/** In đoạn chữ, phần { kw } tô gradient cam (Figma: v6-kw). "\n" trong chữ là xuống dòng. */
 export function Rich({ text }: { text: RichText }) {
   return (
     <>
       {text.map((part, index) =>
         typeof part === "string" ? (
-          part
+          <Lines key={index} text={part} />
         ) : (
-          <span key={index} className="bt-kw">
-            {part.kw}
+          // Cụm nhấn ngắn (≤ 3 chữ) giữ trên một dòng, không ngắt giữa "mọi công / việc".
+          <span
+            key={index}
+            className={cn("bt-kw", part.kw.split(/\s+/).length <= 3 && "whitespace-nowrap")}
+          >
+            <Lines text={part.kw} />
           </span>
         ),
       )}
