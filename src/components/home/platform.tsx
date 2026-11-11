@@ -4,10 +4,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
+import { Phone } from "@/components/nhalo/app/app-ui";
+import { HomeScreen, TenantBillScreen } from "@/components/nhalo/app/screens";
+import { MascotArt } from "@/components/nhalo/parts";
 import { AppMark } from "@/components/ui/app-mark";
 import { Icon } from "@/components/ui/icon";
 import { StatusBadge } from "@/components/ui/status-badge";
+import { siteConfig } from "@/config/site";
 import type { HomeContent, Product, ProductKey, ProductLogo } from "@/content/home-types";
+import type { AppCopy } from "@/content/nhalo-types";
 import { HOME_SECTIONS, localizedPath, type Locale } from "@/i18n/config";
 import { cn } from "@/lib/utils";
 
@@ -17,14 +22,13 @@ import { Reveal } from "./reveal";
 
 /** Mockup bên phải mỗi slide: khung Figma 599×h, file export có thêm 60/30px bóng đổ. */
 const VISUALS: Record<
-  Exclude<ProductKey, "chinchu">,
+  Exclude<ProductKey, "chinchu" | "nhalo">,
   { src: string; height: number; exportHeight: number }
 > = {
   // .webp thay .svg: bản SVG là 695 KB (236 KB sau nén) cho một ảnh toàn path, nằm ở slide
   // hiện mặc định nên tải trong mọi lượt vào trang chủ. Raster còn 126 KB.
   // Khổ 1416 px = 2× bề rộng hiển thị tối đa: ảnh rộng exportWidth/width = 708/599 ≈ 118%
   // của khung 599 px, tức 708 CSS px — lấy 599×2 là thiếu nét trên màn hình retina.
-  nhalo: { src: "/images/home/products/nhalo.webp", height: 588, exportHeight: 667 },
   // .webp thay .png: cùng khổ 1416×1002 nhưng 88 KB thay vì 189 KB (images.unoptimized
   // nên Next phục vụ nguyên file, không tự đổi định dạng).
   balheh: { src: "/images/home/products/balheh.webp", height: 439.5, exportHeight: 501 },
@@ -38,9 +42,11 @@ const VISUALS: Record<
 export function Platform({
   content,
   locale,
+  nhaloApp,
 }: {
   content: HomeContent["platform"];
   locale: Locale;
+  nhaloApp: AppCopy;
 }) {
   const { products } = content;
   const [active, setActive] = useState(0);
@@ -67,12 +73,14 @@ export function Platform({
           phụ thuộc vào lúc JS chạy xong. */}
       <Reveal immediate>
         <div className="flex flex-wrap items-center justify-center gap-x-[22px] text-center">
-          <h2 className="bt-h2 whitespace-nowrap max-sm:whitespace-normal">{content.title}</h2>
+          <h2 className="bt-h2 lg:whitespace-nowrap">{content.title}</h2>
           <span
             aria-hidden="true"
             className="h-[54px] w-[3px] rounded-[3px] bg-accent max-sm:hidden"
           />
-          <p className="bt-h2 bt-kw whitespace-nowrap max-sm:whitespace-normal">
+          {/* py: chữ tô gradient (background-clip: text) bị cắt mất dấu và chân chữ "g", "p"
+              nếu hộp chữ sát dòng — nới hộp ra rồi bù lại bằng margin âm. */}
+          <p className="bt-h2 bt-kw -my-[0.12em] py-[0.12em] lg:whitespace-nowrap">
             {first ? content.keyword.first : content.keyword.other}
           </p>
         </div>
@@ -97,21 +105,22 @@ export function Platform({
                 aria-selected={selected}
                 onClick={() => setActive(index)}
                 className={cn(
-                  "flex shrink-0 items-center gap-2.5 rounded-full border py-1.5 pr-[18px] pl-1.5 text-[15px] leading-none font-medium whitespace-nowrap transition-all",
+                  "flex h-[52px] shrink-0 items-center justify-center gap-3 rounded-full border px-5 text-[15.5px] leading-none font-medium whitespace-nowrap transition-all duration-200",
                   selected
                     ? "border-transparent bg-accent text-on-accent shadow-[0_10px_30px_rgba(239,159,39,0.35)]"
-                    : "border-chip-ring bg-chip text-ink-muted hover:text-ink",
+                    : "border-chip-ring bg-chip text-ink-muted hover:-translate-y-0.5 hover:text-ink hover:shadow-[0_10px_24px_var(--shadow-navy)]",
                 )}
               >
-                <AppMark mark={item.mark} size={32} />
+                <AppMark mark={item.mark} size={36} />
                 {item.chip}
               </button>
             );
           })}
+          {/* Cùng hàng với các nhãn: còn sản phẩm khác sắp ra mắt. */}
+          <span className="flex h-[52px] shrink-0 items-center rounded-full border border-dashed border-line-strong px-6 text-[14.5px] whitespace-nowrap text-ink-muted italic">
+            {content.more}
+          </span>
         </div>
-        <p className="mt-3 text-center text-[14px] leading-[22.4px] text-ink-muted italic max-md:mt-0">
-          {content.more}
-        </p>
       </Reveal>
 
       <Reveal>
@@ -121,6 +130,7 @@ export function Platform({
             product={product}
             statusLabels={content.statusLabels}
             locale={locale}
+            nhaloApp={nhaloApp}
           />
           <SlideArrow direction="prev" label={content.prevLabel} onClick={() => go(active - 1)} />
           <SlideArrow direction="next" label={content.nextLabel} onClick={() => go(active + 1)} />
@@ -150,17 +160,19 @@ function ProductSlide({
   product,
   statusLabels,
   locale,
+  nhaloApp,
 }: {
   product: Product;
   statusLabels: HomeContent["platform"]["statusLabels"];
   locale: Locale;
+  nhaloApp: AppCopy;
 }) {
-  const visual = product.key === "chinchu" ? null : VISUALS[product.key];
+  const visual = product.key === "chinchu" || product.key === "nhalo" ? null : VISUALS[product.key];
 
   return (
-    <div className="bt-fade relative isolate grid grid-cols-1 gap-12 overflow-hidden rounded-[36px] border border-[rgba(239,159,39,0.22)] bg-[linear-gradient(153deg,rgba(255,255,255,0.96),rgba(255,255,255,0.74))] p-12 shadow-[0_40px_80px_rgba(166,95,0,0.14)] backdrop-blur-[8px] max-md:p-7 lg:grid-cols-2 dark:bg-[linear-gradient(153deg,rgba(28,38,80,0.96),rgba(28,38,80,0.8))] dark:shadow-[0_40px_80px_rgba(0,0,0,0.3)]">
+    <div className="bt-fade relative isolate grid grid-cols-1 gap-12 overflow-hidden rounded-[36px] border border-[rgba(239,159,39,0.22)] bg-[linear-gradient(153deg,rgba(255,255,255,0.96),rgba(255,255,255,0.74))] p-12 shadow-[0_40px_80px_rgba(166,95,0,0.14)] backdrop-blur-[8px] transition-shadow duration-300 hover:shadow-[0_48px_96px_rgba(166,95,0,0.22)] max-md:p-7 lg:h-[600px] lg:grid-cols-2 dark:bg-[linear-gradient(153deg,rgba(28,38,80,0.96),rgba(28,38,80,0.8))] dark:shadow-[0_40px_80px_rgba(0,0,0,0.3)]">
       <CursorGlow />
-      <div className="flex min-w-0 flex-col items-start">
+      <div className="flex min-w-0 flex-col items-start lg:justify-center">
         <div className="flex flex-wrap items-center gap-3">
           <ProductName name={product.name} />
           {product.type && (
@@ -178,9 +190,10 @@ function ProductSlide({
           {product.status && (
             <StatusBadge status={product.status} label={statusLabels[product.status]} />
           )}
+          {product.note && <StatusBadge status="soon" label={product.note} />}
         </div>
 
-        <h3 className="mt-3.5 text-[38px] leading-[43.7px] font-semibold tracking-[-0.95px] text-ink max-sm:text-[30px] max-sm:leading-9">
+        <h3 className="mt-3.5 text-[38px] leading-[43.7px] font-semibold tracking-[-0.95px] text-balance text-ink max-sm:text-[30px] max-sm:leading-9">
           {product.title}
         </h3>
 
@@ -213,7 +226,7 @@ function ProductSlide({
           ))}
         </ul>
 
-        <div className="mt-8 flex flex-wrap gap-3">
+        <div className="mt-8 flex flex-wrap gap-3 max-sm:w-full max-sm:[&>*]:w-full">
           {product.detail ? (
             <Link
               href={localizedPath(locale, product.detail)}
@@ -224,9 +237,20 @@ function ProductSlide({
             >
               {product.primary}
             </Link>
+          ) : product.external ? (
+            <a
+              href={siteConfig.townsoftUrl}
+              target="_blank"
+              rel="noopener"
+              className="bt-btn bt-btn-primary"
+            >
+              {product.primary}
+              <Icon name="arrow-up-right" size={18} className="ml-1.5" />
+            </a>
           ) : product.primaryTarget ? (
             <a
               href={`#${HOME_SECTIONS[product.primaryTarget]}`}
+              data-need={product.need}
               aria-label={`${product.primary} — ${productLabel(product.name)}`}
               className="bt-btn bt-btn-primary"
             >
@@ -237,20 +261,13 @@ function ProductSlide({
               {product.primary}
             </button>
           )}
-          {/* "Xem tất cả sản phẩm" → section Khám phá. */}
-          <a href={`#${HOME_SECTIONS.discover}`} className="bt-btn bt-btn-outline">
-            {product.secondary}
-          </a>
         </div>
       </div>
 
-      <div
-        className={cn(
-          "flex min-w-0 justify-center",
-          product.key === "nhalo" ? "items-start" : "items-center",
-        )}
-      >
-        {visual ? (
+      <div className="flex min-w-0 items-center justify-center">
+        {product.key === "nhalo" ? (
+          <NhaloVisual app={nhaloApp} />
+        ) : visual ? (
           <Illustration
             src={visual.src}
             width={599}
@@ -395,6 +412,40 @@ function ChinchuVisual({ copy }: { copy: NonNullable<Product["visual"]> }) {
   );
 }
 
+/**
+ * Minh hoạ NhàLo bằng chính giao diện app (như trang /nhalo/): điện thoại Trang chủ nghiêng
+ * nhẹ phía trước, hoá đơn người thuê nhận qua Zalo xếp chồng lệch phía sau, cả hai đứng trên
+ * một quầng sáng cam chung; mascot cầm túi tiền ngồi đè lên góc dưới để gắn hai máy làm một.
+ */
+function NhaloVisual({ app }: { app: AppCopy }) {
+  return (
+    <div className="relative mx-auto h-[500px] w-[440px] max-sm:h-[370px] max-sm:w-[280px]">
+      <span
+        aria-hidden="true"
+        className="absolute top-1/2 left-1/2 size-[440px] -translate-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(239,159,39,0.28),transparent)] max-sm:size-[280px]"
+      />
+      <span
+        aria-hidden="true"
+        className="absolute top-1/2 left-1/2 size-[400px] -translate-1/2 rounded-full border-2 border-dashed border-[rgba(239,159,39,0.35)] motion-safe:animate-[bt-orbit_60s_linear_infinite] max-sm:size-[260px]"
+      />
+      <div className="absolute top-[48px] left-[196px] rotate-[8deg] [--s:0.52] max-sm:top-[34px] max-sm:left-[124px] max-sm:[--s:0.36]">
+        <Phone device>
+          <TenantBillScreen t={app} compact />
+        </Phone>
+      </div>
+      <div className="absolute top-[6px] left-0 z-[2] -rotate-[4deg] [--s:0.6] max-sm:[--s:0.42]">
+        <Phone device>
+          <HomeScreen t={app} />
+        </Phone>
+      </div>
+      <MascotArt
+        name="tui-tien"
+        className="bt-float absolute right-[-36px] bottom-[-14px] z-[3] w-[160px] [--bob:3.8s] max-sm:right-[-8px] max-sm:w-[96px]"
+      />
+    </div>
+  );
+}
+
 function SlideArrow({
   direction,
   label,
@@ -411,7 +462,9 @@ function SlideArrow({
       title={label}
       onClick={onClick}
       className={cn(
-        "absolute top-1/2 flex size-[52px] -translate-y-1/2 items-center justify-center rounded-full border border-gray-100 bg-white text-[18px] text-navy shadow-[0_12px_32px_var(--shadow-navy)] max-md:size-11",
+        // Đặt theo khoảng cách cố định từ mép trên thẻ (không theo 50% chiều cao), để đổi sản
+        // phẩm có nội dung dài ngắn khác nhau thì mũi tên vẫn đứng nguyên chỗ.
+        "absolute top-[274px] z-10 flex size-[52px] items-center justify-center rounded-full border border-gray-100 bg-white text-[18px] text-navy shadow-[0_12px_32px_var(--shadow-navy)] transition-[translate,background-color,color] duration-200 hover:bg-accent hover:text-on-accent max-lg:top-[150px] max-md:hidden",
         direction === "prev" ? "-left-6 max-md:-left-2" : "-right-6 max-md:-right-2",
       )}
     >

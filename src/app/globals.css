@@ -39,6 +39,17 @@
   --shadow-navy: rgba(35, 48, 94, 0.14);
 
   /* Nền vùng đầu trang (hero + hệ sinh thái) và các khối nền ấm. */
+  /* Nền đầu trang chủ BizTown: pha cam (thương hiệu) và xanh dương để khác trang NhàLo. */
+  --bt-lower-bg:
+    radial-gradient(50% 30% at 0% 22%, rgba(120, 170, 255, 0.16), transparent 70%),
+    radial-gradient(50% 30% at 100% 55%, rgba(255, 184, 77, 0.18), transparent 70%),
+    radial-gradient(60% 25% at 20% 92%, rgba(120, 170, 255, 0.12), transparent 70%);
+  --bt-home-bg:
+    radial-gradient(62% 52% at 90% 6%, rgba(255, 184, 77, 0.55), transparent 62%),
+    radial-gradient(60% 58% at 2% 16%, rgba(120, 170, 255, 0.42), transparent 64%),
+    radial-gradient(75% 48% at 52% 66%, rgba(255, 228, 190, 0.55), transparent 66%),
+    radial-gradient(70% 50% at 100% 92%, rgba(140, 185, 255, 0.36), transparent 62%),
+    linear-gradient(180deg, #fdf9f2 0%, #f3f6ff 100%);
   --top-bg:
     radial-gradient(100% 60.5% at 84% 4%, rgba(255, 184, 77, 0.55), transparent 62%),
     radial-gradient(82% 58.6% at 2% 34%, rgba(255, 214, 150, 0.5), transparent 62%),
@@ -136,6 +147,15 @@
     --nav-shadow: rgba(0, 0, 0, 0.25);
     --shadow-soft: rgba(0, 0, 0, 0.2);
     --shadow-navy: rgba(0, 0, 0, 0.35);
+    --bt-lower-bg:
+      radial-gradient(50% 30% at 0% 22%, rgba(120, 170, 255, 0.1), transparent 70%),
+      radial-gradient(50% 30% at 100% 55%, rgba(255, 184, 77, 0.1), transparent 70%),
+      radial-gradient(60% 25% at 20% 92%, rgba(120, 170, 255, 0.08), transparent 70%);
+    --bt-home-bg:
+      radial-gradient(60% 50% at 88% 10%, rgba(239, 159, 39, 0.28), transparent 62%),
+      radial-gradient(60% 58% at 4% 20%, rgba(70, 120, 230, 0.4), transparent 64%),
+      radial-gradient(80% 50% at 50% 92%, rgba(239, 159, 39, 0.14), transparent 60%),
+      linear-gradient(180deg, #141c38 0%, #18213f 55%, #1c2650 100%);
     --top-bg:
       radial-gradient(90% 49.2% at 78% 18%, rgba(239, 159, 39, 0.3), transparent 62%),
       radial-gradient(70% 56.7% at 8% 30%, rgba(58, 72, 128, 0.7), transparent 65%),
@@ -213,6 +233,15 @@
   --nav-shadow: rgba(0, 0, 0, 0.25);
   --shadow-soft: rgba(0, 0, 0, 0.2);
   --shadow-navy: rgba(0, 0, 0, 0.35);
+  --bt-lower-bg:
+    radial-gradient(50% 30% at 0% 22%, rgba(120, 170, 255, 0.1), transparent 70%),
+    radial-gradient(50% 30% at 100% 55%, rgba(255, 184, 77, 0.1), transparent 70%),
+    radial-gradient(60% 25% at 20% 92%, rgba(120, 170, 255, 0.08), transparent 70%);
+  --bt-home-bg:
+    radial-gradient(60% 50% at 88% 10%, rgba(239, 159, 39, 0.28), transparent 62%),
+    radial-gradient(60% 58% at 4% 20%, rgba(70, 120, 230, 0.4), transparent 64%),
+    radial-gradient(80% 50% at 50% 92%, rgba(239, 159, 39, 0.14), transparent 60%),
+    linear-gradient(180deg, #141c38 0%, #18213f 55%, #1c2650 100%);
   --top-bg:
     radial-gradient(90% 49.2% at 78% 18%, rgba(239, 159, 39, 0.3), transparent 62%),
     radial-gradient(70% 56.7% at 8% 30%, rgba(58, 72, 128, 0.7), transparent 65%),
@@ -383,22 +412,22 @@
   }
 
   /* Kiểu chữ theo type scale v7. */
+  /* Tiêu đề hero ngắt dòng bằng "\n" trong nội dung (dòng dài nhất ~21 ký tự), nên cỡ chữ
+     chọn sao cho mỗi dòng vừa nửa trái khung ở mọi bề rộng. */
   .bt-hero-title {
-    font-size: 70px;
-    line-height: 72.8px;
+    /* --chars: số ký tự dòng dài nhất (hero.tsx), 21 là chuẩn; dòng dài hơn thì chữ nhỏ lại. */
+    font-size: clamp(
+      26px,
+      calc((4.7vw - 8px) * 21 / var(--chars, 21)),
+      calc(60px * 21 / var(--chars, 21))
+    );
+    line-height: 1.1;
     font-weight: 600;
-    letter-spacing: -2.45px;
+    letter-spacing: -0.033em;
 
-    @media (max-width: 1200px) {
-      font-size: 56px;
-      line-height: 60px;
-      letter-spacing: -1.8px;
-    }
-
-    @media (max-width: 600px) {
-      font-size: 40px;
-      line-height: 44px;
-      letter-spacing: -1.2px;
+    /* Một cột (dưới lg): chữ to hơn theo bề rộng màn hình, vẫn vừa dòng dài nhất. */
+    @media (max-width: 1023px) {
+      font-size: clamp(26px, calc(7.6vw * 21 / var(--chars, 21)), 54px);
     }
   }
 
@@ -421,6 +450,7 @@
   }
 
   .bt-lead {
+    text-wrap: pretty;
     font-size: 20px;
     line-height: 31px;
     color: var(--ink-muted);
@@ -849,374 +879,6 @@
     box-shadow: 0 0 0 4px rgba(47, 179, 106, 0.2);
   }
 
-  /* Chương 1 — thẻ "Phân bổ công việc". */
-  .hs-task {
-    display: grid;
-    grid-template-columns: 180px 1fr;
-    gap: 20px;
-    width: 470px;
-    padding: 20px 22px;
-    border-radius: 22px;
-    background: #fff;
-    color: #1f2433;
-    line-height: 1.35;
-    box-shadow:
-      inset 0 0 0 1.5px #f6dfb8,
-      0 30px 60px rgba(166, 95, 0, 0.16);
-  }
-
-  .hs-task-left {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .hs-task-title {
-    margin-bottom: 12px;
-    font-size: 16px;
-    font-weight: 700;
-    white-space: nowrap;
-  }
-
-  .hs-task-ring {
-    display: grid;
-    place-items: center;
-    width: 160px;
-    height: 160px;
-    border-radius: 50%;
-    background: conic-gradient(#34a853 0 76%, #fff 76% 76.6%, #e48b87 76.6% 99.4%, #fff 99.4%);
-
-    > div {
-      display: grid;
-      place-content: center;
-      width: 116px;
-      height: 116px;
-      border-radius: 50%;
-      background: #fff;
-      text-align: center;
-    }
-
-    strong {
-      font-size: 24px;
-      font-weight: 700;
-      line-height: 1.1;
-    }
-
-    span {
-      font-size: 13px;
-      color: #5a6283;
-    }
-  }
-
-  .hs-task-legend {
-    display: flex;
-    gap: 14px;
-    margin-top: 14px;
-    font-size: 11px;
-    color: #5a6283;
-    white-space: nowrap;
-
-    span {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-    }
-
-    i {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-    }
-
-    b {
-      margin-left: 4px;
-      font-size: 14px;
-      color: #1f2433;
-    }
-  }
-
-  .hs-task-kpis {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    margin-bottom: 12px;
-  }
-
-  .hs-task-kpi {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    padding: 8px 10px;
-    border: 1px solid #d9dce3;
-    border-radius: 8px;
-
-    small {
-      font-size: 10px;
-      color: #5a6283;
-    }
-
-    b {
-      font-size: 19px;
-      font-weight: 700;
-    }
-
-    em {
-      font-size: 9.5px;
-      font-style: normal;
-    }
-
-    &.is-blue em {
-      color: #3b82f6;
-    }
-
-    &.is-green em {
-      color: #1e8a4c;
-    }
-
-    &.is-red b,
-    &.is-red em {
-      color: #e5484d;
-    }
-  }
-
-  .hs-task-pt {
-    display: block;
-    font-size: 12px;
-    font-weight: 700;
-  }
-
-  .hs-task-ps {
-    display: block;
-    margin-bottom: 6px;
-    font-size: 10px;
-    color: #868da7;
-  }
-
-  .hs-task-row {
-    margin-top: 7px;
-  }
-
-  .hs-task-rh {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 11px;
-    font-weight: 600;
-    white-space: nowrap;
-
-    i {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-    }
-
-    span {
-      flex: 1;
-    }
-
-    small {
-      font-size: 9.5px;
-      font-weight: 500;
-      color: #868da7;
-    }
-
-    b {
-      width: 32px;
-      font-size: 11px;
-      text-align: right;
-    }
-  }
-
-  .hs-task-bar {
-    height: 4px;
-    margin-top: 4px;
-    overflow: hidden;
-    border-radius: 4px;
-    background: #eef0f4;
-
-    i {
-      display: block;
-      height: 100%;
-      border-radius: 4px;
-    }
-  }
-
-  /* Chương 1 — điện thoại danh sách phòng NhàLo. */
-  .hs-phone {
-    display: flex;
-    flex-direction: column;
-    width: 250px;
-    height: 356px;
-    overflow: hidden;
-    border-radius: 22px;
-    background: #f4f5f8;
-    color: #1f2433;
-    font-size: 11px;
-    line-height: 1.35;
-    box-shadow:
-      inset 0 0 0 1.5px #f6dfb8,
-      0 30px 60px rgba(166, 95, 0, 0.16);
-  }
-
-  .hs-phone-top {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 14px 12px;
-    background: var(--color-navy);
-    color: #fff;
-
-    b {
-      display: block;
-      font-size: 17px;
-      font-weight: 700;
-      line-height: 1.2;
-      white-space: nowrap;
-    }
-
-    small {
-      display: block;
-      overflow: hidden;
-      font-size: 9.5px;
-      color: var(--color-slate-200);
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-  }
-
-  .hs-phone-btn {
-    display: grid;
-    flex: none;
-    place-items: center;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.14);
-  }
-
-  .hs-phone-body {
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    gap: 6px;
-    padding: 9px;
-    overflow: hidden;
-  }
-
-  .hs-phone-seg {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 3px;
-    border-radius: 9px;
-    background: #e7e9ef;
-    font-size: 10.5px;
-    text-align: center;
-
-    span {
-      padding: 6px;
-      border-radius: 7px;
-      color: #5a6283;
-    }
-
-    .is-on {
-      background: #fff;
-      color: var(--color-navy);
-      font-weight: 600;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
-    }
-  }
-
-  .hs-phone-chips {
-    display: flex;
-    gap: 4px;
-    overflow: hidden;
-    white-space: nowrap;
-
-    span {
-      flex: none;
-      padding: 4px 8px;
-      border: 1px solid #c9cdd8;
-      border-radius: 99px;
-      font-size: 9.5px;
-      color: #5a6283;
-    }
-
-    .is-on {
-      border-color: var(--color-navy);
-      background: var(--color-navy);
-      color: #fff;
-      font-weight: 600;
-    }
-  }
-
-  .hs-room {
-    display: flex;
-    flex: none;
-    align-items: flex-start;
-    gap: 9px;
-    padding: 8px;
-    border-radius: 10px;
-    background: #fff;
-    box-shadow: 0 1px 2px rgba(35, 48, 94, 0.06);
-
-    b {
-      font-size: 12px;
-    }
-
-    small {
-      display: block;
-      font-size: 9.5px;
-      color: #5a6283;
-    }
-  }
-
-  .hs-room-bed {
-    display: grid;
-    flex: none;
-    place-items: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 8px;
-    color: #fff;
-
-    &.is-occupied {
-      background: var(--color-navy);
-    }
-
-    &.is-empty {
-      background: #8b92ad;
-    }
-
-    &.is-repair {
-      background: #f0997a;
-    }
-  }
-
-  .hs-room-st {
-    flex: none;
-    padding: 2px 6px;
-    border-radius: 99px;
-    font-size: 8.5px;
-    font-style: normal;
-    font-weight: 600;
-    white-space: nowrap;
-
-    &.is-occupied {
-      background: #e3f4ea;
-      color: #1e8a4c;
-    }
-
-    &.is-empty {
-      background: #eef0f4;
-      color: #5a6283;
-    }
-
-    &.is-repair {
-      background: #fde9e1;
-      color: #e07a55;
-    }
-  }
-
   /* Thẻ kính (chương 2, 4). */
   .hs-glass {
     border-radius: 24px;
@@ -1231,189 +893,6 @@
 
   .hs-muted {
     color: var(--hs-glass-muted);
-  }
-
-  /* Chương 2 — ô ứng dụng. */
-  .hs-tile {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 12px;
-    border-radius: 18px;
-    background: var(--hs-tile-bg);
-    box-shadow: inset 0 0 0 1px var(--hs-tile-ring);
-    animation: bt-fade-in 0.6s ease both;
-
-    b {
-      font-size: 13.5px;
-      font-weight: 600;
-      line-height: 1.35;
-    }
-
-    &.is-ghost {
-      background: transparent;
-      box-shadow: inset 0 0 0 1.5px var(--hs-ghost-ring);
-    }
-  }
-
-  .hs-tile-plus {
-    display: grid;
-    place-items: center;
-    width: 52px;
-    height: 52px;
-    border-radius: 15px;
-    outline: 1.5px dashed var(--hs-ghost-ink);
-    outline-offset: -1.5px;
-    color: var(--hs-ghost-ink);
-    font-size: 20px;
-    font-weight: 700;
-  }
-
-  /* Chương 3 — so sánh trước/sau. */
-  .hs-ba {
-    height: 500px;
-    overflow: hidden;
-    border-radius: 28px;
-    box-shadow: 0 34px 70px var(--hs-glass-shadow);
-    user-select: none;
-
-    input[type="range"] {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      margin: 0;
-      opacity: 0;
-      cursor: ew-resize;
-    }
-  }
-
-  .hs-ba-side {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-  }
-
-  .hs-ba-before {
-    justify-content: flex-start;
-    padding-left: 5%;
-    background: #efe8da;
-  }
-
-  .hs-ba-after {
-    justify-content: flex-end;
-    padding-right: 5%;
-    background: var(--color-accent);
-  }
-
-  .hs-ba-tag {
-    position: absolute;
-    top: 24px;
-    padding: 10px 16px;
-    border-radius: 999px;
-    font-size: 14px;
-    line-height: 1;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-
-    .hs-ba-before & {
-      left: 24px;
-      background: rgba(35, 48, 94, 0.08);
-      color: var(--color-navy);
-    }
-
-    .hs-ba-after & {
-      right: 24px;
-      background: var(--color-navy-950);
-      color: #fff;
-    }
-  }
-
-  .hs-paper-note {
-    width: 268px;
-    padding: 22px 24px;
-    border-radius: 6px;
-    background: #fbf7ee repeating-linear-gradient(transparent 0 29px, #e2d6bd 29px 30px);
-    color: #3d3528;
-    font-size: 16px;
-    line-height: 2;
-    box-shadow: 0 6px 18px rgba(60, 40, 10, 0.15);
-    /* Lệch như bản Figma: sổ tay cao hơn giữa khung, danh sách app thấp hơn. */
-    transform: translateY(-50px) rotate(-3deg) scale(1.08);
-
-    b {
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    s {
-      color: #9b4a2b;
-    }
-  }
-
-  .hs-applist {
-    display: grid;
-    gap: 8px;
-    width: 272px;
-    padding: 16px;
-    border-radius: 16px;
-    background: #fff;
-    color: var(--color-navy);
-    box-shadow: 0 12px 32px rgba(35, 48, 94, 0.14);
-    transform: translateY(24px) scale(1.08);
-  }
-
-  .hs-applist-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    padding: 10px 12px;
-    border-radius: 8px;
-    background: var(--color-gray-50);
-    font-size: 15px;
-    line-height: 1.4;
-    white-space: nowrap;
-
-    b {
-      font-weight: 600;
-    }
-
-    /* Nhãn trạng thái giữ màu mode sáng vì thẻ luôn nền trắng. */
-    > span:last-child {
-      --positive: #1e6b3c;
-      --positive-bg: #e3f4ea;
-      --accent-text: #a65f00;
-      --accent-tint: #fff4e3;
-    }
-  }
-
-  .hs-ba-handle {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: #fff;
-    transform: translateX(-1px);
-
-    span {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      display: grid;
-      place-items: center;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: #fff;
-      color: var(--color-navy);
-      font-weight: 700;
-      box-shadow: 0 12px 32px rgba(35, 48, 94, 0.14);
-      transform: translate(-50%, -50%);
-    }
   }
 
   /* Chương 4 — biểu đồ + thông báo. */
@@ -1447,20 +926,18 @@
     }
   }
 
+  /* Hai thẻ thông báo chương 4: cùng dáng, cùng viền với thẻ biểu đồ (.hs-glass). */
   .hs-toast {
-    width: 312px;
-    padding: 14px 16px 16px;
-    border-radius: 18px;
-    background: #fff;
-    color: var(--color-navy);
+    width: 300px;
+    padding: 16px 18px 18px;
+    border-radius: 24px;
+    background: var(--hs-glass-bg);
+    color: var(--hs-glass-ink);
     line-height: 1.35;
-    box-shadow: 0 12px 32px var(--hs-glass-shadow);
-
-    &.is-nhalo {
-      box-shadow:
-        inset 3px 0 0 var(--color-navy),
-        0 12px 32px var(--hs-glass-shadow);
-    }
+    backdrop-filter: blur(10px);
+    box-shadow:
+      inset 0 0 0 1px var(--hs-glass-ring),
+      0 30px 60px var(--hs-glass-shadow);
 
     b {
       display: block;
@@ -1470,9 +947,9 @@
 
     small {
       display: block;
-      margin: 2px 0 10px;
+      margin: 2px 0 12px;
       font-size: 12.5px;
-      color: #5a6283;
+      color: var(--hs-glass-muted);
     }
   }
 
@@ -1483,7 +960,7 @@
     margin-bottom: 8px;
     font-size: 12px;
     font-weight: 600;
-    color: #5a6283;
+    color: var(--hs-glass-muted);
 
     time {
       font-weight: 500;
@@ -1494,7 +971,7 @@
     height: 6px;
     overflow: hidden;
     border-radius: 99px;
-    background: var(--color-gray-100);
+    background: var(--hs-bar);
 
     i {
       display: block;
@@ -1509,6 +986,18 @@
         background: var(--color-paid);
       }
     }
+  }
+}
+
+@keyframes bt-orbit {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bt-dash {
+  to {
+    stroke-dashoffset: -32;
   }
 }
 
@@ -1531,6 +1020,13 @@
   to {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* Thanh có độ dài cố định mọc dần từ trái (bt-fill thì luôn chạy tới 100%). */
+@keyframes bt-grow {
+  from {
+    transform: scaleX(0);
   }
 }
 
@@ -1566,6 +1062,19 @@
 
   to {
     transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+/* Vòng sóng toả ra từ tâm (minh hoạ khối Liên hệ trang chủ). */
+@keyframes bt-pulse {
+  from {
+    transform: scale(0.85);
+    opacity: 0.7;
+  }
+
+  to {
+    transform: scale(2.1);
     opacity: 0;
   }
 }

@@ -86,16 +86,18 @@ export function NhaloFooter({
 
           {/* Khối 2: pháp nhân, địa chỉ, mạng xã hội. */}
           <div className="col-span-2 flex flex-col items-start gap-4 md:col-span-3 lg:col-span-1 lg:pt-[76px]">
-            <div className="flex flex-col gap-1 text-[14px] leading-[22.4px] text-ink-muted">
-              <p className="flex items-center gap-1">
+            {/* Cùng cách trình bày với chân trang BizTown: tên pháp nhân, MST, địa chỉ. */}
+            <address className="flex flex-col gap-1 text-[14px] leading-[22.4px] text-ink-muted not-italic">
+              <span className="flex items-center gap-1 font-medium text-ink">
                 <MaskIcon src="/images/nhalo/icon-building.svg" size={18.4} />
-                {content.taxCode}
-              </p>
-              <p className="flex items-center gap-[3px]">
+                {dict.companyName}
+              </span>
+              <span className="pl-[22px]">{content.taxCode}</span>
+              <span className="flex items-center gap-[3px] whitespace-nowrap">
                 <MaskIcon src="/images/nhalo/icon-map-pin.svg" size={16.4} />
                 {content.address}
-              </p>
-            </div>
+              </span>
+            </address>
             <ul aria-label={content.social} className="flex items-center gap-2.5">
               {SOCIALS.map((item) => {
                 const href = siteConfig.nhaloSocial[item.key];

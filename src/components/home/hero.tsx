@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState, type ComponentProps } from "react";
+import { useEffect, useState, type ComponentProps, type CSSProperties } from "react";
 
-import type { HomeContent } from "@/content/home-types";
-import { HOME_SECTIONS, type HomeSection } from "@/i18n/config";
+import type { HomeContent, RichText } from "@/content/home-types";
+import { HOME_SECTIONS, type HomeSection, type Locale } from "@/i18n/config";
 import { cn } from "@/lib/utils";
 
 import { HeroSceneArt } from "./hero-scenes";
@@ -19,8 +19,10 @@ const CHAPTER_MS = 7000;
 export function Hero({
   content,
   apps,
+  locale,
 }: {
   content: HomeContent["hero"];
+  locale: Locale;
   /** Danh sách ứng dụng + nhãn trạng thái (dùng chung với khối "Khám phá") cho cảnh chương 2. */
   apps: Pick<HomeContent["discover"], "apps" | "statusLabels">;
 }) {
@@ -54,10 +56,13 @@ export function Hero({
     <section className="bt-wrap">
       <div className="grid grid-cols-1 gap-14 pt-8 pb-5 lg:grid-cols-2">
         <div key={active} className="bt-fade flex flex-col justify-center lg:min-h-[525px]">
-          <h1 className="bt-hero-title text-ink">
+          <h1
+            className="bt-hero-title text-balance text-ink"
+            style={{ "--chars": longestLine(chapter.title) } as CSSProperties}
+          >
             <Rich text={chapter.title} />
           </h1>
-          <p className="mt-6 max-w-[542px] text-[21px] leading-[32.5px] text-ink-muted max-sm:text-[17px] max-sm:leading-[27px]">
+          <p className="mt-6 max-w-[542px] text-justify text-[21px] leading-[32.5px] text-ink-muted max-sm:text-[17px] max-sm:leading-[27px]">
             {chapter.lead}
           </p>
           <div className="mt-9 flex flex-wrap items-center gap-3">
@@ -77,9 +82,9 @@ export function Hero({
         <HeroSceneBox
           scene={chapter.scene}
           copy={content.scenes}
-          paidPill={content.paidPill}
           apps={apps.apps}
           statusLabels={apps.statusLabels}
+          locale={locale}
         />
       </div>
 
@@ -170,11 +175,11 @@ function HeroButton({
  */
 function HeroSceneBox(props: ComponentProps<typeof HeroSceneArt>) {
   return (
-    // data-nosnippet: chữ trong ảnh minh hoạ ("Phân bổ công việc", "Nhà trọ Bình An", "P.101
-    // 22 m²"…) là dữ liệu giả. Google vẫn crawl được, nhưng sẽ không lấy làm đoạn trích trên
+    // data-nosnippet: chữ trong ảnh minh hoạ ("Báo cáo tháng 11", "Nhà trọ Bình An"…) là dữ liệu giả. Google vẫn crawl được, nhưng sẽ không lấy làm đoạn trích trên
     // kết quả tìm kiếm. aria-hidden không có tác dụng này — nó chỉ ẩn khỏi trình đọc màn hình.
+    // Riêng cảnh Sản phẩm (2×2) là các ô bấm được nên không ẩn khỏi trình đọc màn hình.
     <div
-      aria-hidden="true"
+      aria-hidden={props.scene === "apps" ? undefined : true}
       data-nosnippet
       className="relative h-[540px] max-lg:h-[460px] max-sm:h-[292px]"
     >
@@ -188,4 +193,15 @@ function HeroSceneBox(props: ComponentProps<typeof HeroSceneArt>) {
       </div>
     </div>
   );
+}
+
+/**
+ * Số ký tự của dòng dài nhất trong tiêu đề có ngắt dòng bằng "\n", tối thiểu 21. CSS của
+ * .bt-hero-title thu nhỏ cỡ chữ theo tỉ lệ 21 / dòng dài nhất, để dòng dài vẫn nằm trên một dòng.
+ */
+function longestLine(title: RichText) {
+  const text = title.map((part) => (typeof part === "string" ? part : part.kw)).join("");
+  // Tiêu đề không ngắt dòng cố định thì để trình duyệt tự xuống dòng, giữ cỡ chuẩn.
+  if (!text.includes("\n")) return 21;
+  return Math.max(21, ...text.split("\n").map((line) => line.length));
 }

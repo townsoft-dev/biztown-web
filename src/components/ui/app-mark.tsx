@@ -18,7 +18,7 @@ const TONES = {
 } as const;
 
 const LOGOS = {
-  nhalo: "/images/home/nhalo-mark.svg",
+  nhalo: "/images/home/nhalo-mark-cream.svg",
   // SVG nền trong suốt (bản PNG export từ Figma dính nền trắng).
   balheh: "/images/home/balheh-mark.svg",
   chinchu: "/images/home/chinchu-mark.svg",

@@ -7,6 +7,11 @@ function getSiteUrl() {
 export const siteConfig = {
   url: getSiteUrl(),
   email: "biztownofficial@townsoftvina.com",
+  /**
+   * Trang chủ Townsoft Vina — doanh nghiệp gốc của BizTown, chuyên outsourcing phần mềm. Mọi nút
+   * "Xem dịch vụ" (web & app theo yêu cầu) dẫn ra đây.
+   */
+  townsoftUrl: "https://townsoftvina.com",
   // Mã xác minh quyền sở hữu biztown.vn trong Google Search Console (thẻ meta ở <head> mọi trang).
   googleSiteVerification: "DxBLIbJzXX7rMZQDC2kBOuvF9J2x7kEhNI3HdwKhIUU",
   themeColor: "#23305e",
@@ -47,6 +52,16 @@ export const siteConfig = {
    */
   nhaloSocial: {
     facebook: "https://www.facebook.com/1381148068417930",
+    zalo: "https://zalo.me/3480068870203980748",
+    youtube: "https://www.youtube.com/@nhaloapp",
+    tiktok: "https://www.tiktok.com/@biztownofficial",
+  },
+  /**
+   * Mạng xã hội ở chân trang BizTown: Facebook là trang riêng của BizTown; Zalo OA, YouTube
+   * (@nhaloapp) và TikTok (@biztownofficial) dùng chung với NhàLo.
+   */
+  biztownSocial: {
+    facebook: "https://www.facebook.com/profile.php?id=61596238779846",
     zalo: "https://zalo.me/3480068870203980748",
     youtube: "https://www.youtube.com/@nhaloapp",
     tiktok: "https://www.tiktok.com/@biztownofficial",

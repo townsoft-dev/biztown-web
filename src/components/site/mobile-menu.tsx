@@ -8,6 +8,8 @@ import { StatusBadge } from "@/components/ui/status-badge";
 import type { Dictionary } from "@/i18n/dictionaries";
 import { cn } from "@/lib/utils";
 
+import { ServicesColumn } from "./products-menu";
+
 type MenuLink = { label: string; href: string | null };
 
 type MobileMenuProps = {
@@ -176,6 +178,11 @@ export function MobileMenu({
                         {productMenu.all}
                         <Icon name="arrow-up-right" size={18} />
                       </a>
+                      <ServicesColumn
+                        services={productMenu.services}
+                        onNavigate={close}
+                        className="mx-2 mt-2"
+                      />
                     </div>
                   </li>
                 );

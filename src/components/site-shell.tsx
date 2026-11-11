@@ -17,6 +17,7 @@ const FULL_PAGES = new Set<PageKey>([
   "nhaloHelp",
   "balheh",
   "contact",
+  "support",
 ]);
 
 type SiteShellProps = {
@@ -31,7 +32,7 @@ type SiteShellProps = {
 
 /**
  * Khung chung của mọi trang: header, nội dung, chân trang, nút lên đầu trang. Trang chủ, các
- * trang sản phẩm (NhàLo, Balheh) và trang Liên hệ tự dựng toàn bộ section; các trang tài liệu (/support, /privacy, /delete-account) đặt nội dung trong
+ * trang sản phẩm (NhàLo, Balheh), Liên hệ và Hỗ trợ tự dựng toàn bộ section; các trang tài liệu (/privacy, /delete-account) đặt nội dung trong
  * một thẻ trắng trên nền đầu trang — giữ nguyên nội dung cũ, chờ design riêng.
  */
 export function SiteShell({ locale, page, header, footer, children }: SiteShellProps) {
@@ -51,7 +52,7 @@ export function SiteShell({ locale, page, header, footer, children }: SiteShellP
       {FULL_PAGES.has(page) ? (
         <main id={MAIN_ID}>{children}</main>
       ) : (
-        <div className="relative overflow-hidden rounded-b-[48px] bg-[image:var(--top-bg)] pt-[76px] pb-14">
+        <div className="relative overflow-hidden bg-[image:var(--top-bg)] pt-[76px] pb-14">
           <div
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 bg-[image:var(--grid-tile)] [mask-image:linear-gradient(180deg,#000,transparent_70%)] bg-size-[52px_52px]"
