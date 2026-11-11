@@ -498,6 +498,12 @@ export const NHALO: NhaloContent = {
         title: "Policies",
         links: [
           { label: "Privacy policy", to: { page: "nhaloPrivacy" } },
+          // Official version (declared on Google Play, trader Townsoft Vina) lives on
+          // townsoftvina.com — single source, no copy on biztown.vn.
+          {
+            label: "Terms of service",
+            to: { external: "https://townsoftvina.com/nhalo/terms/en" },
+          },
           { label: "Delete account", to: { page: "nhaloDeleteAccount" } },
         ],
       },
