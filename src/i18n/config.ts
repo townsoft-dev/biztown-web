@@ -35,11 +35,7 @@ export function localizedPath(locale: Locale, page: PageKey) {
 export const HOME_SECTIONS = {
   products: "san-pham",
   services: "dich-vu",
-  discover: "kham-pha",
-  audience: "danh-cho-ai",
   about: "ve-biztown",
-  why: "vi-sao-chon",
-  principles: "triet-ly",
   contact: "lien-he",
 } as const;
 export type HomeSection = keyof typeof HOME_SECTIONS;

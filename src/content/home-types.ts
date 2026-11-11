@@ -110,43 +110,6 @@ export type LinkCard = {
   detail?: PageKey;
 };
 
-export type AudienceCard = {
-  code: string;
-  segment: string;
-  title: string;
-  desc: string;
-  foot: string;
-};
-
-export type Stat = {
-  label: string;
-  value: number;
-  suffix: string;
-  desc: string;
-};
-
-export type JourneyStep = {
-  label: string;
-  desc: string;
-  checks: string[];
-};
-
-export type Toast = {
-  mark: AppMarkKind;
-  title: string;
-  meta: string;
-};
-
-export type Feature = { title: string; desc: string };
-
-export type Principle = {
-  media: string;
-  tone: "orange" | "tint" | "gray" | "ink";
-  kicker: string;
-  title: string;
-  desc: string;
-};
-
 /** Một dòng sản phẩm/dịch vụ nhỏ trong thẻ "Hai cách BizTown đồng hành". */
 export type SolutionItem = {
   name: string;
@@ -203,10 +166,6 @@ export type HomeContent = {
     more: string;
     products: Product[];
   };
-  offers: {
-    title: string;
-    cards: { title: string; items: string[]; cta: string; art: "apps" | "browser" }[];
-  };
   discover: {
     title: string;
     support: string;
@@ -216,45 +175,6 @@ export type HomeContent = {
     more: string;
     apps: LinkCard[];
     services: LinkCard[];
-  };
-  audience: {
-    title: string;
-    more: string;
-    cards: AudienceCard[];
-  };
-  stats: {
-    title: string;
-    lead: string;
-    items: Stat[];
-  };
-  journey: {
-    title: string;
-    lead: string;
-    cta: string;
-    /** Nhãn "Bước 1 / 4": {current} và {total} được thay bằng số. */
-    stepOf: string;
-    steps: JourneyStep[];
-  };
-  role: {
-    title: string;
-    lead: string;
-    cta: string;
-    asideTitle: string;
-    asideLinks: string[];
-    toasts: Toast[];
-  };
-  why: {
-    title: string;
-    /** Ảnh minh hoạ 4:5 ở giữa. Bỏ trống thì ẩn khung ảnh, 6 lý do xếp 2 cột. */
-    media?: { src: string; alt: string };
-    left: Feature[];
-    right: Feature[];
-  };
-  principles: {
-    title: string;
-    prevLabel: string;
-    nextLabel: string;
-    items: Principle[];
   };
   /** "Hai cách BizTown đồng hành cùng bạn": sản phẩm sẵn có và web/app theo yêu cầu. */
   solutions: {
@@ -308,11 +228,5 @@ export type HomeContent = {
     or: string;
     /** Nút mở trang Liên hệ đầy đủ. */
     page: string;
-  };
-  band: {
-    title: RichText;
-    lead: string;
-    inputLabel: string;
-    cta: string;
   };
 };
