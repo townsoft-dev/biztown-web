@@ -502,7 +502,9 @@ export const NHALO: NhaloContent = {
         title: "Chính sách",
         links: [
           { label: "Chính sách bảo mật", to: { page: "nhaloPrivacy" } },
-          { label: "Điều khoản dịch vụ", to: { page: "nhaloTerms" } },
+          // Bản chính thức (khai với Google Play, trader Townsoft Vina) ở townsoftvina.com —
+          // chỉ một nguồn nội dung, biztown.vn không giữ bản sao.
+          { label: "Điều khoản dịch vụ", to: { external: "https://townsoftvina.com/nhalo/terms" } },
           { label: "Xoá tài khoản", to: { page: "nhaloDeleteAccount" } },
         ],
       },

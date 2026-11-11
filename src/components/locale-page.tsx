@@ -67,11 +67,6 @@ const CONTENT: Record<PageKey, Record<Locale, () => ReactNode>> = {
     vi: () => <HtmlContent dir="nhalo-delete-account" locale="vi" />,
     en: () => <HtmlContent dir="nhalo-delete-account" locale="en" />,
   },
-  // Điều khoản dịch vụ viết tay tại repo này (không nhập từ repo app như hai trang trên).
-  nhaloTerms: {
-    vi: () => <HtmlContent dir="nhalo-terms" locale="vi" />,
-    en: () => <HtmlContent dir="nhalo-terms" locale="en" />,
-  },
   deleteAccount: {
     vi: () => <HtmlContent dir="nhalo-delete-account" locale="vi" />,
     en: () => <HtmlContent dir="nhalo-delete-account" locale="en" />,
@@ -102,7 +97,6 @@ const NHALO_PAGES = new Set<PageKey>([
   "nhalo",
   "nhaloPrivacy",
   "nhaloDeleteAccount",
-  "nhaloTerms",
   "nhaloGuide",
   "nhaloHelp",
 ]);

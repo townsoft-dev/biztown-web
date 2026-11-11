@@ -27,22 +27,9 @@ const CANONICAL_ALIASES: Partial<Record<PageKey, PageKey>> = {
   deleteAccount: "nhaloDeleteAccount",
 };
 
-/**
- * Trang có bản chính thức ở site khác. Điều khoản dịch vụ NhàLo khai với Google Play theo
- * pháp nhân Townsoft Vina nên bản chính nằm ở townsoftvina.com; trang trên biztown.vn chỉ là
- * bản phụ cùng nội dung. Như CANONICAL_ALIASES: canonical trỏ sang bản chính, không khai
- * hreflang, KHÔNG noindex, và bỏ khỏi sitemap.
- */
-const EXTERNAL_CANONICALS: Partial<Record<PageKey, Record<Locale, string>>> = {
-  nhaloTerms: {
-    vi: "https://townsoftvina.com/nhalo/terms",
-    en: "https://townsoftvina.com/nhalo/terms/en",
-  },
-};
-
-/** Trang có canonical trỏ đi nơi khác (trong hay ngoài site) — không đưa vào sitemap. */
-export function isCanonicalElsewhere(page: PageKey) {
-  return Boolean(CANONICAL_ALIASES[page] || EXTERNAL_CANONICALS[page]);
+/** Trang chỉ là bản sao canonical của trang khác — bỏ khỏi sitemap. */
+export function canonicalTarget(page: PageKey): PageKey | undefined {
+  return CANONICAL_ALIASES[page];
 }
 
 /**
@@ -79,9 +66,8 @@ export function buildPageMetadata(locale: Locale, page: PageKey): Metadata {
   const dict = getDictionary(locale);
   const { title, description } = dict.meta[page];
   const alias = CANONICAL_ALIASES[page];
-  const external = EXTERNAL_CANONICALS[page]?.[locale];
   // og:url theo quy ước là URL chuẩn của nội dung, nên cũng trỏ về bản canonical.
-  const url = external ?? absoluteUrl(locale, alias ?? page);
+  const url = absoluteUrl(locale, alias ?? page);
   // metadataBase (root-document.tsx) biến đường dẫn tương đối thành URL tuyệt đối.
   const image = {
     url: OG_IMAGES[page] ?? OG_IMAGE_DEFAULT,
@@ -95,7 +81,7 @@ export function buildPageMetadata(locale: Locale, page: PageKey): Metadata {
     description,
     alternates: {
       canonical: url,
-      ...(alias || external ? {} : { languages: languageAlternates(page) }),
+      ...(alias ? {} : { languages: languageAlternates(page) }),
     },
     openGraph: {
       type: "website",

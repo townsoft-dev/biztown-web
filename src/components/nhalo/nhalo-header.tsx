@@ -51,7 +51,6 @@ const FLOATING = new Set<PageKey>([
   "nhaloHelp",
   "nhaloPrivacy",
   "nhaloDeleteAccount",
-  "nhaloTerms",
 ]);
 
 export function NhaloHeader({

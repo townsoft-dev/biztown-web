@@ -619,28 +619,6 @@
       font-size: 21px;
       line-height: 1.35;
       font-weight: 600;
-      /* Nhảy từ mục lục (#anchor): chừa chỗ cho thanh menu dính ở đầu trang. */
-      scroll-margin-top: 96px;
-    }
-
-    /* Mục lục đầu trang Điều khoản (/nhalo/terms). */
-    .toc {
-      margin: 22px 0 8px;
-      padding: 16px 20px;
-      border: 1px solid var(--line);
-      border-radius: 20px;
-
-      p {
-        margin: 0 0 6px;
-      }
-
-      ol {
-        margin: 0;
-      }
-
-      li {
-        margin-bottom: 2px;
-      }
     }
 
     h3 {
@@ -706,16 +684,6 @@
       div {
         margin: 2px 0;
       }
-    }
-
-    /* Dòng "bản chính thức ở townsoftvina.com" ngay dưới .meta (điều khoản NhàLo). */
-    .official {
-      margin: 14px 0 0;
-      padding: 10px 14px;
-      border-radius: 12px;
-      background: var(--accent-tint);
-      color: var(--ink-muted);
-      font-size: 14px;
     }
 
     /* Danh sách bước có số tròn. */

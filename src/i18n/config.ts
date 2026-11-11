@@ -18,7 +18,6 @@ export const PAGES = {
   nhalo: "/nhalo",
   nhaloPrivacy: "/nhalo/privacy",
   nhaloDeleteAccount: "/nhalo/delete-account",
-  nhaloTerms: "/nhalo/terms",
   nhaloGuide: "/nhalo/huong-dan",
   nhaloHelp: "/nhalo/ho-tro",
   balheh: "/balheh",

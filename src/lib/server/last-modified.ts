@@ -15,7 +15,6 @@ const SOURCES: Record<PageKey, string[]> = {
   nhalo: ["src/content/vi/nhalo.ts", "src/content/en/nhalo.ts", "src/components/nhalo"],
   nhaloPrivacy: ["src/content/nhalo-privacy"],
   nhaloDeleteAccount: ["src/content/nhalo-delete-account"],
-  nhaloTerms: ["src/content/nhalo-terms"],
   nhaloGuide: [
     "src/content/vi/nhalo-guide.ts",
     "src/content/en/nhalo-guide.ts",
