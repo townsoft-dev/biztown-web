@@ -502,6 +502,7 @@ export const NHALO: NhaloContent = {
         title: "Chính sách",
         links: [
           { label: "Chính sách bảo mật", to: { page: "nhaloPrivacy" } },
+          { label: "Điều khoản dịch vụ", to: { page: "nhaloTerms" } },
           { label: "Xoá tài khoản", to: { page: "nhaloDeleteAccount" } },
         ],
       },

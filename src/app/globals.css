@@ -619,6 +619,28 @@
       font-size: 21px;
       line-height: 1.35;
       font-weight: 600;
+      /* Nhảy từ mục lục (#anchor): chừa chỗ cho thanh menu dính ở đầu trang. */
+      scroll-margin-top: 96px;
+    }
+
+    /* Mục lục đầu trang Điều khoản (/nhalo/terms). */
+    .toc {
+      margin: 22px 0 8px;
+      padding: 16px 20px;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+
+      p {
+        margin: 0 0 6px;
+      }
+
+      ol {
+        margin: 0;
+      }
+
+      li {
+        margin-bottom: 2px;
+      }
     }
 
     h3 {

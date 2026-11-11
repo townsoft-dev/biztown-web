@@ -21,6 +21,7 @@ const PRIORITIES: Record<PageKey, number> = {
   deleteAccount: 0.3,
   nhaloPrivacy: 0.3,
   nhaloDeleteAccount: 0.3,
+  nhaloTerms: 0.3,
   nhaloGuide: 0.7,
   nhaloHelp: 0.6,
 };

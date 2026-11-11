@@ -498,6 +498,7 @@ export const NHALO: NhaloContent = {
         title: "Policies",
         links: [
           { label: "Privacy policy", to: { page: "nhaloPrivacy" } },
+          { label: "Terms of service", to: { page: "nhaloTerms" } },
           { label: "Delete account", to: { page: "nhaloDeleteAccount" } },
         ],
       },

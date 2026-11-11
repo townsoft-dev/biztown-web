@@ -12,7 +12,9 @@ Xem README.md cho cấu trúc và cách sửa nội dung. Những điểm bắt 
 - **Không đổi** `/`, `/support`, `/privacy`, `/delete-account` — đã khai với App Store và
   Google Play. Tiếng Anh nằm dưới `/en`.
 - **Không sửa tay `src/content/nhalo-*/{vi,en}.html`** — nhập bằng `pnpm import:privacy` từ
-  repo biztown-rent. NhàLo là tên mới của BizTown Rent Manager (một ứng dụng), nên `/privacy`
+  repo biztown-rent. Ngoại lệ: `src/content/nhalo-terms/` (Điều khoản dịch vụ, `/nhalo/terms`)
+  viết tay tại repo này — sửa trực tiếp cả `vi.html` và `en.html`. NhàLo là tên mới của
+  BizTown Rent Manager (một ứng dụng), nên `/privacy`
   và `/delete-account` phục vụ đúng tài liệu đó và `rel=canonical` trỏ sang `/nhalo/...`.
 - Sửa nội dung thì sửa **cả** `src/content/vi` và `src/content/en`; chữ dùng chung ở
   `src/i18n/dictionaries.ts`.

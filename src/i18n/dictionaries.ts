@@ -118,6 +118,11 @@ const vi = {
       description:
         "Các bước xoá tài khoản NhàLo ngay trong ứng dụng hoặc qua email: dữ liệu phòng, hợp đồng và hoá đơn nào bị xoá, cùng thời gian lưu trữ còn lại.",
     },
+    nhaloTerms: {
+      title: "Điều khoản dịch vụ ứng dụng NhàLo",
+      description:
+        "Điều khoản sử dụng app quản lý nhà trọ NhàLo của Townsoft Vina: tài khoản, trách nhiệm của chủ nhà với dữ liệu người thuê, phí, giới hạn trách nhiệm, xoá tài khoản và luật áp dụng.",
+    },
     nhaloGuide: {
       title: "Hướng dẫn sử dụng NhàLo — app quản lý nhà trọ",
       description:
@@ -282,6 +287,11 @@ const en: Dictionary = {
       title: "Delete your NhàLo account and all rental data",
       description:
         "How to delete your NhàLo account from inside the app or by email: which rooms, contracts and invoices are removed, and how long anything is retained.",
+    },
+    nhaloTerms: {
+      title: "NhàLo app terms of service",
+      description:
+        "Terms of use for NhàLo, the rental management app by Townsoft Vina: accounts, landlords' duties for tenant data, fees, liability, account deletion and governing law.",
     },
     nhaloGuide: {
       title: "NhàLo user guide — rental management app",
