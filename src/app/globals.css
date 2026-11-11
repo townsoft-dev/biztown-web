@@ -545,20 +545,6 @@
     animation: bt-bob var(--bob, 3.2s) ease-in-out infinite alternate;
   }
 
-  /* Hiện dần khi cuộn tới (thêm .is-in bằng IntersectionObserver). */
-  .bt-reveal {
-    opacity: 0;
-    transform: translateY(14px);
-    transition:
-      opacity 0.5s ease,
-      transform 0.5s ease;
-
-    &.is-in {
-      opacity: 1;
-      transform: none;
-    }
-  }
-
   /*
    * Section mờ dần rồi trượt lên khi cuộn tới (component Reveal). Chỉ ẩn khi <html> có class
    * "js" (script trong <head> thêm vào), nên trình duyệt tắt JS vẫn thấy đủ nội dung.
@@ -574,11 +560,6 @@
       opacity: 1;
       transform: none;
     }
-  }
-
-  /* Hiệu ứng con (cột logo mọc lên...) chờ tới khi section hiện mới chạy. */
-  .js .bt-scroll-reveal:not(.is-in) .bt-rise {
-    animation-play-state: paused;
   }
 
   .bt-fade {
@@ -847,38 +828,6 @@
    * "BizTown Homepage v6". Mockup ứng dụng giữ màu sáng ở cả hai theme; thẻ kính đổi theo
    * biến --hs-*.
    */
-  .hs-ic {
-    flex: none;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .hs-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    padding: 12px 20px;
-    border-radius: 999px;
-    background: #fff;
-    color: var(--color-navy);
-    font-size: 15px;
-    line-height: 24px;
-    font-weight: 600;
-    white-space: nowrap;
-    box-shadow: 0 20px 40px var(--hs-glass-shadow);
-  }
-
-  .hs-pill-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--color-paid);
-    box-shadow: 0 0 0 4px rgba(47, 179, 106, 0.2);
-  }
-
   /* Thẻ kính (chương 2, 4). */
   .hs-glass {
     border-radius: 24px;
