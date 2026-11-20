@@ -1,5 +1,5 @@
 <h1>Privacy Policy</h1>
-<div class="meta"><div><strong>App:</strong> NhàLo</div><div><strong>Provider:</strong> Townsoft Vina Co.Ltd</div><div><strong>Address:</strong> 6th Floor, No. 6, Lane 7, Le Duc Tho, Tu Liem Ward, Hanoi City, Vietnam</div><div><strong>Contact email:</strong> <a href="mailto:biztownofficial@townsoftvina.com">biztownofficial@townsoftvina.com</a></div><div><strong>Effective date:</strong> 28 October 2026</div></div>
+<div class="meta"><div><strong>App:</strong> NhàLo</div><div><strong>Provider:</strong> Townsoft Vina Co.Ltd</div><div><strong>Address:</strong> 6th Floor, No. 6, Lane 7, Le Duc Tho, Tu Liem Ward, Hanoi City, Vietnam</div><div><strong>Contact email:</strong> <a href="mailto:biztownofficial@townsoftvina.com">biztownofficial@townsoftvina.com</a></div><div><strong>Effective date:</strong> 20 November 2026</div></div>
 <h2>1. Who we are and what this app does</h2>
 <p>NhàLo is an app for <strong>landlords and the managers they authorise</strong>. It helps manage rental properties, rooms, tenants, contracts and electricity and water meter readings, and it creates and sends monthly rent invoices with a bank transfer QR code.</p>
 <p><strong>Tenants do not install this app and have no account in it.</strong> Tenants only receive invoices one way, by Zalo or email.</p>
@@ -27,6 +27,7 @@
 <li><strong>Tenants:</strong> full name, phone number, date of birth, sex, email, national ID number (optional), notes.</li>
 <li><strong>Contracts:</strong> term, rent, deposit, utility unit prices, service fees, billing cycle.</li>
 <li><strong>Electricity and water meter readings</strong> per room and per period.</li>
+<li><strong>Electricity and water meter photos</strong> (if you take or pick one on a reading field) — kept with the reading for reference.</li>
 <li><strong>Invoices:</strong> line items, totals, status, sent and collected timestamps.</li>
 </ul>
 <p>The national ID number is optional. Enter it only where genuinely needed to manage the tenancy or draw up the rental contract, and only with the tenant&#x27;s consent.</p>
@@ -35,16 +36,25 @@
 <li><strong>Push notification device token</strong> issued by Firebase Cloud Messaging, used to deliver in-app notifications.</li>
 <li><strong>Server technical logs:</strong> access timestamps, operation type, error codes, used to operate the service and troubleshoot problems.</li>
 <li><strong>Language preference and the phone number you asked us to remember at sign in</strong> — stored <strong>on your own device only</strong>, never sent to our servers.</li>
+<li><strong>Advertising identifier and app usage events</strong> (install, app open, registration completed) — sent to Meta to measure NhàLo&#x27;s ads, see 3.5.</li>
+<li><strong>Readings recorded offline</strong> — stored temporarily <strong>on your phone</strong> and removed once they reach our server.</li>
 </ul>
 <h3>3.4. What we do NOT collect</h3>
-<p>We do <strong>not</strong> collect your location, contacts, browsing history, or the content of messages or calls on your device. We do <strong>not</strong> use your data for advertising, do <strong>not</strong> sell data to third parties, and do <strong>not</strong> build tracking profiles of users.</p>
+<p>We do <strong>not</strong> collect your location, contacts, browsing history, messages or calls. The app shows <strong>no</strong> ads, we do <strong>not</strong> sell data to third parties, and we do <strong>not</strong> send your name, phone number or any property, room, tenant or invoice data to advertising partners. How we measure NhàLo&#x27;s own ads is described in 3.5.</p>
+<h3>3.5. Ad measurement (Meta)</h3>
+<p>NhàLo advertises on Facebook and Instagram. To learn which ad led to an install, the app uses the <strong>Meta (Facebook SDK – App Events)</strong> toolkit. Data sent to Meta: the device advertising identifier (IDFA on iPhone if you allow it; Google Advertising ID on Android), basic device information (model, OS, app version) and these events: install, app open, registration completed.</p>
+<ul>
+<li><strong>iPhone:</strong> the app asks &quot;Allow tracking&quot;. You can decline and every feature still works; change it any time in Settings → Privacy &amp; Security → Tracking.</li>
+<li><strong>Android:</strong> you can reset or delete your Advertising ID in Settings → Privacy → Ads.</li>
+</ul>
 <h2>4. Device permissions</h2>
 <ul>
-<li><strong>Camera</strong> and <strong>Photo library</strong> — opened only when you actively take or pick a photo of a property, a room or your profile picture. The app never accesses them in the background.</li>
+<li><strong>Camera</strong> and <strong>Photo library</strong> — opened only when you actively take or pick a photo of a property, a room, an electricity/water meter or your profile picture. For the library, the app only receives the photos you pick. The app never accesses them in the background.</li>
 <li><strong>Notifications</strong> — to alert you about invoices due and in-app reminders. You can turn this off at any time in your device settings.</li>
+<li><strong>Allow tracking (iPhone only)</strong> — for ad measurement as in 3.5. Declining affects no feature.</li>
 </ul>
 <h2>5. How we use the data</h2>
-<p>1. To create and protect your account and to verify sign-in by phone and OTP. 2. To store and display your property, room, tenant and contract records. 3. To calculate and produce invoices and generate payment QR codes. 4. To deliver invoices to tenants by Zalo or email <strong>at your instruction</strong>. 5. To send push notifications about activity in the app. 6. To keep the service secure, detect abnormal access and fix defects.</p>
+<p>1. To create and protect your account and to verify sign-in by phone and OTP. 2. To store and display your property, room, tenant and contract records. 3. To calculate and produce invoices and generate payment QR codes. 4. To deliver invoices to tenants by Zalo or email <strong>at your instruction</strong>. 5. To send push notifications about activity in the app. 6. To keep the service secure, detect abnormal access and fix defects. 7. Read the number on meter photos with AI when you take or pick a photo on a reading field; you can always check and correct it before saving. 8. Send periodic task reminders (time to record readings, ready to invoice, contract expired). 9. Measure NhàLo&#x27;s ads (3.5). 10. Support: when you ask for help, NhàLo staff may sign in to your account to help set up initial data or fix an issue; every such access is logged.</p>
 <p>Messages go to tenants <strong>only when you press send</strong> — the app never contacts your tenants on its own.</p>
 <h2>6. Sharing with third parties</h2>
 <p>We share data only to the minimum extent necessary, with the following service providers:</p>
@@ -53,12 +63,14 @@
 <li><strong>Zalo (VNG)</strong> — recipient phone number, one-time passcodes and invoice or notification details, to deliver messages via Zalo.</li>
 <li><strong>Email delivery provider</strong> — recipient email address and email content, to send invoices and data copies by email.</li>
 <li><strong>Google Firebase</strong> — the device&#x27;s push notification token, to send push notifications.</li>
+<li><strong>Anthropic (Claude AI service)</strong> — only the meter photos you take or pick, to read the number. Photos are sent from our server without your name, phone number or account details.</li>
+<li><strong>Meta Platforms</strong> — advertising identifier, basic device information and install, app-open and registration events (3.5), to measure ads.</li>
 <li><strong>Apple, Google</strong> — receive no personal data from the app; they only distribute and update it.</li>
 </ul>
 <p>We may also disclose data when <strong>lawfully required by a competent authority</strong>, or where necessary to protect our legal rights and those of our users.</p>
 <p>We <strong>do not sell, trade or rent</strong> personal data.</p>
 <h2>7. Where data is stored</h2>
-<p>Data is stored on Amazon Web Services cloud infrastructure in the <strong>Seoul, South Korea</strong> region. Zalo delivery is operated by a provider based in Vietnam. Transfers of data outside Vietnam are carried out in accordance with Personal Data Protection Law No. 91/2025/QH15 and Decree 356/2025/ND-CP, together with the safeguards described in the Security section.</p>
+<p>Data is stored on Amazon Web Services cloud infrastructure in the <strong>Seoul, South Korea</strong> region. Zalo delivery is operated by a provider based in Vietnam. Meter photos are processed by Anthropic in the United States to read the number. Ad measurement data is processed by Meta under Meta&#x27;s privacy policy. Transfers of data outside Vietnam are carried out in accordance with Personal Data Protection Law No. 91/2025/QH15 and Decree 356/2025/ND-CP, together with the safeguards described in the Security section.</p>
 <h2>8. Retention</h2>
 <ul>
 <li>Account and operational data are kept <strong>for as long as you use your account</strong>.</li>
@@ -90,7 +102,7 @@
 <p>Send requests to <strong><a href="mailto:biztownofficial@townsoftvina.com">biztownofficial@townsoftvina.com</a></strong>. We acknowledge within <strong>72 hours</strong> and complete the request within <strong>30 days</strong>.</p>
 <p>If you are a <strong>tenant</strong> and wish to see, correct or delete your information, please contact <strong>your landlord</strong>, who entered and controls that data. You may also write to us and we will forward your request to the relevant landlord.</p>
 <h2>11. Account deletion</h2>
-<p>You can delete your account <strong>directly in the app</strong>: go to <strong>Profile &amp; Settings → Delete account</strong> and enter your password to confirm. Before deleting, you can email yourself a copy of your data.</p>
+<p>You can delete your account <strong>directly in the app</strong>: go to <strong>Account → Delete account</strong> and enter your password to confirm. Before deleting, you can email yourself a copy of your data.</p>
 <p>Deletion is <strong>permanent</strong>: the account and all of its data are erased, you <strong>cannot sign in again</strong> with this account, and we <strong>cannot restore</strong> the data. To use the app again you need to register a new account.</p>
 <p>Deleting a landlord account also deletes the properties, rooms, tenants, contracts, meter readings and invoices that belong to it. Properties you only manage for someone else stay unchanged; only your access is removed.</p>
 <p>If you cannot open the app, follow the instructions at https://biztown.vn/nhalo/delete-account, or email <strong><a href="mailto:biztownofficial@townsoftvina.com">biztownofficial@townsoftvina.com</a></strong> from your registered address (or include the account&#x27;s phone number) with the subject <strong>&quot;Account deletion request&quot;</strong>. We verify your identity and permanently delete the account within <strong>30 days</strong>.</p>
