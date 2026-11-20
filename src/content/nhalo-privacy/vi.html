@@ -1,5 +1,5 @@
 <h1>Chính sách quyền riêng tư</h1>
-<div class="meta"><div><strong>Ứng dụng:</strong> NhàLo</div><div><strong>Đơn vị cung cấp:</strong> Công ty TNHH Townsoft Vina</div><div><strong>Địa chỉ:</strong> Tầng 6, số 6, ngõ 7, Lê Đức Thọ, phường Từ Liêm, thành phố Hà Nội, Việt Nam</div><div><strong>Email liên hệ:</strong> <a href="mailto:biztownofficial@townsoftvina.com">biztownofficial@townsoftvina.com</a></div><div><strong>Ngày hiệu lực:</strong> 28/10/2026</div></div>
+<div class="meta"><div><strong>Ứng dụng:</strong> NhàLo</div><div><strong>Đơn vị cung cấp:</strong> Công ty TNHH Townsoft Vina</div><div><strong>Địa chỉ:</strong> Tầng 6, số 6, ngõ 7, Lê Đức Thọ, phường Từ Liêm, thành phố Hà Nội, Việt Nam</div><div><strong>Email liên hệ:</strong> <a href="mailto:biztownofficial@townsoftvina.com">biztownofficial@townsoftvina.com</a></div><div><strong>Ngày hiệu lực:</strong> 20/11/2026</div></div>
 <h2>1. Chúng tôi là ai và ứng dụng này làm gì</h2>
 <p>NhàLo là ứng dụng dành cho <strong>chủ nhà trọ và người được chủ nhà uỷ quyền quản lý</strong>. Ứng dụng giúp quản lý nhà/dãy trọ, phòng, người thuê, hợp đồng, chỉ số điện nước, và tạo — gửi hoá đơn tiền trọ hàng tháng kèm mã QR chuyển khoản.</p>
 <p><strong>Người thuê nhà không cài và không có tài khoản trong ứng dụng này.</strong> Người thuê chỉ nhận hoá đơn một chiều qua Zalo hoặc email.</p>
@@ -27,6 +27,7 @@
 <li><strong>Người thuê:</strong> họ tên, số điện thoại, ngày sinh, giới tính, email, số CCCD/CMND (tuỳ chọn), ghi chú.</li>
 <li><strong>Hợp đồng:</strong> thời hạn, tiền thuê, tiền cọc, đơn giá điện nước, phí dịch vụ, kỳ thanh toán.</li>
 <li><strong>Chỉ số điện, nước</strong> theo từng phòng và từng kỳ.</li>
+<li><strong>Ảnh đồng hồ điện nước</strong> (nếu bạn chụp hoặc chọn ở ô chỉ số) — lưu kèm chỉ số để đối chiếu khi cần.</li>
 <li><strong>Hoá đơn:</strong> các khoản tiền, tổng tiền, trạng thái, thời điểm gửi và thu tiền.</li>
 </ul>
 <p>Số CCCD/CMND là thông tin tuỳ chọn. Chỉ nhập khi thực sự cần cho việc quản lý cho thuê, lập hợp đồng thuê nhà và khi người thuê đã đồng ý.</p>
@@ -35,16 +36,25 @@
 <li><strong>Mã thiết bị nhận thông báo đẩy (device token)</strong> do Firebase Cloud Messaging cấp — dùng để gửi thông báo trong ứng dụng.</li>
 <li><strong>Nhật ký kỹ thuật</strong> của máy chủ: thời điểm truy cập, loại thao tác, mã lỗi. Dùng để vận hành và xử lý sự cố.</li>
 <li><strong>Lựa chọn ngôn ngữ và số điện thoại đã ghi nhớ khi đăng nhập</strong> — lưu <strong>trên chính điện thoại của bạn</strong>, không gửi về máy chủ.</li>
+<li><strong>Mã nhận dạng quảng cáo và sự kiện sử dụng ứng dụng</strong> (cài đặt, mở ứng dụng, đăng ký xong) — gửi cho Meta để đo hiệu quả quảng cáo của NhàLo, xem mục 3.5.</li>
+<li><strong>Chỉ số ghi khi mất mạng</strong> — lưu tạm <strong>trên điện thoại của bạn</strong> và tự xoá sau khi đã gửi lên máy chủ.</li>
 </ul>
 <h3>3.4. Những gì chúng tôi KHÔNG thu thập</h3>
-<p>Chúng tôi <strong>không</strong> thu thập vị trí, danh bạ, lịch sử duyệt web, nội dung tin nhắn hay cuộc gọi trên máy bạn. Chúng tôi <strong>không</strong> dùng dữ liệu của bạn để quảng cáo, <strong>không</strong> bán dữ liệu cho bên thứ ba, và <strong>không</strong> lập hồ sơ theo dõi người dùng.</p>
+<p>Chúng tôi <strong>không</strong> thu thập vị trí, danh bạ, lịch sử duyệt web, nội dung tin nhắn hay cuộc gọi trên máy bạn. Ứng dụng <strong>không</strong> hiển thị quảng cáo, chúng tôi <strong>không</strong> bán dữ liệu cho bên thứ ba và <strong>không</strong> gửi tên, số điện thoại hay dữ liệu nhà, phòng, người thuê, hoá đơn cho bên quảng cáo. Việc đo hiệu quả quảng cáo của NhàLo được mô tả ở mục 3.5.</p>
+<h3>3.5. Đo hiệu quả quảng cáo (Meta)</h3>
+<p>NhàLo có chạy quảng cáo trên Facebook và Instagram. Để biết lượt cài đặt đến từ quảng cáo nào, ứng dụng dùng bộ công cụ <strong>Meta (Facebook SDK – App Events)</strong>. Dữ liệu gửi cho Meta gồm: mã nhận dạng quảng cáo của thiết bị (IDFA trên iPhone nếu bạn cho phép; Mã nhận dạng quảng cáo của Google trên Android), thông tin thiết bị cơ bản (loại máy, hệ điều hành, phiên bản ứng dụng) và các sự kiện: cài đặt, mở ứng dụng, đăng ký tài khoản xong.</p>
+<ul>
+<li><strong>iPhone:</strong> ứng dụng hỏi &quot;Cho phép theo dõi&quot;. Bạn có thể từ chối, mọi tính năng vẫn dùng bình thường; đổi lại bất cứ lúc nào trong Cài đặt → Quyền riêng tư &amp; Bảo mật → Theo dõi.</li>
+<li><strong>Android:</strong> bạn có thể đặt lại hoặc xoá Mã nhận dạng quảng cáo trong Cài đặt → Quyền riêng tư → Quảng cáo.</li>
+</ul>
 <h2>4. Quyền truy cập thiết bị</h2>
 <ul>
-<li><strong>Camera</strong> và <strong>Thư viện ảnh</strong> — chỉ mở khi bạn chủ động chụp/chọn ảnh nhà, phòng hoặc ảnh đại diện. Ứng dụng không tự ý truy cập nền.</li>
+<li><strong>Camera</strong> và <strong>Thư viện ảnh</strong> — chỉ mở khi bạn chủ động chụp/chọn ảnh nhà, phòng, ảnh đồng hồ điện nước hoặc ảnh đại diện. Với thư viện, ứng dụng chỉ nhận đúng ảnh bạn chọn. Ứng dụng không tự ý truy cập nền.</li>
 <li><strong>Thông báo</strong> — để báo hoá đơn đến hạn và các nhắc việc trong ứng dụng. Bạn có thể tắt bất cứ lúc nào trong Cài đặt của điện thoại.</li>
+<li><strong>Cho phép theo dõi (chỉ iPhone)</strong> — để đo quảng cáo như mục 3.5. Từ chối không ảnh hưởng tính năng nào.</li>
 </ul>
 <h2>5. Chúng tôi dùng dữ liệu để làm gì</h2>
-<p>1. Tạo và bảo vệ tài khoản, xác thực đăng nhập bằng số điện thoại và mã OTP. 2. Lưu trữ và hiển thị dữ liệu nhà, phòng, người thuê, hợp đồng của bạn. 3. Tính và tạo hoá đơn, sinh mã QR chuyển khoản. 4. Gửi hoá đơn tới người thuê qua Zalo hoặc email theo lệnh của bạn. 5. Gửi thông báo đẩy về hoạt động trong ứng dụng. 6. Bảo đảm an toàn hệ thống, phát hiện truy cập bất thường, khắc phục lỗi.</p>
+<p>1. Tạo và bảo vệ tài khoản, xác thực đăng nhập bằng số điện thoại và mã OTP. 2. Lưu trữ và hiển thị dữ liệu nhà, phòng, người thuê, hợp đồng của bạn. 3. Tính và tạo hoá đơn, sinh mã QR chuyển khoản. 4. Gửi hoá đơn tới người thuê qua Zalo hoặc email theo lệnh của bạn. 5. Gửi thông báo đẩy về hoạt động trong ứng dụng. 6. Bảo đảm an toàn hệ thống, phát hiện truy cập bất thường, khắc phục lỗi. 7. Đọc số trên ảnh đồng hồ điện nước bằng AI khi bạn chụp hoặc chọn ảnh ở ô chỉ số; bạn luôn kiểm và sửa được trước khi lưu. 8. Nhắc việc định kỳ (tới kỳ ghi số, đủ số để tạo hoá đơn, hợp đồng hết hạn). 9. Đo hiệu quả quảng cáo của NhàLo (mục 3.5). 10. Hỗ trợ khi bạn liên hệ: nhân viên NhàLo có thể đăng nhập vào tài khoản của bạn để giúp nhập dữ liệu ban đầu hoặc xử lý sự cố khi bạn yêu cầu; mỗi lần truy cập đều được ghi nhật ký.</p>
 <p>Chúng tôi chỉ gửi tin cho người thuê <strong>khi bạn bấm gửi</strong> — ứng dụng không tự động gửi cho người thuê sau lưng bạn.</p>
 <h2>6. Chia sẻ dữ liệu với bên thứ ba</h2>
 <p>Chúng tôi chỉ chia sẻ dữ liệu ở mức tối thiểu cần thiết, với các nhà cung cấp dịch vụ sau:</p>
@@ -53,12 +63,14 @@
 <li><strong>Zalo (VNG)</strong> — số điện thoại người nhận, mã OTP và thông tin trên hoá đơn hoặc thông báo, để gửi tin qua Zalo.</li>
 <li><strong>Nhà cung cấp dịch vụ gửi email</strong> — địa chỉ email người nhận và nội dung email, để gửi hoá đơn và bản sao dữ liệu qua email.</li>
 <li><strong>Google Firebase</strong> — mã thiết bị nhận thông báo, để gửi thông báo đẩy.</li>
+<li><strong>Anthropic (dịch vụ AI Claude)</strong> — chỉ ảnh đồng hồ điện nước bạn chụp hoặc chọn, để đọc chỉ số. Ảnh được gửi từ máy chủ của chúng tôi, không kèm tên, số điện thoại hay thông tin tài khoản.</li>
+<li><strong>Meta Platforms</strong> — mã nhận dạng quảng cáo, thông tin thiết bị cơ bản và sự kiện cài đặt, mở ứng dụng, đăng ký (mục 3.5), để đo hiệu quả quảng cáo.</li>
 <li><strong>Apple, Google</strong> — không nhận dữ liệu cá nhân từ ứng dụng; chỉ phân phối và cập nhật ứng dụng.</li>
 </ul>
 <p>Ngoài ra, chúng tôi có thể cung cấp dữ liệu khi <strong>cơ quan nhà nước có thẩm quyền yêu cầu hợp pháp</strong>, hoặc khi cần để bảo vệ quyền lợi hợp pháp của chúng tôi và của người dùng.</p>
 <p>Chúng tôi <strong>không bán, không trao đổi, không cho thuê</strong> dữ liệu cá nhân.</p>
 <h2>7. Nơi lưu trữ dữ liệu</h2>
-<p>Dữ liệu được lưu trên hạ tầng đám mây của Amazon Web Services tại khu vực <strong>Seoul, Hàn Quốc</strong>. Dịch vụ gửi Zalo do nhà cung cấp tại Việt Nam vận hành. Việc chuyển dữ liệu ra ngoài lãnh thổ Việt Nam được thực hiện theo Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15 và Nghị định 356/2025/NĐ-CP, cùng các biện pháp bảo vệ nêu tại mục Bảo mật.</p>
+<p>Dữ liệu được lưu trên hạ tầng đám mây của Amazon Web Services tại khu vực <strong>Seoul, Hàn Quốc</strong>. Dịch vụ gửi Zalo do nhà cung cấp tại Việt Nam vận hành. Ảnh đồng hồ điện nước được Anthropic xử lý tại Hoa Kỳ để đọc số. Dữ liệu đo lường quảng cáo do Meta xử lý theo chính sách quyền riêng tư của Meta. Việc chuyển dữ liệu ra ngoài lãnh thổ Việt Nam được thực hiện theo Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15 và Nghị định 356/2025/NĐ-CP, cùng các biện pháp bảo vệ nêu tại mục Bảo mật.</p>
 <h2>8. Thời gian lưu trữ</h2>
 <ul>
 <li>Dữ liệu tài khoản và dữ liệu vận hành được lưu <strong>trong suốt thời gian bạn còn sử dụng tài khoản</strong>.</li>
@@ -90,7 +102,7 @@
 <p>Gửi yêu cầu tới <strong><a href="mailto:biztownofficial@townsoftvina.com">biztownofficial@townsoftvina.com</a></strong>. Chúng tôi trả lời trong vòng <strong>72 giờ</strong> và xử lý xong trong vòng <strong>30 ngày</strong>.</p>
 <p>Nếu bạn là <strong>người thuê nhà</strong> và muốn xem, sửa hoặc xoá thông tin của mình, vui lòng liên hệ <strong>chủ nhà</strong> — người đã nhập và đang kiểm soát dữ liệu đó. Bạn cũng có thể viết cho chúng tôi và chúng tôi sẽ chuyển yêu cầu tới chủ nhà tương ứng.</p>
 <h2>11. Xoá tài khoản</h2>
-<p>Bạn xoá được tài khoản <strong>ngay trong ứng dụng</strong>: vào <strong>Hồ sơ &amp; Cài đặt → Xoá tài khoản</strong>, nhập mật khẩu để xác nhận. Trước khi xoá, bạn có thể gửi bản sao dữ liệu của mình về email.</p>
+<p>Bạn xoá được tài khoản <strong>ngay trong ứng dụng</strong>: vào <strong>Tài khoản → Xoá tài khoản</strong>, nhập mật khẩu để xác nhận. Trước khi xoá, bạn có thể gửi bản sao dữ liệu của mình về email.</p>
 <p>Khi xoá, tài khoản và toàn bộ dữ liệu của tài khoản bị <strong>xoá hẳn và vĩnh viễn</strong>. Bạn <strong>không thể đăng nhập lại</strong> bằng tài khoản này và chúng tôi <strong>không thể khôi phục</strong> dữ liệu. Muốn dùng lại, bạn cần đăng ký tài khoản mới.</p>
 <p>Xoá tài khoản chủ nhà sẽ xoá luôn nhà, phòng, người thuê, hợp đồng, chỉ số điện nước và hoá đơn thuộc tài khoản đó. Nhà mà bạn chỉ được giao làm Quản lý thì giữ nguyên, chỉ gỡ quyền truy cập của bạn.</p>
 <p>Nếu không mở được ứng dụng, làm theo hướng dẫn tại https://biztown.vn/nhalo/delete-account, hoặc gửi email từ địa chỉ đã đăng ký (hoặc kèm số điện thoại của tài khoản) tới <strong><a href="mailto:biztownofficial@townsoftvina.com">biztownofficial@townsoftvina.com</a></strong> với tiêu đề <strong>&quot;Yêu cầu xoá tài khoản&quot;</strong>. Chúng tôi xác minh danh tính rồi xoá hẳn tài khoản trong vòng <strong>30 ngày</strong>.</p>
